@@ -20,6 +20,7 @@ html_show_copyright = False
 html_add_permalinks = "#"
 
 # imgmath extension options
+imgmath_font_size = 14
 imgmath_image_format = "svg"
 imgmath_add_tooltips = False
 imgmath_latex_preamble = "\\usepackage[boldvectors,boldmatrices]{blatex}"
