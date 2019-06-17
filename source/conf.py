@@ -15,9 +15,11 @@ html_sidebars = {}
 html_domain_indices = True
 html_show_sourcelink = False
 html_show_sphinx = False
-show_powered_by = False
 html_show_copyright = False
 html_add_permalinks = "#"
+html_theme_options = {
+    "show_powered_by": "false"
+}
 
 # imgmath extension options
 imgmath_font_size = 14
