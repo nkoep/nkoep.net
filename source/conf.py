@@ -23,3 +23,6 @@ html_add_permalinks = "#"
 imgmath_image_format = "svg"
 imgmath_add_tooltips = False
 imgmath_latex_preamble = "\\usepackage[boldvectors,boldmatrices]{blatex}"
+
+def setup(app):
+    app.add_stylesheet("css/style.css")
