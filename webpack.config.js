@@ -1,0 +1,44 @@
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+module.exports = {
+  mode: "development",
+  entry: ["./src/index.js", "./src/sass/main.scss"],
+  output: {
+    path: path.resolve(__dirname, "public"),
+    filename: "app.js"
+  },
+  devtool: "source-map",
+  devServer: {
+    contentBase: "./public",
+    historyApiFallback: true
+  },
+  watch: false,
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"]
+          }
+        }
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
+      }
+    ]
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    }),
+    new CopyWebpackPlugin([{from: "_redirect"}])
+  ]
+};
