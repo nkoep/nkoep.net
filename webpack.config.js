@@ -46,7 +46,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./src/templates/404.html",
-      filename: "404.html"
+      filename: "404.html",
+      inject: false
     })
   ]
 };
