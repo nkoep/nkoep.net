@@ -36,10 +36,12 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: "./src/templates/index.html"
+      template: "./src/templates/index.html",
+      filename: "index.html"
     }),
     new HtmlWebpackPlugin({
-      template: "./src/templates/404.html"
+      template: "./src/templates/404.html",
+      filename: "404.html"
     })
   ]
 };
