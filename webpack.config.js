@@ -14,7 +14,7 @@ module.exports = {
     contentBase: "./public",
     historyApiFallback: {
       rewrites: [{
-        from:  /^\/404$/,
+        from: /^\/404$/,
         to: "/404.html"
       }]
     }
