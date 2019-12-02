@@ -12,7 +12,12 @@ module.exports = {
   devtool: "source-map",
   devServer: {
     contentBase: "./public",
-    historyApiFallback: true
+    historyApiFallback: {
+      rewrites: [{
+        from:  /^\/404$/,
+        to: "/404.html"
+      }]
+    }
   },
   watch: false,
   module: {
