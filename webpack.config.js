@@ -1,7 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -37,8 +36,10 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
+      template: "./src/templates/index.html"
     }),
-    new CopyWebpackPlugin([{from: "_redirect"}])
+    new HtmlWebpackPlugin({
+      template: "./src/templates/404.html"
+    })
   ]
 };
