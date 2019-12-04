@@ -16,9 +16,8 @@ const router = createRouter();
 
 document.addEventListener("DOMContentLoaded", () => {
   router.mountComponents();
-  window.onpopstate = (event) => {
-    const pathname = event.state || "/";
-    router.route(pathname);
+  window.onpopstate = event => {
+    router.route(event.state || window.location.pathname);
   };
-  router.route(window.location.pathname)
+  router.route(window.location.pathname);
 });
