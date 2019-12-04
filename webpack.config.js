@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -48,6 +49,11 @@ module.exports = {
       template: "./src/templates/404.html",
       filename: "404.html",
       inject: false
-    })
+    }),
+    new CopyWebpackPlugin(
+      ["pages", "posts"].map(folder => {
+        return {from: `./${folder}`, to: `./${folder}`}
+      })
+    )
   ]
 };

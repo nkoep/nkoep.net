@@ -13,11 +13,12 @@ import "./sass/main.scss";
 dom.watch();
 
 const router = createRouter();
+
 document.addEventListener("DOMContentLoaded", () => {
   router.mountComponents();
-  router.route(window.location.pathname)
   window.onpopstate = (event) => {
     const pathname = event.state || "/";
     router.route(pathname);
   };
+  router.route(window.location.pathname)
 });

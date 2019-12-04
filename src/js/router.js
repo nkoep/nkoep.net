@@ -1,69 +1,8 @@
-class _Route {
-  load() {
-    return "";
-  }
-
-  render(location) {
-    const outlet = document.getElementById("outlet");
-
-    // Remove the fade class if it exists so the current content is hidden
-    // immediately once we set its opacity.
-    outlet.classList.remove("fade");
-    outlet.style.opacity = 0;
-
-    // Add the fade class, set the new content and transition to full opacity.
-    outlet.innerHTML = this.load();
-    outlet.classList.add("fade");
-    outlet.style.opacity = 1;
-  }
-}
-
-class Home extends _Route {
-  load(location) {
-    // TODO: Retrieve an article list and add them to the front page.
-    return `
-      <span style="color: green">Hi</span>
-    `
-  }
-}
-
-class About extends _Route {
-  load(location) {
-    return `
-      <span style="color: green">Hi from About page</span>
-    `
-  }
-}
-
-class Art extends _Route {
-  load(location) {
-    return `
-      <div>Art'n shit</divY
-    `;
-  }
-}
-
-class Misc extends _Route {
-  load(location) {
-    return `
-      Here, we'll have a reading log 'n shit
-    `;
-  }
-}
-
-class Post extends _Route {
-  load(pathname) {
-    // We don't explicitly check if pathname begins with
-    // "/articles" since the regex match should have taken
-    // care of this.
-    const name = pathname.split("/articles", 1)[1];
-    // const content = await utils.fetchPost(name + ".md");
-
-    // TODO: Use element.scrollIntoView if we can find an id with the given
-    //       hash.
-    const hash = window.location.hash;
-  }
-}
+import Home from "./routes/home.js";
+import About from "./routes/about.js";
+import Art from "./routes/art.js";
+import Misc from "./routes/misc.js";
+import Post from "./routes/post.js";
 
 class Router {
   constructor() {
@@ -156,16 +95,18 @@ class Router {
 
   fixUpInternalLinks_() {
     const app = document.getElementById("app");
+    const clickCallback = event => {
+      event.preventDefault();
+      const pathname = event.target.pathname;
+      if (pathname !== undefined && pathname !== window.location.pathname) {
+        this.route(event.target.pathname);
+        window.history.pushState(pathname, "", pathname);
+      }
+    };
+
     // Hook into click events for internal links so we don't reload pages.
     Array.from(app.getElementsByClassName("link")).forEach(element => {
-      element.onclick = event => {
-        event.preventDefault();
-        const pathname = event.target.pathname;
-        if (pathname !== undefined && pathname !== window.location.pathname) {
-          this.route(event.target.pathname);
-          window.history.pushState(pathname, "", pathname);
-        }
-      };
+      element.onclick = clickCallback;
     });
   }
 
@@ -186,8 +127,8 @@ export default function createRouter() {
   const router = new Router();
   router.add(/^\/$/, Home);
   router.add(/^\/about$/, About);
-  router.add(/^\/art/, Art);
+  router.add(/^\/art$/, Art);
   router.add(/^\/misc$/, Misc);
-  // router.add(/^\/articles\/./, Post);
+  router.add(/^\/post\/./, Post);
   return router;
 }
