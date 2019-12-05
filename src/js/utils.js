@@ -19,10 +19,15 @@ function retrieveResource(url) {
   });
 }
 
-export default async function fetchMarkdownResource(url) {
-  const converter = new showdown.Converter({
-    extensions: [showdownHighlight]
-  });
-  const md = await retrieveResource(url);
+const converter = new showdown.Converter({
+  extensions: [showdownHighlight]
+});
+
+export function convertMarkdown(md) {
   return converter.makeHtml(md);
+}
+
+export default async function fetchMarkdownResource(url) {
+  const md = await retrieveResource(url);
+  return convertMarkdown(md);
 }

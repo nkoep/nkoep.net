@@ -1,10 +1,8 @@
 import Route from "./route.js";
+import fetchMarkdownResource from "../utils.js";
 
 export default class MiscRoute extends Route {
-  load() {
-    const span = document.createElement("span");
-    span.style.color = "purple";
-    span.textContent = "reading list etc.";
-    return span;
+  async load() {
+    return await fetchMarkdownResource("/pages/misc.md");
   }
 }

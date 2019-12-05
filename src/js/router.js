@@ -97,9 +97,9 @@ class Router {
     const app = document.getElementById("app");
     const onClickCallback = event => {
       event.preventDefault();
-      const pathname = event.target.pathname;
+      let pathname = event.target.pathname;
       if (pathname !== undefined && pathname !== window.location.pathname) {
-        this.route(event.target.pathname);
+        this.route(pathname);
         window.history.pushState(pathname, "", pathname);
       }
     };
@@ -111,7 +111,6 @@ class Router {
   }
 
   async route(pathname) {
-    console.log("Routing...");
     for (let i = 0; i < this.routes_.length; ++i) {
       const [re, Route] = this.routes_[i];
       if (re.test(pathname)) {
@@ -126,7 +125,7 @@ class Router {
         return;
       }
     }
-    window.location.replace("/404");
+    // window.location.replace("/404");
   }
 }
 
