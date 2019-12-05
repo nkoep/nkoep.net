@@ -95,7 +95,7 @@ class Router {
 
   fixUpInternalLinks_() {
     const app = document.getElementById("app");
-    const clickCallback = event => {
+    const onClickCallback = event => {
       event.preventDefault();
       const pathname = event.target.pathname;
       if (pathname !== undefined && pathname !== window.location.pathname) {
@@ -106,7 +106,7 @@ class Router {
 
     // Hook into click events for internal links so we don't reload pages.
     Array.from(app.getElementsByClassName("link")).forEach(element => {
-      element.onclick = clickCallback;
+      element.onclick = onClickCallback;
     });
   }
 

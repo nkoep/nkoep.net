@@ -12,13 +12,16 @@ export default class Route {
     // Remove the fade class if it exists so the current content is hidden
     // immediately once we set its opacity.
     outlet.classList.remove("fade");
-    outlet.style.opacity = 0;
+
+    // TODO: Also animate the page footer.
 
     // Add the fade class, set the new content and transition to full opacity.
+    // This needs to be slightly delayed, otherwise the animation won't fire.
     outlet.innerHTML = "";
-    outlet.appendChild(this.load(pathname));
-    outlet.classList.add("fade");
-    outlet.style.opacity = 1;
+    setTimeout(() => {
+      outlet.classList.add("fade");
+      outlet.appendChild(this.load(pathname));
+    }, 100);
   }
 }
 
