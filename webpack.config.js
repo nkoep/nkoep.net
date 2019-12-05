@@ -8,7 +8,8 @@ module.exports = {
   entry: ["./src/index.js", "./src/sass/main.scss"],
   output: {
     path: path.resolve(__dirname, "public"),
-    filename: "app.js"
+    filename: "app.js",
+    publicPath: "/"
   },
   devtool: "source-map",
   devServer: {
