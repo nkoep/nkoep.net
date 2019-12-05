@@ -1,8 +1,8 @@
 import fetchMarkdownResource from "./utils.js";
 
 export default class Post {
-  constructor(name, date, basename) {
-    this.name = name;
+  constructor(title, date, basename) {
+    this.title = title;
     this.date = date;
     this.basename = basename;
   }

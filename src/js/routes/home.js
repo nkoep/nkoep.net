@@ -10,7 +10,7 @@ export default class HomeRoute extends Route {
       var a = document.createElement("a");
       a.className = "link";
       a.href = "/post/" + post.basename;
-      a.textContent = post.name + " (" + post.date + ")";
+      a.textContent = post.title + " (" + post.date + ")";
 
       var li = document.createElement("li");
       li.appendChild(a);

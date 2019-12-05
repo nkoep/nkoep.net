@@ -20,20 +20,18 @@ export default class PostRoute extends Route {
 
     const post = findPost(pathname);
     if (!post) {
+      // TODO: Fix this up a bit.
       span.style.color = "red";
       span.textContent = "Post not found";
       return span;
     }
 
     const content = await post.fetchContent();
-    console.log(content);
-    return content;
-
-    span.style.color = "green";
-    span.textContent = "Post found";
-    return span;
-
-    // const content = await utils.fetchPost(name + ".md");
+    return `
+      <h1>${post.title}</h1>
+      <h2>${post.date}</h2>
+      ${content}
+    `;
 
     // TODO: Use element.scrollIntoView if we can find an id with the given
     //       hash.
