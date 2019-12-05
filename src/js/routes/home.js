@@ -1,7 +1,7 @@
 import Route from "./route.js";
 import { posts } from "../../posts.js";
 
-export default class Home extends Route {
+export default class HomeRoute extends Route {
   load() {
     var ul = document.createElement("ul");
     ul.id = "posts";
@@ -9,7 +9,7 @@ export default class Home extends Route {
     [...posts].reverse().forEach(function(post) {
       var a = document.createElement("a");
       a.className = "link";
-      a.href = "/post/" + post.filename;
+      a.href = "/post/" + post.basename;
       a.textContent = post.name + " (" + post.date + ")";
 
       var li = document.createElement("li");

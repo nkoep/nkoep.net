@@ -1,7 +1,7 @@
 import Post from "./js/post.js";
 
 export const posts = [
-  new Post("First post", "December 04, 2019", "bla.md"),
-  new Post("Second post", "December 04, 2019", "blub.md")
+  new Post("The Dharma Bums", "December 04, 2019", "foo"),
+  new Post("The Sun Also Rises", "December 04, 2019", "bar")
 ];
 

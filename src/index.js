@@ -1,3 +1,13 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
+import hljs from "highlight.js/lib/highlight";
+import javascript from "highlight.js/lib/languages/javascript";
+import python from "highlight.js/lib/languages/python";
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("python", python);
+import "highlight.js/styles/github.css";
+
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import {
   faGithub, faInstagram, faTwitter , faLastfm

@@ -40,6 +40,9 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
-    "@fortawesome/free-brands-svg-icons": "^5.11.2"
+    "@fortawesome/free-brands-svg-icons": "^5.11.2",
+    "core-js": "^3.4.7",
+    "regenerator-runtime": "^0.13.3",
+    "showdown-highlight": "^2.1.3"
   }
 }

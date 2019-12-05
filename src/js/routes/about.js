@@ -1,6 +1,6 @@
 import Route from "./route.js";
 
-export default class About extends Route {
+export default class AboutRoute extends Route {
   load() {
     const span = document.createElement("span");
     span.style.color = "green";
