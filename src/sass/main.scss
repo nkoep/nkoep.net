@@ -84,3 +84,8 @@ a:hover {
     padding: 0 1.5em;
   }
 }
+
+// Highlight links in the code listing on the landing page.
+a.link.hljs-string {
+  font-weight: bold;
+}

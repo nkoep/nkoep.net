@@ -2,58 +2,57 @@ import Route from "./route.js";
 import { posts } from "../../posts.js";
 import { convertMarkdown } from "../utils.js";
 
-const pythonRepl = posts => `
+const pythonHead = `
 \`\`\`python
 >>> from nkoep.rnd import musings
 >>> for year in sorted(musings.years())[::-1]:
 ...     print(f"{year}:")
-...     for musing in musings.group_by_year(year):
+...     for musing in musings.group_by_year(year)[::-1]:
 ...         print(musing)
 ...     print()
-...
-${posts}
 \`\`\`
 `;
 
+function hljsSpanTag(klass, text) {
+  const span = document.createElement("span");
+  span.className = `hljs-${klass}`;
+  span.textContent = text;
+  return span;
+}
+
 export default class HomeRoute extends Route {
   load() {
-    var div = document.createElement("div");
+    const div = document.createElement("div");
+    div.innerHTML = convertMarkdown(pythonHead);
+    const code = div.querySelector("code");
 
-    // TODO: Actually filter posts by year.
-    const entries = ["2019:"];
+    // Insert an ellipsis first. highlight.js doesn't properly highlight
+    // continuation ellipses.
+    code.appendChild(hljsSpanTag("meta", "...\n"));
+
+    let previousYear = null;
+    // We assume posts are pre-sorted in increasing order, so we simply reverse
+    // the order here when listing them on the landing page so that the most
+    // recent post is on top.
     [...posts].reverse().forEach(post => {
-      entries.push(`Musing("${post.title}", "${post.date}")`);
-    });
-
-    const getPostUrl = title => {
-      // XXX: This is ugly.
-      title = title.slice(1, title.length-1);
-      for (let i = 0; i < posts.length; ++i) {
-        const post = posts[i];
-        if (title === post.title) {
-          return `/post/${post.basename}`;
+      const year = post.date.year();
+      if (year !== previousYear) {
+        if (previousYear) {
+          code.insertAdjacentHTML("beforeend", "\n");
         }
+        previousYear = year;
+        code.appendChild(hljsSpanTag("number", year));
+        code.insertAdjacentHTML("beforeend", ":\n");
       }
-    };
 
-    div.innerHTML = convertMarkdown(pythonRepl(entries.join("\n")));
-    const labels = Array.from(div.getElementsByClassName("hljs-string"));
-    // This is so very fucking ugly, but oh well :D
-    // We skip the first element, cause that's the year f-string, and then
-    // every other element with the hljs-string class should be a post name,
-    // which we'll turn into an anchor tag by wrapping the span element. Also,
-    // the way we retrieve the
-    for (let i = 1; i < labels.length; i += 2) {
-      const label = labels[i];
-      // const newLabel = label.cloneNode(true);
-      const a = document.createElement("a");
-      a.className = "link hljs-string";
-      a.style.fontWeight = "bold";
-      a.textContent = label.textContent;
-      // XXX: This approach has O(n^2) complexity...
-      a.href = getPostUrl(label.textContent);
-      label.parentNode.replaceChild(a, label);
-    }
+      code.appendChild(document.createTextNode("Musing("))
+      code.insertAdjacentHTML(
+        "beforeend",
+        `<a class="link hljs-string"
+            href="/post/${post.basename}">"${post.title}"</a>, `);
+      code.appendChild(hljsSpanTag("string", `${post.date}")\n`));
+    });
+    code.insertAdjacentHTML("beforeend", "\n");
 
     return div;
   }

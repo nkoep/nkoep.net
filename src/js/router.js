@@ -97,7 +97,7 @@ class Router {
     const app = document.getElementById("app");
     const onClickCallback = event => {
       event.preventDefault();
-      let pathname = event.target.pathname;
+      const pathname = event.target.pathname;
       if (pathname !== undefined && pathname !== window.location.pathname) {
         this.route(pathname);
         window.history.pushState(pathname, "", pathname);
