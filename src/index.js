@@ -9,7 +9,7 @@ import {
 import hljs from "highlight.js/lib/highlight";
 import javascript from "highlight.js/lib/languages/javascript";
 import python from "highlight.js/lib/languages/python";
-import "highlight.js/styles/atom-one-dark.css";//github.css";
+import "highlight.js/styles/atom-one-dark.css";
 
 import createRouter from "./js/router.js";
 
