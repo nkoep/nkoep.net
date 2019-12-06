@@ -115,12 +115,6 @@ class Router {
       const [re, Route] = this.routes_[i];
       if (re.test(pathname)) {
         await (new Route).render(pathname);
-        // FIXME: This requires all internal links to be present once we call
-        //        the method. If we delay rendering of the outlet for animation
-        //        purposes, however, then we'll miss certain links when trying
-        //        to hook into click events this way. One way would be to
-        //        asynchronously hook into events, by chaining promises from
-        //        the `render` method in Route.
         this.fixUpInternalLinks_();
         return;
       }

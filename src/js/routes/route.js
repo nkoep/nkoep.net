@@ -3,29 +3,23 @@ export default class Route {
     return document.createElement("div");
   }
 
-  // TODO: This method needs to be async, since the load methods below
-  //       generally will have to asynchronously fetch resources.
-
   async render(pathname) {
     const outlet = document.getElementById("outlet");
 
-    // Remove the fade class if it exists so the current content is hidden
-    // immediately once we set its opacity.
-    outlet.classList.remove("fade");
-
     // TODO: Also animate the page footer.
 
-    // Add the fade class, set the new content and transition to full opacity.
-    // This needs to be slightly delayed, otherwise the animation won't fire.
-    outlet.innerHTML = "";
-  // setTimeout(() => {
-    outlet.classList.add("fade");
     const content = await this.load(pathname);
+    outlet.innerHTML = "";
+
+    // We wrap the content in another div so we can fade in the new content.
+    const inner = document.createElement("div");
+    inner.className = "fadein";
     if (typeof content === "string") {
-      outlet.innerHTML = content;
+      inner.innerHTML = content;
     } else {
-      outlet.appendChild(content);
+      inner.appendChild(content);
     }
-  // }, 100);
+
+    outlet.appendChild(inner);
   }
 }
