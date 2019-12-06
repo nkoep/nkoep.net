@@ -50,7 +50,8 @@ export default class HomeRoute extends Route {
         "beforeend",
         `<a class="link hljs-string"
             href="/post/${post.basename}">"${post.title}"</a>, `);
-      code.appendChild(hljsSpanTag("string", `${post.date}")\n`));
+      code.appendChild(hljsSpanTag("string", `"${post.date}"`));
+      code.insertAdjacentHTML("beforeend", ")\n");
     });
     code.insertAdjacentHTML("beforeend", "\n");
 
