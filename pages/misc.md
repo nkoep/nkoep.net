@@ -1,6 +1,6 @@
-# Reading Log
+## Reading Log
 
-## 2019
+### 2019
 
 - Harper Lee - To Kill a Mockingbird
 - F. Scott Fitzgerald - The Great Gatsby

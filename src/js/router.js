@@ -1,6 +1,6 @@
 import Home from "./routes/home.js";
 import About from "./routes/about.js";
-import Art from "./routes/art.js";
+import Media from "./routes/media.js";
 import Misc from "./routes/misc.js";
 import Post from "./routes/post.js";
 
@@ -13,7 +13,7 @@ class Router {
     const nav = document.createElement("nav");
     nav.id = "navbar";
 
-    const entries = ["About", "Art", "Misc"];
+    const entries = ["About", "Media", "Misc"];
     entries.forEach(page => {
       const a = document.createElement("a");
       a.className = "link";
@@ -138,7 +138,7 @@ export default function createRouter() {
   const router = new Router();
   router.add(/^\/$/, Home);
   router.add(/^\/about$/, About);
-  router.add(/^\/art$/, Art);
+  router.add(/^\/media/, Media);
   router.add(/^\/misc$/, Misc);
   router.add(/^\/post\/./, Post);
   return router;
