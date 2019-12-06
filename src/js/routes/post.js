@@ -26,6 +26,7 @@ export default class PostRoute extends Route {
       return this.generateError_("Resource not found");
     }
 
+    this.setTitle(post.title);
     return `
       <h1>${post.title}</h1>
       <p class="date">${post.date}</p>

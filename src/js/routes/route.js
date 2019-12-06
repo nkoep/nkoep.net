@@ -1,8 +1,17 @@
 import fetchMarkdownResource from "../utils.js";
 
 export default class Route {
-  constructor(staticResource) {
+  constructor(staticResource, title) {
     this.staticResource_ = staticResource;
+    this.title_ = title || null;  // Don't allow title_ to be undefined
+  }
+
+  setTitle(title) {
+    this.title_ = title;
+  }
+
+  getTitle() {
+    return this.title_;
   }
 
   generateError_(message) {

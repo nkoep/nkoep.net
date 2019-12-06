@@ -117,7 +117,14 @@ class Router {
     for (let i = 0; i < this.routes_.length; ++i) {
       const [re, Route] = this.routes_[i];
       if (re.test(pathname)) {
-        await (new Route).render(pathname);
+        const route = new Route();
+        await route.render(pathname);
+        const title = route.getTitle();
+        if (title) {
+          document.title = `${title} | Niklas Koep`;
+        } else {
+          document.title = "Niklas Koep";
+        }
         this.trapInternalLinks_();
         // FIXME: This works after popstate events, but not after full page
         //        loads.
