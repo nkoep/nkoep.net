@@ -25,6 +25,7 @@ export default class HomeRoute extends Route {
     const div = document.createElement("div");
     div.innerHTML = convertMarkdown(pythonHead);
     const code = div.querySelector("code");
+    const appendHTML = html => code.insertAdjacentHTML("beforeend", html);
 
     // Insert an ellipsis first. highlight.js doesn't properly highlight
     // continuation ellipses.
@@ -38,22 +39,20 @@ export default class HomeRoute extends Route {
       const year = post.date.year();
       if (year !== previousYear) {
         if (previousYear) {
-          code.insertAdjacentHTML("beforeend", "\n");
+          appendHTML("\n");
         }
         previousYear = year;
         code.appendChild(hljsSpanTag("number", year));
-        code.insertAdjacentHTML("beforeend", ":\n");
+        appendHTML(":\n");
       }
 
       code.appendChild(document.createTextNode("Musing("))
-      code.insertAdjacentHTML(
-        "beforeend",
-        `<a class="link hljs-string"
-            href="/post/${post.basename}">"${post.title}"</a>, `);
+      appendHTML(`<a class="link hljs-string"
+                     href="/post/${post.basename}">"${post.title}"</a>, `);
       code.appendChild(hljsSpanTag("string", `"${post.date}"`));
-      code.insertAdjacentHTML("beforeend", ")\n");
+      appendHTML(")\n");
     });
-    code.insertAdjacentHTML("beforeend", "\n");
+    appendHTML("\n");
 
     return div;
   }
