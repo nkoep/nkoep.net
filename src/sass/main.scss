@@ -124,3 +124,14 @@ p.date {
 a.link.hljs-string {
   font-weight: bold;
 }
+
+.video {
+  padding-bottom: 56.25%; // 16:9
+  position: relative;
+
+  iframe[src*="youtube.com"] {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+}
