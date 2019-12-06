@@ -25,16 +25,11 @@ export default class PostRoute extends Route {
       span.textContent = "Post not found";
       return span;
     }
-
     const content = await post.fetchContent();
     return `
       <h1>${post.title}</h1>
-      <h2>${post.date}</h2>
+      <p class="date">${post.date}</p>
       ${content}
     `;
-
-    // TODO: Use element.scrollIntoView if we can find an id with the given
-    //       hash.
-    const hash = window.location.hash;
   }
 }

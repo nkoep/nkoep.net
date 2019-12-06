@@ -70,7 +70,6 @@ class Router {
     footer.appendChild(ul);
   }
 
-  // TODO: Create navbar and links here.
   mountComponents() {
     const app = document.getElementById("app");
 
@@ -116,6 +115,14 @@ class Router {
       if (re.test(pathname)) {
         await (new Route).render(pathname);
         this.trapInternalLinks_();
+        // FIXME: This works after popstate events, but not after full page
+        //        loads.
+        if (window.location.hash) {
+          const element = document.getElementById(window.location.hash);
+          if (element) {
+            element.scrollIntoView();
+          }
+        }
         return;
       }
     }

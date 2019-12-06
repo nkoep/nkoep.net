@@ -29,6 +29,11 @@ a {
   transition: 0.25s;
 }
 
+a:active,
+a:focus {
+  outline: none;
+}
+
 a:hover {
   color: darkorange;
   transition: 0.1s;
@@ -43,6 +48,12 @@ a:hover {
   #outlet {
     padding: 3em 0;
   }
+}
+
+p.date {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
 }
 
 .fadein {
@@ -80,7 +91,8 @@ a:hover {
 
     a {
       margin: 0;
-      padding: 0 0.75em;
+      padding: 0;
+      padding-left: 1.5em;
     }
   }
 }
