@@ -98,8 +98,12 @@ class Router {
       event.preventDefault();
       const pathname = event.target.pathname;
       if (pathname !== undefined && pathname !== window.location.pathname) {
-        this.route(pathname);
-        window.history.pushState(pathname, "", pathname);
+        if (event.ctrlKey) {
+          window.open(pathname, "_blank");
+        } else {
+          this.route(pathname);
+          window.history.pushState(pathname, "", pathname);
+        }
       }
     };
 
