@@ -93,7 +93,7 @@ class Router {
     this.routes_.push([re, route]);
   }
 
-  fixUpInternalLinks_() {
+  trapInternalLinks_() {
     const app = document.getElementById("app");
     const onClickCallback = event => {
       event.preventDefault();
@@ -115,11 +115,11 @@ class Router {
       const [re, Route] = this.routes_[i];
       if (re.test(pathname)) {
         await (new Route).render(pathname);
-        this.fixUpInternalLinks_();
+        this.trapInternalLinks_();
         return;
       }
     }
-    // window.location.replace("/404");
+    window.location.replace("/404");
   }
 }
 
