@@ -16,16 +16,16 @@ function findPost(pathname) {
 
 export default class PostRoute extends Route {
   async load(pathname) {
-    const span = document.createElement("span");
-
     const post = findPost(pathname);
     if (!post) {
-      // TODO: Fix this up a bit.
-      span.style.color = "red";
-      span.textContent = "Post not found";
-      return span;
+      return this.generateError_("Post not found");
     }
+
     const content = await post.fetchContent();
+    if (content === null) {
+      return this.generateError_("Resource not found");
+    }
+
     return `
       <h1>${post.title}</h1>
       <p class="date">${post.date}</p>
