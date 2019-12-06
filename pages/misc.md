@@ -5,6 +5,7 @@
 - Harper Lee - To Kill a Mockingbird
 - F. Scott Fitzgerald - The Great Gatsby
 - Ernest Hemingway - The Sun Also Rises
+- David Foster Wallace - This is Water
 - Jack Kerouac - On the Road
 - Hermann Hesse - Siddhartha
 - Philip Pullman - Der Goldene Kompass (Northern Lights)

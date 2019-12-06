@@ -1,13 +1,26 @@
+@import url(
+  "https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap");
+
 * {
-  margin: 0;
-  padding: 0;
+  // margin: 0;
+  // padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background-color: rgba(0, 0, 50, 0.05);
-  margin: auto;
-  margin-top: 4em;
+  // background-color: rgba(0, 0, 50, 0.05);
+  font-family: "Raleway", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 3em auto;
+}
+
+code {
+  font-size: 12px;
+}
+
+ul {
+  list-style-position: inside;
 }
 
 a {
@@ -22,9 +35,9 @@ a:hover {
 }
 
 #app {
-  background-color: lightgray;
+  // background-color: lightgray;
   margin: auto;
-  max-width: 800px;
+  max-width: 700px;
   width: 80%;
 
   #outlet {
@@ -51,6 +64,11 @@ a:hover {
   #navbar,
   #branding {
     flex: auto;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
   }
 
   #branding {
