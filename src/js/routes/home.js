@@ -13,23 +13,23 @@ const pythonHead = `
 \`\`\`
 `;
 
-function hljsSpanTag(klass, text) {
-  const span = document.createElement("span");
-  span.className = `hljs-${klass}`;
-  span.textContent = text;
-  return span;
-}
-
 export default class HomeRoute extends Route {
   load() {
     const div = document.createElement("div");
     div.innerHTML = convertMarkdown(pythonHead);
     const code = div.querySelector("code");
-    const appendHTML = html => code.insertAdjacentHTML("beforeend", html);
 
-    // Insert an ellipsis first. highlight.js doesn't properly highlight
+    const appendHTML = html => code.insertAdjacentHTML("beforeend", html);
+    const appendHljsTag = (klass, text) => {
+      const span = document.createElement("span");
+      span.className = `hljs-${klass}`;
+      span.textContent = text;
+      code.appendChild(span);
+    };
+
+    // Insert an ellipsis first since highlight.js doesn't properly highlight
     // continuation ellipses.
-    code.appendChild(hljsSpanTag("meta", "...\n"));
+    appendHljsTag("meta", "...\n");
 
     let previousYear = null;
     // We assume posts are pre-sorted in increasing order, so we simply reverse
@@ -42,14 +42,14 @@ export default class HomeRoute extends Route {
           appendHTML("\n");
         }
         previousYear = year;
-        code.appendChild(hljsSpanTag("number", year));
+        appendHljsTag("number", year);
         appendHTML(":\n");
       }
 
-      code.appendChild(document.createTextNode("Musing("))
+      appendHTML("Musing(")
       appendHTML(`<a class="link hljs-string"
                      href="/post/${post.basename}">"${post.title}"</a>, `);
-      code.appendChild(hljsSpanTag("string", `"${post.date}"`));
+      appendHljsTag("string", `"${post.date}"`);
       appendHTML(")\n");
     });
     appendHTML("\n");
