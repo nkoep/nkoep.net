@@ -2,9 +2,11 @@ import Route from "./route.js";
 import { posts } from "../../posts.js";
 
 function findPost(pathname) {
-  // We don't explicitly check if pathname begins with "/post" since the regex
-  // match should have taken care of this.
-  const basename = pathname.split("/post/", 2)[1];
+  const matches = pathname.match(/^\/post\/(.*)/);
+  if (!matches) {
+    return null;
+  }
+  const basename = matches[1];
   for (let i = 0; i < posts.length; ++i) {
     const post = posts[i];
     if (basename === post.basename) {
