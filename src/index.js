@@ -13,6 +13,7 @@ import "highlight.js/styles/atom-one-dark.css";
 
 import createRouter from "./js/router.js";
 
+import "normalize.css";
 import "./sass/main.scss";
 
 // Configure fontawesome.
