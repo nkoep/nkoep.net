@@ -36,6 +36,19 @@ class Router {
     });
   }
 
+  createLogo_() {
+    const a = document.createElement("a");
+    a.className = "link";
+    a.textContent = "NK";
+    a.href = "/";
+
+    const div = document.createElement("div");
+    div.id = "logo";
+    div.appendChild(a);
+
+    return div;
+  }
+
   createSocialLinks_() {
     const links = {
       "github": "https://github.com/nkoep/",
@@ -65,20 +78,11 @@ class Router {
   }
 
   populateHeader_(header) {
-    const nav = this.createNavbar_();
-
-    const a = document.createElement("a");
-    a.id = "branding";
-    a.className = "link";
-    a.textContent = "Niklas Koep";
-    a.href = "/";
-
-    [a, nav].forEach(element => header.appendChild(element));
-  }
-
-  populateFooter_(footer) {
-    const ul = this.createSocialLinks_();
-    footer.appendChild(ul);
+    const navbar = this.createNavbar_();
+    const logo = this.createLogo_();
+    const socialLinks = this.createSocialLinks_();
+    [navbar, logo, socialLinks].forEach(
+      element => header.appendChild(element));
   }
 
   mountComponents() {
@@ -92,11 +96,6 @@ class Router {
     const outlet = document.createElement("div");
     outlet.id = "outlet";
     app.appendChild(outlet);
-
-    const footer = document.createElement("div");
-    footer.id = "footer";
-    this.populateFooter_(footer);
-    app.appendChild(footer);
   }
 
   add(pattern, Route) {

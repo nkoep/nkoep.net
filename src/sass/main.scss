@@ -1,5 +1,7 @@
+@import "palette.scss";
+
 @import url(
-  "https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap");
+  "https://fonts.googleapis.com/css?family=Montserrat|Raleway|Cormorant&display=swap");
 
 html {
   margin: auto;
@@ -71,50 +73,56 @@ p.date {
   display: flex;
 
   #navbar,
-  #branding {
-    flex: auto;
-    font-family: "Montserrat", sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+  #logo,
+  #social {
+    display: flex;
+    flex: 1 0 0;
   }
 
-  #branding {
-    text-align: left;
+  #navbar,
+  #social {
+    margin: auto 0;
   }
 
   #navbar {
-    text-align: right;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    justify-content: flex-start;
+    letter-spacing: 2px;
+    text-align: left;
+    text-transform: uppercase;
 
     a {
-      margin: 0;
-      padding: 0;
-      padding-left: 1.5em;
+      flex: auto;
     }
 
     .active {
       font-weight: bold;
     }
   }
+
+  #logo {
+    font-family: "Cormorant", serif;
+    font-size: 40px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #social {
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    text-align: right;
+
+    li {
+      flex: auto;
+    }
+  }
 }
 
 #posts {
   text-align: center;
-}
-
-#footer {
-  ul#social {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
-  #social li {
-    display: inline;
-    padding: 0 1.5em;
-  }
 }
 
 .error {

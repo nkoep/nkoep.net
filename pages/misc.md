@@ -2,6 +2,12 @@
 
 ## Reading Log
 
+### Currently reading
+
+- Frank Herbert - Dune
+- Albert Camus - Der Fall (The Fall)
+- Gore Vidal - The City and the Pillar
+
 ### 2019
 
 - Harper Lee - To Kill a Mockingbird
