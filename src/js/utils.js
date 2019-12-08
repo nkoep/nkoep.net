@@ -1,5 +1,4 @@
 import * as showdown from "showdown";
-// const showdown = require("showdown");
 import showdownHighlight from "showdown-highlight";
 
 function retrieveResource(url) {

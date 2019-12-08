@@ -1,24 +1,24 @@
 import Route from "./route.js";
 import { posts } from "../../posts.js";
 
-function findPost(pathname) {
-  const matches = pathname.match(/^\/post\/(.*)/);
-  if (!matches) {
+export default class PostRoute extends Route {
+  findPost_(pathname) {
+    const matches = pathname.match(/^\/post\/(.*)/);
+    if (!matches) {
+      return null;
+    }
+    const basename = matches[1];
+    for (let i = 0; i < posts.length; ++i) {
+      const post = posts[i];
+      if (basename === post.basename) {
+        return post;
+      }
+    }
     return null;
   }
-  const basename = matches[1];
-  for (let i = 0; i < posts.length; ++i) {
-    const post = posts[i];
-    if (basename === post.basename) {
-      return post;
-    }
-  }
-  return null;
-}
 
-export default class PostRoute extends Route {
   async load(pathname) {
-    const post = findPost(pathname);
+    const post = this.findPost_(pathname);
     if (!post) {
       return this.generateError_("Post not found");
     }

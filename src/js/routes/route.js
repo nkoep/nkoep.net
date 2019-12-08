@@ -1,7 +1,15 @@
 import fetchMarkdownResource from "../utils.js";
 
 export default class Route {
-  constructor(staticResource, title) {
+  constructor(pattern, staticResource, title) {
+    if (new.target === Route) {
+      throw TypeError("Can't instantiate abstract class 'Route'");
+    }
+
+    if (!(pattern instanceof RegExp)) {
+      throw TypeError("'pattern' must be a regular expression");
+    }
+    this.pattern_ = pattern;
     this.staticResource_ = staticResource;
     this.title_ = title || null;  // Don't allow title_ to be undefined
   }
@@ -16,6 +24,10 @@ export default class Route {
 
   generateError_(message) {
     return `<div class="error">${message}</div>`;
+  }
+
+  match(pathname) {
+    return this.pattern_.test(pathname);
   }
 
   async load() {

@@ -88,8 +88,8 @@ class Router {
     app.appendChild(footer);
   }
 
-  add(re, route) {
-    this.routes_.push([re, route]);
+  add(pattern, Route) {
+    this.routes_.push(new Route(pattern));
   }
 
   trapInternalLinks_() {
@@ -115,9 +115,8 @@ class Router {
 
   async route(pathname) {
     for (let i = 0; i < this.routes_.length; ++i) {
-      const [re, Route] = this.routes_[i];
-      if (re.test(pathname)) {
-        const route = new Route();
+      const route = this.routes_[i];
+      if (route.match(pathname)) {
         await route.render(pathname);
         const title = route.getTitle();
         if (title) {
