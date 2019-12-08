@@ -1,6 +1,12 @@
 @import url(
   "https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap");
 
+html {
+  margin: auto;
+  margin-right: calc(100% - 100vw);
+  overflow-x: hidden;
+}
+
 body {
   font-family: "Raleway", sans-serif;
   font-size: 14px;
