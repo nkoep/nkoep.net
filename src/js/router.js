@@ -25,6 +25,17 @@ class Router {
     return nav;
   }
 
+  refreshNavbar_(title) {
+    const nav = document.getElementById("navbar");
+    Array.from(nav.getElementsByTagName("a")).forEach(element => {
+      if (element.textContent === title) {
+        element.classList.add("active");
+      } else {
+        element.classList.remove("active");
+      }
+    });
+  }
+
   createSocialLinks_() {
     const links = {
       "github": "https://github.com/nkoep/",
@@ -124,6 +135,7 @@ class Router {
         } else {
           document.title = "Niklas Koep";
         }
+        this.refreshNavbar_(title);
         this.trapInternalLinks_();
         // FIXME: This works after popstate events, but not after full page
         //        loads.
