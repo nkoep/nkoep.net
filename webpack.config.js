@@ -3,6 +3,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+const staticAssets = ["pages", "posts"].map(folder => {
+  return {from: `./${folder}`, to: `./${folder}`}
+});
+staticAssets.push({from: "./favicon.ico"});
+
 module.exports = {
   mode: "development",
   entry: ["./src/index.js", "./src/sass/main.scss"],
@@ -55,10 +60,6 @@ module.exports = {
       filename: "404.html",
       inject: false
     }),
-    new CopyWebpackPlugin(
-      ["pages", "posts"].map(folder => {
-        return {from: `./${folder}`, to: `./${folder}`}
-      })
-    )
+    new CopyWebpackPlugin(staticAssets)
   ]
 };
