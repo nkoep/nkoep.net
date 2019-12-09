@@ -58,7 +58,7 @@ a:focus {
   width: 80%;
 
   #outlet {
-    padding: 3em 0;
+    padding-top: 3em;
   }
 }
 
@@ -117,13 +117,12 @@ p.date {
     font-family: "Montserrat", sans-serif;
     font-size: 11px;
     font-weight: 400;
-    justify-content: flex-start;
     letter-spacing: 2px;
     text-align: left;
     text-transform: uppercase;
 
-    a {
-      flex: auto;
+    ul {
+      justify-content: space-between;
     }
 
     .active {
@@ -132,19 +131,14 @@ p.date {
   }
 
   #logo {
+    flex-grow: 2;
     font-family: "Cormorant", serif;
     font-size: 40px;
     justify-content: center;
-    text-align: center;
   }
 
   #social {
     justify-content: space-between;
-    text-align: right;
-
-    li {
-      flex: auto;
-    }
   }
 }
 

@@ -7,6 +7,7 @@
 - Frank Herbert - Dune
 - Albert Camus - Der Fall (The Fall)
 - Gore Vidal - The City and the Pillar
+- Albert Camus - Der Fremde (The Stranger)
 
 ### 2019
 
