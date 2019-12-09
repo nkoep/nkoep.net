@@ -85,6 +85,8 @@ p.date {
 }
 
 #header {
+  $item-spacing: 1.5em;
+
   display: flex;
 
   a {
@@ -96,15 +98,17 @@ p.date {
   }
 
   ul {
-    display: flex;
     list-style: none;
     padding: 0;
+
+    li {
+      display: inline;
+    }
   }
 
   #navbar,
   #logo,
   #social {
-    display: flex;
     flex: 1 0 0;
   }
 
@@ -121,8 +125,9 @@ p.date {
     text-align: left;
     text-transform: uppercase;
 
-    ul {
-      justify-content: space-between;
+    li {
+      margin-right: $item-spacing;
+      text-align: left;
     }
 
     .active {
@@ -131,14 +136,17 @@ p.date {
   }
 
   #logo {
-    flex-grow: 2;
     font-family: "Cormorant", serif;
     font-size: 40px;
-    justify-content: center;
+    text-align: center;
   }
 
   #social {
-    justify-content: space-between;
+    text-align: right;
+
+    li {
+      margin-left: $item-spacing;
+    }
   }
 }
 
