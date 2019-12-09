@@ -1,7 +1,8 @@
-@import "palette.scss";
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Cormorant&display=swap");
 
-@import url(
-  "https://fonts.googleapis.com/css?family=Montserrat|Raleway|Cormorant&display=swap");
+@import "palette.scss";
 
 html {
   margin: auto;
@@ -10,10 +11,21 @@ html {
 }
 
 body {
+  background: $bg;
+  color: $fg;
   font-family: "Raleway", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   margin: 3em auto;
+  text-align: justify;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.25em;
 }
 
 code {
@@ -25,19 +37,19 @@ ul {
 }
 
 a {
-  color: black;
+  color: $link;
   text-decoration: none;
-  transition: 0.25s;
+  transition: color 0.25s;
+}
+
+a:hover {
+  color: $link-hover;
+  transition: color 0.1s;
 }
 
 a:active,
 a:focus {
   outline: none;
-}
-
-a:hover {
-  color: darkorange;
-  transition: 0.1s;
 }
 
 #app {
@@ -51,9 +63,12 @@ a:hover {
 }
 
 p.date {
+  color: $fg-muted;
   font-style: italic;
   margin: 0;
+  margin-top: -1em;
   padding: 0;
+  padding-bottom: 1em;
 }
 
 .fadein {
@@ -71,6 +86,20 @@ p.date {
 
 #header {
   display: flex;
+
+  a {
+    color: black;
+  }
+
+  a:hover {
+    color: $link;
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
 
   #navbar,
   #logo,
@@ -111,8 +140,6 @@ p.date {
 
   #social {
     justify-content: space-between;
-    list-style: none;
-    padding: 0;
     text-align: right;
 
     li {

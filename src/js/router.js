@@ -13,14 +13,19 @@ class Router {
     const nav = document.createElement("nav");
     nav.id = "navbar";
 
+    const ul = document.createElement("ul");
+
     const entries = ["About", "Media", "Misc"];
     entries.forEach(page => {
+      const li = document.createElement("li");
       const a = document.createElement("a");
       a.className = "link";
       a.textContent = page;
       a.href = `/${page.toLowerCase()}`;
-      nav.appendChild(a);
+      li.appendChild(a);
+      ul.appendChild(li);
     });
+    nav.appendChild(ul);
 
     return nav;
   }
