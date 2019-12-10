@@ -2,6 +2,7 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub, faInstagram, faTwitter , faLastfm
 } from "@fortawesome/free-brands-svg-icons"
@@ -17,9 +18,7 @@ import "normalize.css";
 import "./sass/main.scss";
 
 // Configure fontawesome.
-[faGithub, faInstagram, faTwitter, faLastfm].forEach(
-  icon => library.add(icon)
-);
+library.add(faBars, faTimes, faGithub, faInstagram, faTwitter, faLastfm);
 dom.watch();
 
 // Configure syntax highlighting.

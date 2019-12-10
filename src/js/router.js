@@ -9,6 +9,17 @@ class Router {
     this.routes_ = [];
   }
 
+  createMenu_() {
+    const navbar = this.createNavbar_();
+    const socialLinks = this.createSocialLinks_();
+
+    const div = document.createElement("div");
+    div.id = "menu";
+    [navbar, socialLinks].forEach(element => div.appendChild(element));
+
+    return div;
+  }
+
   createNavbar_() {
     const nav = document.createElement("nav");
     nav.id = "navbar";
@@ -83,23 +94,24 @@ class Router {
   }
 
   populateHeader_(header) {
+    const menu = this.createMenu_();
     const navbar = this.createNavbar_();
     const logo = this.createLogo_();
     const socialLinks = this.createSocialLinks_();
-    [navbar, logo, socialLinks].forEach(
+    [menu, navbar, logo, socialLinks].forEach(
       element => header.appendChild(element));
   }
 
   mountComponents() {
-    const app = document.getElementById("app");
-
     const header = document.createElement("div");
     header.id = "header";
     this.populateHeader_(header);
-    app.appendChild(header);
 
     const outlet = document.createElement("div");
     outlet.id = "outlet";
+
+    const app = document.getElementById("app");
+    app.appendChild(header);
     app.appendChild(outlet);
   }
 

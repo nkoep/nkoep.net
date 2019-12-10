@@ -4,6 +4,10 @@
 
 @import "palette.scss";
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   margin: auto;
   margin-right: calc(100% - 100vw);
@@ -55,10 +59,9 @@ a:focus {
 #app {
   margin: auto;
   max-width: 700px;
-  width: 80%;
 
   #outlet {
-    padding-top: 3em;
+    padding-top: 1.5em;
   }
 }
 
@@ -103,6 +106,33 @@ p.date {
 
     li {
       display: inline;
+    }
+  }
+
+  #menu {
+    align-items: center;
+    background: rgba($bg, 0.95);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    position: fixed;
+    top: 0;
+    transition: 1s;
+    width: 0;
+    z-index: 1;
+
+    #navbar li {
+      display: block;
+    }
+
+    #navbar,
+    #social {
+      li {
+        margin: 0 $item-spacing/2;
+        text-align: center;
+      }
     }
   }
 
