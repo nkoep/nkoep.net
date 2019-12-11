@@ -63,6 +63,7 @@ a:focus {
 #app {
   margin: auto;
   max-width: 700px;
+  width: 80%;
 
   #outlet {
     padding-top: 1.5em;
@@ -91,9 +92,10 @@ p.date {
   }
 }
 
+// TODO: Clean up this mess.
 #header {
   $item-spacing: 1.5em;
-  $menu-breakpoint: 501px;
+  $menu-breakpoint: 601px;
 
   display: flex;
 
