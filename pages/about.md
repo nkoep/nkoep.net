@@ -9,7 +9,6 @@ I'm Niklas
 - Frank Herbert - Dune
 - Albert Camus - Der Fall (The Fall)
 - Gore Vidal - The City and the Pillar
-- Albert Camus - Der Fremde (The Stranger)
 
 ### 2019
 
@@ -25,6 +24,7 @@ I'm Niklas
 - Henry Miller - Tropic of Cancer
 - Matt Ruff - Bad Monkeys
 - Friedrich Dürrenmatt - Die Physiker
+- Albert Camus - Der Fremde (The Stranger)
 
 ## Video Editing
 
