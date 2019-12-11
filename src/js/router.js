@@ -19,6 +19,7 @@ class Router {
 
     const closeMenu = () => {
       menu.style.width = "0"
+      document.querySelector("html").classList.remove("noscroll");
     };
 
     // Close the menu on all click events, but don't consume the event so links
@@ -46,6 +47,7 @@ class Router {
     a.onclick = event => {
       event.preventDefault();
       menu.style.width = "100%";
+      document.querySelector("html").classList.add("noscroll");
     };
     a.appendChild(span);
     return a;
