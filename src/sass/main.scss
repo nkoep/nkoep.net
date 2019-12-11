@@ -122,11 +122,11 @@ p.date {
     display: flex;
     flex-direction: column;
     height: 100%;
-    left: 0;
+    right: 0;
     overflow-x: hidden;
     position: fixed;
     top: 0;
-    // transition: width 0.5s;
+    transition: width 0.5s;
     width: 0;
     z-index: 1;
 
