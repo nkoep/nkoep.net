@@ -23,7 +23,9 @@ function retrieveResource(url) {
 }
 
 const converter = new showdown.Converter({
-  extensions: [showdownHighlight]
+  extensions: [showdownHighlight],
+  customizedHeaderId: true,
+  ghCompatibleHeaderId: true
 });
 
 export function convertMarkdown(md) {

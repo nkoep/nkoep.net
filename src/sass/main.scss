@@ -89,6 +89,7 @@ p.date {
 
 #header {
   $item-spacing: 1.5em;
+  $menu-breakpoint: 501px;
 
   display: flex;
 
@@ -119,16 +120,19 @@ p.date {
     overflow-x: hidden;
     position: fixed;
     top: 0;
-    transition: 1s;
+    // transition: width 0.5s;
     width: 0;
     z-index: 1;
 
-    #navbar li {
+    .navbar li {
       display: block;
     }
 
-    #navbar,
-    #social {
+    .navbar,
+    .social {
+      display: block;
+      flex: none;
+
       li {
         margin: 0 $item-spacing/2;
         text-align: center;
@@ -136,18 +140,23 @@ p.date {
     }
   }
 
-  #navbar,
+  .navbar,
   #logo,
-  #social {
+  .social {
     flex: 1 0 0;
   }
 
-  #navbar,
-  #social {
+  .navbar,
+  .social {
+    display: none;
     margin: auto 0;
+
+    @media only screen and (min-width: $menu-breakpoint) {
+      display: block;
+    }
   }
 
-  #navbar {
+  .navbar {
     font-family: "Montserrat", sans-serif;
     font-size: 11px;
     font-weight: 400;
@@ -171,11 +180,20 @@ p.date {
     text-align: center;
   }
 
-  #social {
+  .social {
     text-align: right;
 
     li {
       margin-left: $item-spacing;
+      white-space: nowrap;
+    }
+  }
+
+  #menu-button {
+    margin: auto 0;
+
+    @media only screen and (min-width: $menu-breakpoint) {
+      display: none;
     }
   }
 }

@@ -13,16 +13,47 @@ class Router {
     const navbar = this.createNavbar_();
     const socialLinks = this.createSocialLinks_();
 
-    const div = document.createElement("div");
-    div.id = "menu";
-    [navbar, socialLinks].forEach(element => div.appendChild(element));
+    const menu = document.createElement("div");
+    menu.id = "menu";
+    [navbar, socialLinks].forEach(element => menu.appendChild(element));
 
-    return div;
+    const closeMenu = () => {
+      menu.style.width = "0"
+    };
+
+    // Close the menu on all click events, but don't consume the event so links
+    // still work!
+    menu.onclick = closeMenu;
+
+    // Close the menu when Escape is pressed.
+    document.onkeyup = event => {
+      event.preventDefault();
+      const key = event.key;
+      if (key === "Escape" || key === "Esc") {
+        closeMenu();
+      }
+    };
+
+    return menu;
+  }
+
+  createMenuButton_(menu) {
+    const span = document.createElement("span");
+    span.className = "fas fa-bars";
+    const a = document.createElement("a");
+    a.id = "menu-button";
+    a.href = "javascript:void(0)";
+    a.onclick = event => {
+      event.preventDefault();
+      menu.style.width = "100%";
+    };
+    a.appendChild(span);
+    return a;
   }
 
   createNavbar_() {
     const nav = document.createElement("nav");
-    nav.id = "navbar";
+    nav.className = "navbar";
 
     const ul = document.createElement("ul");
 
@@ -42,14 +73,15 @@ class Router {
   }
 
   refreshNavbar_(title) {
-    // FIXME: This finds the navbar in the overlay menu first.
-    const nav = document.getElementById("navbar");
-    Array.from(nav.getElementsByTagName("a")).forEach(element => {
-      if (element.textContent === title) {
-        element.classList.add("active");
-      } else {
-        element.classList.remove("active");
-      }
+    const navs = document.getElementsByClassName("navbar");
+    Array.from(navs).forEach(nav => {
+      Array.from(nav.getElementsByTagName("a")).forEach(element => {
+        if (element.textContent === title) {
+          element.classList.add("active");
+        } else {
+          element.classList.remove("active");
+        }
+      });
     });
   }
 
@@ -75,7 +107,7 @@ class Router {
     };
 
     const ul = document.createElement("ul");
-    ul.id = "social";
+    ul.className = "social";
 
     for (let key in links) {
       const span = document.createElement("span");
@@ -99,7 +131,8 @@ class Router {
     const navbar = this.createNavbar_();
     const logo = this.createLogo_();
     const socialLinks = this.createSocialLinks_();
-    [menu, navbar, logo, socialLinks].forEach(
+    const menuButton = this.createMenuButton_(menu);
+    [menu, navbar, logo, socialLinks, menuButton].forEach(
       element => header.appendChild(element));
   }
 
@@ -137,7 +170,7 @@ class Router {
 
     // Hook into click events for internal links so we don't reload pages.
     Array.from(app.getElementsByClassName("link")).forEach(element => {
-      element.onclick = onClickCallback;
+      element.addEventListener("click", onClickCallback);
     });
   }
 
