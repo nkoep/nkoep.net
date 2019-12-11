@@ -134,13 +134,14 @@ p.date {
       display: block;
     }
 
+    #logo,
     .navbar,
     .social {
       display: block;
       flex: none;
 
       li {
-        margin: 0 $item-spacing/2;
+        margin: 0 $item-spacing / 2;
         text-align: center;
       }
     }
@@ -150,6 +151,10 @@ p.date {
   #logo,
   .social {
     flex: 1 0 0;
+  }
+
+  #logo {
+    margin: auto 0;
   }
 
   .navbar,
