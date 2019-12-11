@@ -1,6 +1,6 @@
 import Home from "./routes/home.js";
 import About from "./routes/about.js";
-import Media from "./routes/media.js";
+import Projects from "./routes/projects.js";
 import Misc from "./routes/misc.js";
 import Post from "./routes/post.js";
 
@@ -26,7 +26,7 @@ class Router {
 
     const ul = document.createElement("ul");
 
-    const entries = ["About", "Media", "Misc"];
+    const entries = ["About", "Projects"];
     entries.forEach(page => {
       const li = document.createElement("li");
       const a = document.createElement("a");
@@ -42,6 +42,7 @@ class Router {
   }
 
   refreshNavbar_(title) {
+    // FIXME: This finds the navbar in the overlay menu first.
     const nav = document.getElementById("navbar");
     Array.from(nav.getElementsByTagName("a")).forEach(element => {
       if (element.textContent === title) {
@@ -172,8 +173,7 @@ export default function createRouter() {
   const router = new Router();
   router.add(/^\/$/, Home);
   router.add(/^\/about$/, About);
-  router.add(/^\/media/, Media);
-  router.add(/^\/misc$/, Misc);
+  router.add(/^\/projects/, Projects);
   router.add(/^\/post\/./, Post);
   return router;
 }
