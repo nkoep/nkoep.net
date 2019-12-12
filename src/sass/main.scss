@@ -133,14 +133,14 @@ p.date {
     }
   }
 
-  &:before {
+  &::before {
     content: "";
     @media only screen and (min-width: $menu-breakpoint) {
       content: none;
     }
   }
 
-  &:before,
+  &::before,
   .navbar,
   #logo,
   .social,
@@ -229,11 +229,18 @@ p.date {
     .social {
       align-items: center;
       display: flex;
+      justify-content: center;
 
       li {
         margin: $item-spacing;
         text-align: center;
       }
+    }
+
+    #logo,
+    .navbar {
+      border-bottom: solid 1px rgba($fg, 0.25);
+      width: 35%;
     }
   }
 }
