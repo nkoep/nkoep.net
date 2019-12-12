@@ -139,42 +139,6 @@ p.date {
     }
   }
 
-  #menu {
-    align-items: center;
-    background: $bg;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow-x: hidden;
-    position: fixed;
-    right: 0;
-    top: 0;
-    transition: width 0.5s;
-    width: 0;
-    z-index: 1;
-
-    .navbar li {
-      display: block;
-    }
-
-    .navbar,
-    .social {
-      font-size: $menu-fontsize;
-    }
-
-    #logo,
-    .navbar,
-    .social {
-      display: block;
-      flex: none;
-
-      li {
-        margin: $item-spacing;
-        text-align: center;
-      }
-    }
-  }
-
   &:before,
   .navbar,
   #logo,
@@ -233,6 +197,42 @@ p.date {
 
     @media only screen and (min-width: $menu-breakpoint) {
       display: none;
+    }
+  }
+
+  #menu {
+    align-items: center;
+    background: $bg;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: width 0.25s;
+    width: 0;
+    z-index: 1;
+
+    .navbar li {
+      display: block;
+    }
+
+    .navbar,
+    .social {
+      font-size: $menu-fontsize;
+    }
+
+    #logo,
+    .navbar,
+    .social {
+      align-items: center;
+      display: flex;
+
+      li {
+        margin: $item-spacing;
+        text-align: center;
+      }
     }
   }
 }
