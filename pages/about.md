@@ -27,12 +27,12 @@
 optimization on Riemannian manifolds with support for automatic
 differentiation.
 Such problems frequently arise in the context of signal processing and machine
-learning where constraint sets form a smooth nonlinear search space.
+learning where constraint sets often form a smooth nonlinear search space.
 To attack such problems, Pymanopt, which is based on the MATLAB toolbox
 [manopt](www.manopt.org), provides a variety of different solvers (e.g.,
 steepest descent, conjugate gradients, trust-regions), manifolds (e.g., Stiefel
 manifold, Grassmannian manifold, positive definite matrices) and autodiff
-backends (e.g., [autograd](https://github.com/HIPS/autograd),
+backends ([autograd](https://github.com/HIPS/autograd),
 [Theano](http://www.deeplearning.net/software/theano/),
 [Tensorflow](https://www.tensorflow.org/)).
 By appealing to automatic differentiation, the toolbox lowers the entry barrier

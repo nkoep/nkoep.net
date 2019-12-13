@@ -10,6 +10,7 @@
 
 html {
   margin: auto;
+  // Hack to avoid content to be repositioned when the scrollbar appears.
   margin-right: calc(100% - 100vw);
   overflow-x: hidden;
 }

@@ -1,21 +1,21 @@
 Considering how often I seem to have to re-install Arch Linux on various
-machines and I can never seem to remember the exact details, I figured I'd
-write up a short installation guide, mainly as a future reference for myself.
+machines and that I can never seem to remember the exact details, I figured I'd
+write up a short installation guide, mainly as future reference for myself.
 Here we go.
 
 ## First Steps
 
-The first part is easy. Grab an ISO of Arch Linux from
-[here](https://www.archlinux.org/download/) and `dd` it onto a USB drive or the
-like. Boot into the live image and change the keymap to maintain sanity during
-the next steps:
+Grab an ISO of Arch Linux from [here](https://www.archlinux.org/download/) and
+`dd` it onto a USB drive or the like.
+Boot into the live image and change the keymap to maintain sanity during the
+next steps:
 ```shell
 # loadkeys de-latin1-nodeadkeys
 ```
 
 Make sure the directory `/sys/firmware/efi/efivars` exists and is not empty to
-verify we booted in EFI mode. Next, hook up an ethernet cable and request an
-IP address
+verify we booted in EFI mode.
+Next, hook up an ethernet cable and request an IP address
 ```shell
 # dhcpcd
 # ping www.google.de
@@ -45,22 +45,24 @@ and possibly extend the volume group by another device via
 # vgextend main /dev/sdY
 ```
 
-Next up: disk encryption. Run
+Next up: disk encryption.
+Run
 ```shell
 # cryptsetup luksFormat -c aes-xts-plain64 -s 512 /dev/mapper/main-root
 # cryptsetup open /dev/mapper/main-root root
 # mkfs.ext4 /dev/mapper/root
 # mount /dev/mapper/root /mnt
 ```
-to encrypt, open, format and mount the root partition. We'll also create a
-mount point for the boot partition, and mount it accordingly:
+to encrypt, open, format and mount the root partition.
+We'll also create a mount point for the boot partition, and mount it
+accordingly:
 ```shell
 # mkdir /mnt/boot
 # mount /dev/sdX1 /mnt/boot
 ```
 
 Before creating an fstab file, we first create and enable the swapfile so
-`genfstab` will pick it up for the fstab file.
+`genfstab` will pick it up when generating the fstab file.
 ```shell
 # fallocate -l 1G /mnt/swapfile
 # mkswap /mnt/swapfile
@@ -68,6 +70,7 @@ Before creating an fstab file, we first create and enable the swapfile so
 ```
 
 ## Bootstrapping the System
+
 Install the base packages, create the fstab file, and chroot into the root
 filesystem:
 ```shell
@@ -85,7 +88,7 @@ Now set the timezone and update the hardware clock:
 Set the locale:
 ```shell
 # echo "en_US.UTF-8 UTF-8" >/etc/locale.gen
-# local-gen
+# locale-gen
 # echo "LANG=en_US.UTF-8" >/etc/locale.conf
 # echo "KEYMAP=de-latin1-nodeadkeys" >/etc/vconsole.conf
 ```
@@ -98,9 +101,10 @@ Set the hostname and append an entry to the hosts file:
 ```
 
 ## Bootloader
+
 Before creating the initramfs and installing the bootloader, we'll have to make
-sure to enable LVM and encryption support in the `mkinitcpio` config. To that
-end, change the **HOOKS** line in `/etc/mkinitcpio.conf` to
+sure to enable LVM and encryption support in the `mkinitcpio` config.
+To that end, change the **HOOKS** line in `/etc/mkinitcpio.conf` to
 ```raw
 HOOKS=(... keyboard keymap block lvm2 encrypt filesystems ...)
 ```
@@ -108,8 +112,9 @@ Then run
 ```shell
 # mkinitcpio -p linux
 ```
-to create the initramfs. Now install the bootloader and configure the loader to
-decrypt the root partition at boot:
+to create the initramfs.
+Now install the bootloader and configure the loader to decrypt the root
+partition at boot:
 ```shell
 # bootctl --path=/boot install
 # UUID=$(blkid -s UUID -o value /dev/mapper/main-root)
@@ -130,6 +135,7 @@ Let's also set a root password before finally rebooting the system:
 ```
 
 ## Graphical User Interface
+
 Let's install a good set of default packages:
 ```shell
 # pacman -S sudo xorg-server xf86-video-intel lightdm
@@ -173,22 +179,11 @@ EndSection
 EOF
 ```
 
-## Some Commonly Used Packages
+## Arch User Repository (AUR)
 
-> - binutils
-> - neovim
-> - tree
-> - mlocate
-> - chromium
-> - pepper-flash
-> - numix-gtk-theme
-> - lxappearance
-> - gtk-engine-murrine
-> - ttf-droid
-> - texlive-most
-
-## AUR
-Let's install pacaur. First, install a few needed base packages
+In order to interface with the AUR, we opt for `pacaur`.
+To install it, we first need to install some AUR packages manually.
+Install a few needed base packages
 ```shell
 # pacman -S git make fakeroot pkg-config
 ```
@@ -200,10 +195,12 @@ git clone https://aur.archlinux.org/$pkg.git
 cd $pkg && makepkg -si && cd ..
 done
 ```
-With pacaur set up, let's install a pacman hook to update the bootloader, as
+With `pacaur` set up, let's install a pacman hook to update the bootloader, as
 well as a bunch of other common AUR packages:
 ```shell
 # pacaur -S systemd-boot-pacman-hook
 # pacaur -S dmenu-xft-mouse-height-fuzzy-history dropbox
 # pacaur -S gopass numix-square-icon-theme-git polybar
 ```
+
+And that's it!
