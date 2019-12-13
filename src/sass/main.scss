@@ -20,7 +20,7 @@ body {
   font-family: "Raleway", sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  margin: 3em auto;
+  margin: 2em auto;
 }
 
 p {
@@ -78,8 +78,8 @@ a:focus {
 
 #app {
   margin: auto;
-  max-width: 700px;
-  width: 80%;
+  max-width: 650px;
+  width: 85%;
 
   #outlet {
     padding-top: 1.5em;
@@ -112,7 +112,7 @@ p.date {
 
 #header {
   $item-spacing: 1.5em;
-  $menu-breakpoint: 601px;
+  $menu-breakpoint: 575px;
   $menubutton-fontsize: 24px;
   $code-breakpoint: 550px;
   $menu-fontsize: 20px;
@@ -165,7 +165,7 @@ p.date {
     font-family: "Montserrat", sans-serif;
     font-size: 11px;
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-align: left;
     text-transform: uppercase;
 
