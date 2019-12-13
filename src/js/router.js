@@ -43,7 +43,6 @@ class Router {
     const span = document.createElement("span");
     span.className = "fas fa-bars";
     const a = document.createElement("a");
-    a.id = "menu-button";
     a.href = "javascript:void(0)";
     a.onclick = event => {
       event.preventDefault();
@@ -51,7 +50,11 @@ class Router {
       document.querySelector("html").classList.add("noscroll");
     };
     a.appendChild(span);
-    return a;
+
+    const div = document.createElement("div");
+    div.id = "menu-button";
+    div.appendChild(a);
+    return div;
   }
 
   createNavbar_() {
