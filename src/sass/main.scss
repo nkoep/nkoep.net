@@ -130,7 +130,6 @@ p.date {
   $item-spacing: 1.5em;
   $menu-breakpoint: 575px;
   $menubutton-fontsize: 24px;
-  $code-breakpoint: 550px;
   $menu-fontsize: 20px;
 
   display: flex;
@@ -263,7 +262,57 @@ p.date {
 }
 
 #posts {
-  text-align: center;
+  $wide-breakpoint: 640px;
+
+  // XXX: For future reference in case we decide to center posts...
+  // display: flex;
+  // justify-content: center;
+
+  h1,
+  p {
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  h1 {
+    font-size: 1.25em;
+  }
+
+  #posts-narrow {
+    display: block;
+  }
+
+  #posts-wide {
+    display: none;
+  }
+
+  $inner-padding: 0.5em;
+
+  .post {
+    border: solid 0px transparent;
+    display: block;
+    margin: 1em 0;
+    padding: $inner-padding;
+    transition: 0.25s;
+  }
+
+  .post:hover {
+    background-color: rgba($fg-muted, 0.1);
+    border-left: solid 3px rgba($fg-muted, 0.25);
+    padding-left: 2 * $inner-padding;
+  }
+
+  // XXX: Comment this in for the code listing.
+  // @media only screen and (min-width: $wide-breakpoint) {
+  //   #posts-narrow {
+  //     display: none;
+  //   }
+  //
+  //   #posts-wide {
+  //     display: block;
+  //   }
+  // }
 }
 
 .error {
