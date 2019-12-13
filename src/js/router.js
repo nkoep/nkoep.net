@@ -1,6 +1,5 @@
 import Home from "./routes/home.js";
 import About from "./routes/about.js";
-import Projects from "./routes/projects.js";
 import Misc from "./routes/misc.js";
 import Post from "./routes/post.js";
 
@@ -62,7 +61,7 @@ class Router {
 
     const ul = document.createElement("ul");
 
-    const entries = ["About", "Projects"];
+    const entries = ["About", "Misc"];
     entries.forEach(page => {
       const li = document.createElement("li");
       const a = document.createElement("a");
@@ -211,7 +210,7 @@ export default function createRouter() {
   const router = new Router();
   router.add(/^\/$/, Home);
   router.add(/^\/about$/, About);
-  router.add(/^\/projects/, Projects);
+  router.add(/^\/misc/, Misc);
   router.add(/^\/post\/./, Post);
   return router;
 }

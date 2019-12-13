@@ -1,73 +1,27 @@
 # About
 
-I'm Niklas
+> One day I will find the right words, and they will be simple.
+>
+> <cite>-- Jack Kerouac</cite>
 
-## Reading Log
+## CV
 
-### Currently reading
+### Education
 
-- Frank Herbert - Dune
-- Albert Camus - Der Fall (The Fall)
-- Gore Vidal - The City and the Pillar
+- Dr.-Ing. from the Faculty of Electrical Engineering and Information
+  Technology, RWTH Aachen University, Germany
+- M.Sc. in Electrical Engineering, Information Technology and Computer
+  Engineering, RWTH Aachen University, Germany
+- B.Sc. in Electrical Engineering, Information Technology and Computer
+  Engineering, RWTH Aachen University, Germany
 
-### 2019
+### Publications
 
-- Harper Lee - To Kill a Mockingbird
-- F. Scott Fitzgerald - The Great Gatsby
-- Ernest Hemingway - The Sun Also Rises
-- David Foster Wallace - This is Water
-- Jack Kerouac - On the Road
-- Hermann Hesse - Siddhartha
-- Philip Pullman - Der Goldene Kompass (Northern Lights)
-- Philip Pullman - Das Magische Messer (The Subtle Knife)
-- Philip Pullman - Das Bernstein-Teleskop (The Amber Spyglass)
-- Henry Miller - Tropic of Cancer
-- Matt Ruff - Bad Monkeys
-- Friedrich Dürrenmatt - Die Physiker
-- Albert Camus - Der Fremde (The Stranger)
+[https://dblp.uni-trier.de/pers/hd/k/Koep:Niklas](https://dblp.uni-trier.de/pers/hd/k/Koep:Niklas)
 
-## Video Editing
+## Projects
 
-bla
+### Pymanopt
 
-### Selected Works
-
-#### Echoes of 2017
-
-<div class="video">
-  <iframe src="https://www.youtube.com/embed/DtJYa5F2ghI" frameborder="0"
-          allowfullscreen>
-  </iframe>
-</div>
-
-#### Echoes of 2016
-
-<div class="video">
-  <iframe src="https://www.youtube.com/embed/MO_XwBLHsFE" frameborder="0"
-          allowfullscreen>
-  </iframe>
-</div>
-
-#### Trenches
-
-<div class="video">
-  <iframe src="https://www.youtube.com/embed/GEtdRpNrWb4" frameborder="0"
-          allowfullscreen>
-  </iframe>
-</div>
-
-#### O' fRoD, the Aftermath
-
-<div class="video">
-  <iframe src="https://www.youtube.com/embed/34DeJGlylsA" frameborder="0"
-          allowfullscreen>
-  </iframe>
-</div>
-
-#### Eve
-
-<div class="video">
-  <iframe src="https://www.youtube.com/embed/yZgt4lSz5NA" frameborder="0"
-          allowfullscreen>
-  </iframe>
-</div>
+Pymanopt is a Python toolbox for numerical optimization on Riemannian manifolds
+with support for automatic differentiation.
