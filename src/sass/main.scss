@@ -49,6 +49,18 @@ code {
   font-size: 12px;
 }
 
+blockquote {
+  border-left: solid 3px lightgray;
+  font-style: italic;
+  color: rgba($fg, 0.75);
+  margin: 0;
+  padding-left: 1em;
+
+  cite {
+    font-style: normal;
+  }
+}
+
 ul {
   list-style-position: outside;
   list-style-type: circle;
