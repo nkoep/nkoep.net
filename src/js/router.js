@@ -10,13 +10,12 @@ class Router {
   }
 
   createMenu_() {
-    const logo = this.createLogo_();
     const navbar = this.createNavbar_();
     const socialLinks = this.createSocialLinks_();
 
     const menu = document.createElement("div");
     menu.id = "menu";
-    [logo, navbar, socialLinks].forEach(element => menu.appendChild(element));
+    [navbar, socialLinks].forEach(element => menu.appendChild(element));
 
     const closeMenu = () => {
       menu.style.width = "0"
