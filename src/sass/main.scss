@@ -32,7 +32,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.25em;
+  font-size: 1.35em;
 }
 
 h3 {
@@ -95,6 +95,10 @@ a:focus {
 
   #outlet {
     padding-top: 1.5em;
+
+    ul {
+      font-size: 14px;
+    }
   }
 }
 
