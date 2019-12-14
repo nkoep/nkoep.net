@@ -29,16 +29,9 @@ To light a fire under my ass, I keep track of what I read here.
 
 ## Video Editing
 
-As a teenager, I heavily got into frag movies.
-While I never played the game myself, my game of choice was Counter-Strike 1.6.
-I got so obsessed with video editing that for a while I would start work on the
-next project the day after I had finished the current one.
-I eventually retired the hobby when I went to university in 2008.
-However, I got pulled back into it in 2015 when my friends [Anthony
-Perfetto](https://twitter.com/ANPerfetto) and [Daniel
-Hagelin](https://twitter.com/danielhagelin) got in touch after picking up
-editing again, this time for Counter-Strike: Global Offensive.
-Below I list some of the videos I worked on over the years.
+As a teenager, I heavily got into editing frag movies for Counter-Strike.
+I eventually retired the hobby when I went to university in 2008, but picked it
+up again in late 2015.
 
 ### Echoes of 2017
 
@@ -59,12 +52,7 @@ pulled off), where I took the reins, this time I
 
 ### Selected Works
 
-#### CS:GO
-
 - [Echoes of 2016](https://youtu.be/MO_XwBLHsFE) (2017)
 - [Trenches](https://youtu.be/GEtdRpNrWb4) (2016)
-
-#### CS 1.6
-
 - [O' fRoD, the Aftermath](https://youtu.be/34DeJGlylsA) (2008)
 - [Eve](https://youtu.be/yZgt4lSz5NA) (2007)
