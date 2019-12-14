@@ -8,7 +8,7 @@ const staticAssets = ["pages", "posts"].map(folder => {
 });
 staticAssets.push({from: "./favicon.ico"});
 
-module.exports = {
+module.exports = (env, argv) => ({
   mode: "development",
   entry: ["./src/index.js", "./src/sass/main.scss"],
   output: {
@@ -16,7 +16,7 @@ module.exports = {
     filename: "app.js",
     publicPath: "/"
   },
-  devtool: "source-map",
+  devtool: argv.mode === "development" ? "source-map" : false,
   devServer: {
     contentBase: "./public",
     historyApiFallback: {
@@ -62,4 +62,4 @@ module.exports = {
     }),
     new CopyWebpackPlugin(staticAssets)
   ]
-};
+});
