@@ -4,6 +4,10 @@
 >
 > <cite>-- Jack Kerouac (kind of...)</cite>
 
+## Contact
+
+<contact@nkoep.net>
+
 ## CV
 
 ### Education
@@ -17,7 +21,7 @@
 
 ### Publications
 
-[https://dblp.uni-trier.de/pers/hd/k/Koep:Niklas](https://dblp.uni-trier.de/pers/hd/k/Koep:Niklas)
+<https://dblp.uni-trier.de/pers/hd/k/Koep:Niklas>
 
 ## Projects
 
