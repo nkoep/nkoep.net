@@ -4,9 +4,13 @@ import showdownHighlight from "showdown-highlight";
 function retrieveResource(url) {
   return new Promise(resolve => {
     const xhr = new XMLHttpRequest();
-    // Bypass the browser cache on repeated page requests.
-    xhr.open("GET",
-             url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime());
+    // Bypass the browser cache on repeated page requests in development mode.
+    if (process.env.NODE_ENV === "development") {
+      xhr.open("GET",
+               url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime());
+    } else {
+      xhr.open("GET", url);
+    }
     xhr.onreadystatechange = () => {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
