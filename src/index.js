@@ -15,7 +15,7 @@ import "highlight.js/styles/atom-one-dark.css";
 import createRouter from "./js/router.js";
 
 import "normalize.css";
-import "./sass/main.scss";
+import "./main.scss";
 
 // Configure fontawesome.
 library.add(faBars, faTimes, faGithub, faInstagram, faTwitter, faLastfm);

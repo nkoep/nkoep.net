@@ -10,7 +10,7 @@ staticAssets.push({from: "./favicon.ico"});
 
 module.exports = (env, argv) => ({
   mode: "development",
-  entry: ["./src/index.js", "./src/sass/main.scss"],
+  entry: ["./src/index.js", "./src/main.scss"],
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "app.js",
