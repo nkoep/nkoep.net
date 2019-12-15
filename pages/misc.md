@@ -32,6 +32,7 @@ To light a fire under my ass, I keep track of what I read here.
 As a teenager, I heavily got into editing frag movies for Counter-Strike.
 I eventually retired the hobby when I went to university in 2008, but picked it
 up again in late 2015.
+Below are some of my favorite videos I worked on over the years.
 
 ### Echoes of 2017
 
