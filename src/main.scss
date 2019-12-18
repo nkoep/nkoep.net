@@ -56,6 +56,11 @@ blockquote {
   color: rgba($fg, 0.75);
   margin: 0;
   padding-left: 1em;
+  transition: color 250ms;
+
+  &:hover {
+    color: $fg;
+  }
 
   cite {
     font-style: normal;
@@ -72,12 +77,12 @@ ul {
 a {
   color: $link;
   text-decoration: none;
-  transition: color 0.25s;
+  transition: color 250ms;
 }
 
 a:hover {
   color: $link-hover;
-  transition: color 0.1s;
+  transition: color 100ms;
 }
 
 a:active,
@@ -235,7 +240,7 @@ p.date {
     position: fixed;
     right: 0;
     top: 0;
-    transition: width 0.25s;
+    transition: width 250ms;
     width: 0;
     z-index: 1;
 
@@ -306,7 +311,7 @@ p.date {
     display: block;
     margin: 1em 0;
     padding: $inner-padding;
-    transition: 0.25s;
+    transition: 250ms;
   }
 
   .post:hover {
