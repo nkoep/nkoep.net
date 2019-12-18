@@ -279,8 +279,6 @@ p.date {
 }
 
 #posts {
-  $wide-breakpoint: 640px;
-
   // XXX: For future reference in case we decide to center posts...
   // display: flex;
   // justify-content: center;
@@ -294,14 +292,6 @@ p.date {
 
   h1 {
     font-size: 1.25em;
-  }
-
-  #posts-narrow {
-    display: block;
-  }
-
-  #posts-wide {
-    display: none;
   }
 
   $inner-padding: 0.5em;
@@ -319,17 +309,6 @@ p.date {
     border-left: solid 3px rgba($fg-muted, 0.25);
     padding-left: 2 * $inner-padding;
   }
-
-  // XXX: Comment this in for the code listing.
-  // @media only screen and (min-width: $wide-breakpoint) {
-  //   #posts-narrow {
-  //     display: none;
-  //   }
-  //
-  //   #posts-wide {
-  //     display: block;
-  //   }
-  // }
 }
 
 .error {

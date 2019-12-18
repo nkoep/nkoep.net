@@ -1,5 +1,6 @@
 import * as showdown from "showdown";
 import showdownHighlight from "showdown-highlight";
+import * as toml from "toml";
 
 function retrieveResource(url) {
   return new Promise(resolve => {
@@ -11,6 +12,9 @@ function retrieveResource(url) {
     } else {
       xhr.open("GET", url);
     }
+    // Prevent browsers from trying to parse files (e.g., Firefox tries to
+    // parse TOML files as XML).
+    xhr.overrideMimeType("text/html");
     xhr.onreadystatechange = () => {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
@@ -36,7 +40,12 @@ export function convertMarkdown(md) {
   return converter.makeHtml(md);
 }
 
-export default async function fetchMarkdownResource(url) {
-  const md = await retrieveResource(url);
-  return convertMarkdown(md);
+export async function fetchMarkdownResource(url) {
+  const resource = await retrieveResource(url);
+  return convertMarkdown(resource);
+}
+
+export async function fetchTomlResource(url) {
+  const resource = await retrieveResource(url);
+  return toml.parse(resource);
 }

@@ -6,7 +6,8 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const staticAssets = ["pages", "posts"].map(folder => {
   return {from: `./${folder}`, to: `./${folder}`}
 });
-staticAssets.push({from: "./favicon.ico"});
+["favicon.ico", "posts.toml"].forEach(
+  asset => staticAssets.push({from: `./${asset}`}));
 
 module.exports = (env, argv) => ({
   mode: "development",

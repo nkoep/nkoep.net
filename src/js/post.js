@@ -1,4 +1,4 @@
-import fetchMarkdownResource from "./utils.js";
+import { fetchMarkdownResource, fetchTomlResource } from "./utils.js";
 
 class PostDate {
   constructor(date) {
@@ -19,7 +19,7 @@ class PostDate {
   }
 }
 
-export default class Post {
+class Post {
   constructor(title, date, basename) {
     this.title = title;
     this.date = new PostDate(date);
@@ -35,4 +35,10 @@ export default class Post {
     }
     return this.content;
   }
+}
+
+export default async function getPosts() {
+  const resource = await fetchTomlResource("/posts.toml");
+  return resource.posts.map(
+    post => new Post(post.name, post.date, post.basename));
 }

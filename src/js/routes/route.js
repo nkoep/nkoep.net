@@ -1,4 +1,4 @@
-import fetchMarkdownResource from "../utils.js";
+import { fetchMarkdownResource } from "../utils.js";
 
 export default class Route {
   constructor(pattern, staticResource, title) {
