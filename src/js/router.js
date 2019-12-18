@@ -8,22 +8,36 @@ class Router {
     this.routes_ = [];
   }
 
-  createMenu_() {
-    const navbar = this.createNavbar_();
-    const socialLinks = this.createSocialLinks_();
+  createMenuButton_(id, icon, onclick) {
+    const span = document.createElement("span");
+    span.className = `fas ${icon}`;
+    const a = document.createElement("a");
+    a.href = "javascript:void(0)";
+    a.onclick = onclick;
+    a.appendChild(span);
 
+    const div = document.createElement("div");
+    div.id = id;
+    div.appendChild(a);
+    return div;
+  }
+
+  createMenu_() {
     const menu = document.createElement("div");
     menu.id = "menu";
-    [navbar, socialLinks].forEach(element => menu.appendChild(element));
 
     const closeMenu = () => {
       menu.style.width = "0"
       document.querySelector("html").classList.remove("noscroll");
     };
 
-    // Close the menu on all click events, but don't consume the event so links
-    // still work!
-    menu.onclick = closeMenu;
+    const closeButton = this.createMenuButton_(
+      "close-button", "fa-times", closeMenu);
+    const navbar = this.createNavbar_();
+    const socialLinks = this.createSocialLinks_();
+
+    [closeButton, navbar, socialLinks].forEach(
+      element => menu.appendChild(element));
 
     // Close the menu when Escape is pressed.
     document.onkeyup = event => {
@@ -35,24 +49,6 @@ class Router {
     };
 
     return menu;
-  }
-
-  createMenuButton_(menu) {
-    const span = document.createElement("span");
-    span.className = "fas fa-bars";
-    const a = document.createElement("a");
-    a.href = "javascript:void(0)";
-    a.onclick = event => {
-      event.preventDefault();
-      menu.style.width = "100%";
-      document.querySelector("html").classList.add("noscroll");
-    };
-    a.appendChild(span);
-
-    const div = document.createElement("div");
-    div.id = "menu-button";
-    div.appendChild(a);
-    return div;
   }
 
   createNavbar_() {
@@ -132,10 +128,18 @@ class Router {
 
   populateHeader_(header) {
     const menu = this.createMenu_();
+
+    const openMenu = event => {
+      event.preventDefault();
+      menu.style.width = "100%";
+      document.querySelector("html").classList.add("noscroll");
+    };
+
     const navbar = this.createNavbar_();
     const logo = this.createLogo_();
     const socialLinks = this.createSocialLinks_();
-    const menuButton = this.createMenuButton_(menu);
+    const menuButton = this.createMenuButton_(
+      "menu-button", "fa-bars", openMenu);
     [menu, navbar, logo, socialLinks, menuButton].forEach(
       element => header.appendChild(element));
   }
@@ -184,10 +188,11 @@ class Router {
       if (route.match(pathname)) {
         await route.render(pathname);
         const title = route.getTitle();
+        const name = "Niklas Koep";
         if (title) {
-          document.title = `${title} | Niklas Koep`;
+          document.title = `${title} | ${name}`;
         } else {
-          document.title = "Niklas Koep";
+          document.title = name;
         }
         this.refreshNavbar_(title);
         this.trapInternalLinks_();
