@@ -20,7 +20,7 @@ class PostDate {
 }
 
 class Post {
-  constructor(title, date, basename) {
+  constructor({title, date, basename}) {
     this.title = title;
     this.date = new PostDate(date);
     this.basename = basename;
@@ -39,6 +39,5 @@ class Post {
 
 export default async function getPosts() {
   const resource = await fetchTomlResource("/posts.toml");
-  return resource.posts.map(
-    post => new Post(post.name, post.date, post.basename));
+  return resource.posts.map(post => new Post(post));
 }
