@@ -31,6 +31,8 @@ class Router {
       document.querySelector("html").classList.remove("noscroll");
     };
 
+    menu.onclick = closeMenu;
+
     const closeButton = this.createMenuButton_(
       "close-button", "fa-times", closeMenu);
     const navbar = this.createNavbar_();
