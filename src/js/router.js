@@ -24,10 +24,10 @@ class Router {
 
   createMenu_() {
     const menu = document.createElement("div");
-    menu.id = "menu";
+    menu.className = "menu";
 
     const closeMenu = () => {
-      menu.style.width = "0"
+      menu.classList.remove("menu-open");
       document.querySelector("html").classList.remove("noscroll");
     };
 
@@ -133,7 +133,7 @@ class Router {
 
     const openMenu = event => {
       event.preventDefault();
-      menu.style.width = "100%";
+      menu.classList.add("menu-open");
       document.querySelector("html").classList.add("noscroll");
     };
 

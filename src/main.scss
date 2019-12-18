@@ -225,7 +225,7 @@ p.date {
     }
   }
 
-  #menu {
+  .menu {
     align-items: center;
     background: $bg;
     display: flex;
@@ -266,6 +266,10 @@ p.date {
       border-bottom: solid 1px rgba($fg, 0.25);
       width: 35%;
     }
+  }
+
+  .menu-open {
+    width: 100%;
   }
 }
 
