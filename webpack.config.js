@@ -21,7 +21,7 @@ module.exports = (env, argv) => {
     },
     output: {
       path: path.resolve(__dirname, "public"),
-      filename: "[name].js",
+      filename: "[name].[contenthash].js",
       publicPath: "/"
     },
     devtool: devMode ? "source-map" : false,
