@@ -1,6 +1,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-var OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -49,7 +49,7 @@ module.exports = (env, argv) => {
           }
         },
         {
-          test: /\.(s*)css$/i,
+          test: /\.(s*)css$/,
           use: [
             devMode ? "style-loader" : MiniCssExtractPlugin.loader,
             "css-loader",
@@ -77,5 +77,5 @@ module.exports = (env, argv) => {
         chunks: ["404"]
       })
     ]
-  }
+  };
 };
