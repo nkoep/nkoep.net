@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
 
   const staticAssets = [
     "favicon.ico", "pages", "posts", "posts.toml"
-  ].map(folder => ({from: `./${folder}`, to: `./${folder}`}));
+  ].map(asset => ({from: `./${asset}`, to: `./${asset}`}));
 
   return {
     mode: "development",
