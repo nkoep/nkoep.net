@@ -224,6 +224,6 @@ export default function createRouter() {
   router.add(/^\/$/, Home);
   router.add(/^\/about$/, About);
   router.add(/^\/misc/, Misc);
-  router.add(/^\/post\/./, Post);
+  router.add(/^\/p\/./, Post);
   return router;
 }

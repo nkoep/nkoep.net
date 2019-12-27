@@ -1,5 +1,5 @@
 import Route from "./route.js";
-import getPosts from "../post.js";
+import { getPosts } from "../post.js";
 import { convertMarkdown } from "../utils.js";
 
 export default class HomeRoute extends Route {
@@ -19,7 +19,7 @@ export default class HomeRoute extends Route {
 
       const item = document.createElement("a");
       item.className = "post link";
-      item.href = `/post/${post.basename}`;
+      item.href = post.href;
       [h1, p].forEach(element => item.appendChild(element));
 
       div.appendChild(item);
