@@ -7,6 +7,10 @@ import {
   faGithub, faInstagram, faTwitter , faLastfm
 } from "@fortawesome/free-brands-svg-icons"
 
+import { registerLanguage } from "highlight.js/lib/highlight";
+import shell from "highlight.js/lib/languages/shell";
+import python from "highlight.js/lib/languages/python";
+import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/atom-one-dark.css";
 
 import createRouter from "./js/router.js";
@@ -17,6 +21,14 @@ import "./main.scss";
 // Configure fontawesome.
 library.add(faBars, faTimes, faGithub, faInstagram, faTwitter, faLastfm);
 dom.watch();
+
+// Configure highlight.js.
+const languages = {
+  shell, python, javascript
+}
+for (const language in languages) {
+  registerLanguage(language, languages[language]);
+}
 
 const router = createRouter();
 

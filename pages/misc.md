@@ -1,4 +1,4 @@
-# Misc
+# Miscellaneous
 
 ## Reading Log
 

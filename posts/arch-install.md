@@ -124,7 +124,7 @@ Before creating the initramfs and installing the bootloader, we'll have to make
 sure to enable LVM and encryption support in the `mkinitcpio` config.
 To that end, change the **HOOKS** line in `/etc/mkinitcpio.conf` to
 
-```raw
+```
 HOOKS=(... keyboard keymap block lvm2 encrypt filesystems ...)
 ```
 
@@ -180,7 +180,7 @@ Create a user, create a system group *autologin* and add the user:
 
 While we're at it, let's also give the user `sudo` privileges by adding
 
-```raw
+```
 nik ALL=(ALL) NOPASSWD: ALL
 ```
 
@@ -188,7 +188,7 @@ to the sudoers file via `EDITOR=vim visudo`.
 
 Add the lines
 
-```raw
+```
 autologin-user=nik
 autologin-session=xmonad
 ```

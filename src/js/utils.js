@@ -1,6 +1,6 @@
-import * as showdown from "showdown";
+import { Converter as MarkdownConverter } from "showdown";
 import showdownHighlight from "showdown-highlight";
-import * as toml from "toml";
+import { parse as parseToml } from "toml";
 
 function retrieveResource(url) {
   return new Promise(resolve => {
@@ -30,7 +30,7 @@ function retrieveResource(url) {
   });
 }
 
-const converter = new showdown.Converter({
+const converter = new MarkdownConverter({
   extensions: [showdownHighlight],
   customizedHeaderId: true,
   ghCompatibleHeaderId: true
@@ -47,5 +47,5 @@ export async function fetchMarkdownResource(url) {
 
 export async function fetchTomlResource(url) {
   const resource = await retrieveResource(url);
-  return toml.parse(resource);
+  return parseToml(resource);
 }

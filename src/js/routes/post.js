@@ -9,8 +9,7 @@ export default class PostRoute extends Route {
     }
     const posts = await getPosts();
     const basename = matches[1];
-    for (let i = 0; i < posts.length; ++i) {
-      const post = posts[i];
+    for (const post of posts) {
       if (basename === post.basename) {
         return post;
       }
