@@ -111,7 +111,7 @@ class Router {
     const ul = document.createElement("ul");
     ul.className = "social";
 
-    for (let key in links) {
+    for (const key in links) {
       const span = document.createElement("span");
       span.className = "fab fa-" + key;
 
@@ -185,31 +185,37 @@ class Router {
   }
 
   async route(pathname) {
-    for (let i = 0; i < this.routes_.length; ++i) {
-      const route = this.routes_[i];
+    let route = null;
+    for (route of this.routes_) {
       if (route.match(pathname)) {
-        await route.render(pathname);
-        const title = route.getTitle();
-        const name = "Niklas Koep";
-        if (title) {
-          document.title = `${title} | ${name}`;
-        } else {
-          document.title = name;
-        }
-        this.refreshNavbar_(title);
-        this.trapInternalLinks_();
-        // FIXME: This works after popstate events, but not after full page
-        //        loads.
-        if (window.location.hash) {
-          const element = document.getElementById(window.location.hash);
-          if (element) {
-            element.scrollIntoView();
-          }
-        }
-        return;
+        break;
       }
     }
-    window.location.replace("/404");
+    if (!route) {
+      window.location.replace("/404");
+    }
+
+    const outlet = document.getElementById("outlet");
+    outlet.innerHTML = "";
+    outlet.appendChild(await route.render(pathname));
+
+    const title = route.getTitle();
+    const name = "Niklas Koep";
+    if (title) {
+      document.title = `${title} | ${name}`;
+    } else {
+      document.title = name;
+    }
+    this.refreshNavbar_(title);
+    this.trapInternalLinks_();
+    // FIXME: This works after popstate events, but not after full page
+    //        loads.
+    if (window.location.hash) {
+      const element = document.getElementById(window.location.hash);
+      if (element) {
+        element.scrollIntoView();
+      }
+    }
   }
 }
 

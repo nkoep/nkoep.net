@@ -43,10 +43,7 @@ export default class Route {
   }
 
   async render(pathname) {
-    const outlet = document.getElementById("outlet");
-
     const content = await this.load(pathname);
-    outlet.innerHTML = "";
 
     // We wrap the content in another div so we can fade in the new content.
     const inner = document.createElement("div");
@@ -57,6 +54,6 @@ export default class Route {
       inner.appendChild(content);
     }
 
-    outlet.appendChild(inner);
+    return inner;
   }
 }
