@@ -64,7 +64,9 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new CopyWebpackPlugin(staticAssets),
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin({
+        filename: "[name].[contenthash].css"
+      }),
       new OptimizeCssAssetsPlugin(),
       new HtmlWebpackPlugin({
         template: "./src/templates/index.html",
