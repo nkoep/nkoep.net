@@ -15,10 +15,13 @@ module.exports = (env, argv) => {
 
   return {
     mode: "development",
-    entry: ["./src/index.js", "./src/main.scss"],
+    entry: {
+      "app": ["./src/index.js", "./src/sass/main.scss"],
+      "404": ["./src/404.js", "./src/sass/404.scss"]
+    },
     output: {
       path: path.resolve(__dirname, "public"),
-      filename: "app.js",
+      filename: "[name].js",
       publicPath: "/"
     },
     devtool: devMode ? "source-map" : false,
@@ -67,12 +70,13 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin(),
       new HtmlWebpackPlugin({
         template: "./src/templates/index.html",
-        filename: "index.html"
+        filename: "index.html",
+        chunks: ["app"]
       }),
       new HtmlWebpackPlugin({
         template: "./src/templates/404.html",
         filename: "404.html",
-        inject: false
+        chunks: ["404"]
       })
     ]
   }
