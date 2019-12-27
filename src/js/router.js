@@ -184,15 +184,20 @@ class Router {
     });
   }
 
-  async route(pathname) {
-    let route = null;
-    for (route of this.routes_) {
+  getRoute_(pathname) {
+    for (const route of this.routes_) {
       if (route.match(pathname)) {
-        break;
+        return route;
       }
     }
+    return null;
+  }
+
+  async route(pathname) {
+    const route = this.getRoute_(pathname);
     if (!route) {
       window.location.replace("/404");
+      return;
     }
 
     const outlet = document.getElementById("outlet");
