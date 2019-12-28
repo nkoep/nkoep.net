@@ -9,7 +9,6 @@ To light a fire under my ass, I keep track of what I read here.
 
 - Frank Herbert - Dune
 - Albert Camus - Der Fall (The Fall)
-- Gore Vidal - The City and the Pillar
 
 ### 2019
 
@@ -26,6 +25,7 @@ To light a fire under my ass, I keep track of what I read here.
 - Matt Ruff - Bad Monkeys
 - Friedrich Dürrenmatt - Die Physiker
 - Albert Camus - Der Fremde (The Stranger)
+- Gore Vidal - The City and the Pillar
 
 ## Quotes
 
@@ -64,6 +64,9 @@ To light a fire under my ass, I keep track of what I read here.
 > He was happy to get up in the morning; he was happy to go to bed at night
 > with the thought of a new day to look forward to. He knew his life was
 > aimless, and he could not have been more content.
+<!--  -->
+> He would suffer. He would know pain. With infinite care and patience, he set
+> about destroying his own happiness.
 
 ## Video Editing
 
