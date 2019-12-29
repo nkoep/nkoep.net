@@ -8,7 +8,6 @@ To light a fire under my ass, I keep track of what I read here.
 ### Current
 
 - Frank Herbert - Dune
-- Albert Camus - Der Fall (The Fall)
 
 ### 2019
 
@@ -26,6 +25,7 @@ To light a fire under my ass, I keep track of what I read here.
 - Friedrich Dürrenmatt - Die Physiker
 - Albert Camus - Der Fremde (The Stranger)
 - Gore Vidal - The City and the Pillar
+- Albert Camus - Der Fall (The Fall)
 
 ## Quotes
 
