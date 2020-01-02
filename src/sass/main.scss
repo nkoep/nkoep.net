@@ -232,7 +232,7 @@ p.date {
 
   .menu {
     align-items: center;
-    background: $bg;
+    background: $fg;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -243,6 +243,15 @@ p.date {
     transition: width 250ms;
     width: 0;
     z-index: 1;
+
+    a {
+      color: #ffc937;
+      color: $link;
+    }
+
+    a:hover {
+      color: $link-hover;
+    }
 
     .navbar li {
       display: block;
