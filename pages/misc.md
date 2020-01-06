@@ -2,15 +2,16 @@
 
 ## Reading Log
 
-I'm a slow reader; I'm a lazy reader.
-To light a fire under my ass, I keep track of what I read here.
-
-### Current
-
+<details open><summary>Currently Reading</summary>
 - Frank Herbert - Dune
+- Andrey Platonov - The Foundation Pit
+</details>
 
-### 2019
+<details open><summary>2020</summary>
+- Bertrand Russell - In Praise of Idleness
+</details>
 
+<details><summary>2019</summary>
 - Harper Lee - To Kill a Mockingbird
 - F. Scott Fitzgerald - The Great Gatsby
 - Ernest Hemingway - The Sun Also Rises
@@ -26,6 +27,7 @@ To light a fire under my ass, I keep track of what I read here.
 - Albert Camus - Der Fremde (The Stranger)
 - Gore Vidal - The City and the Pillar
 - Albert Camus - Der Fall (The Fall)
+</details>
 
 ## Quotes
 

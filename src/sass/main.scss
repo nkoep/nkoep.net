@@ -36,7 +36,8 @@ h2 {
   font-size: 1.35em;
 }
 
-h3 {
+h3,
+summary {
   font-size: 1.15em;
 }
 
@@ -86,8 +87,17 @@ a:hover {
 }
 
 a:active,
-a:focus {
+a:focus,
+summary {
   outline: none;
+}
+
+summary {
+  font-weight: bold;
+}
+
+summary:hover {
+  cursor: pointer;
 }
 
 .noscroll {
@@ -313,7 +323,8 @@ p.date {
     transition: 250ms;
   }
 
-  .post:hover {
+  .post:hover,
+  .post:active {
     background-color: rgba($fg-muted, 0.1);
     border-left: solid 3px rgba($fg-muted, 0.25);
     padding-left: 2 * $inner-padding;
