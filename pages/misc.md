@@ -3,12 +3,12 @@
 ## Reading Log
 
 <details open><summary>Currently Reading</summary>
-- Frank Herbert - Dune
 - Andrey Platonov - The Foundation Pit
 </details>
 
 <details open><summary>2020</summary>
 - Bertrand Russell - In Praise of Idleness
+- Frank Herbert - Dune
 </details>
 
 <details><summary>2019</summary>

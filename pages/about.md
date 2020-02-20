@@ -36,8 +36,9 @@ space.
 To attack such problems, Pymanopt, which is based on the MATLAB toolbox
 [Manopt](https://www.manopt.org/), provides a variety of different solvers
 (e.g., steepest descent, conjugate gradients, trust-regions), manifolds (e.g.,
-Stiefel manifold, Grassmannian manifold, positive definite matrices) and
+Stiefel manifold, Grassmannian, positive definite matrices) and
 autodiff backends (currently [Autograd](https://github.com/HIPS/autograd),
+[PyTorch](https://pytorch.org/),
 [Theano](http://www.deeplearning.net/software/theano/) and
 [Tensorflow](https://www.tensorflow.org/)).
 By appealing to automatic differentiation, the toolbox lowers the entry barrier
