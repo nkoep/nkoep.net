@@ -52,7 +52,7 @@ code {
 }
 
 blockquote {
-  border-left: solid 3px lightgray;
+  border-left: solid 3px rgba($link, 0.75);
   font-style: italic;
   color: rgba($fg, 0.75);
   margin: 0;
@@ -60,6 +60,7 @@ blockquote {
   transition: color 250ms;
 
   &:hover {
+    border-left: solid 3px $link;
     color: $fg;
   }
 
