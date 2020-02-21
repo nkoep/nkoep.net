@@ -4,6 +4,7 @@
 
 <details open><summary>Currently Reading</summary>
 - Andrey Platonov - The Foundation Pit
+- Frank Schätzing - Breaking News
 </details>
 
 <details open><summary>2020</summary>
