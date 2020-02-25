@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Cormorant&display=swap");
 
 @import "palette.scss";
@@ -10,7 +11,7 @@
 
 html {
   margin: auto;
-  // Hack to avoid content to be repositioned when the scrollbar appears.
+  // Hack to avoid content from being repositioned when the scrollbar appears.
   margin-right: calc(100% - 100vw);
   overflow-x: hidden;
 }
@@ -18,10 +19,16 @@ html {
 body {
   background: $bg;
   color: $fg;
-  font-family: "Raleway", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   margin: 2em auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Raleway", sans-serif;
 }
 
 p {
