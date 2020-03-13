@@ -25,14 +25,15 @@ body {
   margin: 2em auto;
 }
 
+p {
+  text-align: justify;
+}
+
 h1,
 h2,
 h3 {
   font-family: "Raleway", sans-serif;
-}
-
-p {
-  text-align: justify;
+  line-height: 1.25;
 }
 
 h1 {
@@ -46,12 +47,6 @@ h2 {
 h3,
 summary {
   font-size: 1.15em;
-}
-
-h1,
-h2,
-h3 {
-  line-height: 1.25;
 }
 
 code {

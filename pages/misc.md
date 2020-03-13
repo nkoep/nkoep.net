@@ -5,11 +5,13 @@
 <details open><summary>Currently Reading</summary>
 - Andrey Platonov - The Foundation Pit
 - Frank Schätzing - Breaking News
+- Tennessee Williams - A Streetcar Named Desire
 </details>
 
 <details open><summary>2020</summary>
 - Bertrand Russell - In Praise of Idleness
 - Frank Herbert - Dune
+- John Steinbeck - The Pearl
 </details>
 
 <details><summary>2019</summary>
