@@ -5,6 +5,9 @@
 <details open><summary>Currently Reading</summary>
 - Andrey Platonov - The Foundation Pit
 - Frank Schätzing - Breaking News
+- Thomas Mann - Der Tod in Venedig
+- Anne Frank - Tagebuch
+- Heinrich Böll - Ende einer Dienstfahrt
 </details>
 
 <details open><summary>2020</summary>
@@ -12,6 +15,7 @@
 - Frank Herbert - Dune
 - John Steinbeck - The Pearl
 - Tennessee Williams - A Streetcar Named Desire
+- Heinrich Böll - Ansichten eines Clowns
 </details>
 
 <details><summary>2019</summary>
