@@ -56,10 +56,11 @@ code {
 }
 
 blockquote {
+  background-color: rgba($fg-muted, 0.02);
   border-left: solid 3px rgba($link, 0.75);
   font-style: italic;
   color: rgba($fg, 0.75);
-  margin: 0;
+  margin: 1em 0;
   padding: $inner-padding;
   padding-left: 2 * $inner-padding;
   transition: 250ms;
