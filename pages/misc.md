@@ -82,18 +82,20 @@
 As a teenager, I heavily got into editing frag movies for Counter-Strike.
 I eventually retired the hobby when I went to university in 2008, but picked it
 up again in late 2015.
-Below are some of my favorite videos I worked on over the years.
-
-### Echoes of 2017
 
 *Echoes of 2017* was the culmination of several months of work, split across
 3 editors.
 Up until now, it is easily the work I am most satisfied with as a whole.
-Unlike in the previous iteration, [Echoes of
-2016](https://youtu.be/MO_XwBLHsFE) (which features the most
-[satisfying](https://youtu.be/MO_XwBLHsFE?t=178) AV synchronization I ever
-pulled off), where I took the reins, this time I
-[closed](https://youtu.be/DtJYa5F2ghI?t=458) out the video.
+Its predecessor, *Echoes of 2016*, which features the most
+[satisfying](https://youtu.be/MO_XwBLHsFE?t=178) synchronization I ever came up
+with, is a close second.
+Some other notable works and favorites include
+
+- [Trenches](https://youtu.be/GEtdRpNrWb4) (2016)
+- [O' fRoD, the Aftermath](https://youtu.be/34DeJGlylsA) (2008)
+- [Eve](https://youtu.be/yZgt4lSz5NA) (2007)
+
+### Echoes of 2017
 
 <div class="video">
   <iframe src="https://www.youtube.com/embed/DtJYa5F2ghI" frameborder="0"
@@ -101,9 +103,9 @@ pulled off), where I took the reins, this time I
   </iframe>
 </div>
 
-### Selected Works
-
-- [Echoes of 2016](https://youtu.be/MO_XwBLHsFE) (2017)
-- [Trenches](https://youtu.be/GEtdRpNrWb4) (2016)
-- [O' fRoD, the Aftermath](https://youtu.be/34DeJGlylsA) (2008)
-- [Eve](https://youtu.be/yZgt4lSz5NA) (2007)
+### Echoes of 2016
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/MO_XwBLHsFE" frameborder="0"
+          allowfullscreen>
+  </iframe>
+</div>
