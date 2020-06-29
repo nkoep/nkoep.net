@@ -9,6 +9,8 @@
   box-sizing: border-box;
 }
 
+$inner-padding: 0.5em;
+
 html {
   margin: auto;
   // Hack to avoid content from being repositioned when the scrollbar appears.
@@ -58,12 +60,20 @@ blockquote {
   font-style: italic;
   color: rgba($fg, 0.75);
   margin: 0;
-  padding-left: 1em;
-  transition: color 250ms;
+  padding: $inner-padding;
+  padding-left: 2 * $inner-padding;
+  transition: 250ms;
 
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  &:active,
   &:hover {
-    border-left: solid 3px $link;
-    color: $fg;
+    background-color: rgba($fg-muted, 0.1);
+    border-left: solid 3px rgba($fg-muted, 0.25);
+    padding-left: 2.5 * $inner-padding;
   }
 
   cite {
@@ -315,8 +325,6 @@ p.date {
   h1 {
     font-size: 1.25em;
   }
-
-  $inner-padding: 0.5em;
 
   .post {
     border: solid 0px transparent;
