@@ -1,5 +1,5 @@
 <script>
-	import Nav from "../components/Nav.svelte";
+	import Header from "../components/Header.svelte";
 
 	export let segment;
 </script>
@@ -23,7 +23,7 @@
 </style>
 
 <main>
-  <Nav {segment}/>
+  <Header {segment}/>
 
   <div id="outlet">
     <slot></slot>
