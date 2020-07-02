@@ -8,8 +8,6 @@
 
 <script>
 	export let posts;
-
-  posts = [...posts].reverse();
 </script>
 
 <style lang="scss">

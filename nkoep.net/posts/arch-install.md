@@ -27,7 +27,6 @@ Next, hook up an ethernet cable and request an IP address
 ```shell
 # dhcpcd
 # ping www.google.de
-
 ```
 
 Finally, update the system clock via

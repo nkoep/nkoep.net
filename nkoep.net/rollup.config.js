@@ -16,7 +16,10 @@ const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
-const onwarn = (warning, onwarn) => (warning.code === "CIRCULAR_DEPENDENCY" && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+const onwarn = (warning, onwarn) => {
+  return (warning.code === "CIRCULAR_DEPENDENCY" &&
+          /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+};
 
 const watchPosts = {
   buildStart() {
@@ -59,7 +62,6 @@ export default {
         dedupe: ["svelte"]
       }),
       commonjs(),
-
       legacy && babel({
         extensions: [".js", ".mjs", ".html", ".svelte"],
         babelHelpers: "runtime",
@@ -76,14 +78,12 @@ export default {
           }]
         ]
       }),
-
       !dev && terser({
         module: true
       })
     ],
-
     preserveEntrySignatures: false,
-    onwarn,
+    onwarn
   },
 
   server: {
@@ -109,9 +109,8 @@ export default {
     external: Object.keys(pkg.dependencies).concat(
       require("module").builtinModules || Object.keys(process.binding("natives"))
     ),
-
     preserveEntrySignatures: "strict",
-    onwarn,
+    onwarn
   },
 
   serviceworker: {
@@ -126,8 +125,7 @@ export default {
       commonjs(),
       !dev && terser()
     ],
-
     preserveEntrySignatures: false,
-    onwarn,
+    onwarn
   }
 };

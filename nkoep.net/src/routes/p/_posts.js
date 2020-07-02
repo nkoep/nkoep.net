@@ -30,6 +30,7 @@ const posts = fs.readdirSync("./posts").map(postFilename => {
   }
 });
 
+posts.sort((post1, post2) => new Date(post2.date) - new Date(post1.date));
 posts.forEach(post => {
   post.html = post.html.replace(/^\t{3}/gm, "");
 });
