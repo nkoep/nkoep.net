@@ -13,15 +13,13 @@
 
 <script>
 	export let post;
+
+  import "highlight.js/styles/paraiso-dark.css";
 </script>
 
 <svelte:head>
 	<title>{post.title} | Niklas Koep</title>
 </svelte:head>
-
-<style>
-  @import "../../style/highlight.scss";
-</style>
 
 <h1>{post.title}</h1>
 <p class="date">{post.date}</p>
