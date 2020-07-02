@@ -1,8 +1,11 @@
 <script>
   import Icon from "svelte-awesome/components/Icon.svelte";
   import {
-    faGithub, faInstagram, faTwitter , faLastfm
-  } from "@fortawesome/free-brands-svg-icons"
+    faGithub,
+    faInstagram,
+    faLastfm,
+    faTwitter
+  } from "@fortawesome/free-brands-svg-icons";
 
 	export let segment;
 
@@ -20,20 +23,8 @@
 
   [aria-current],
   [aria-current]::after {
-    .active {
-      font-weight: bold;
-    }
+    font-weight: bold;
 	}
-
-	/* [aria-current]::after { */
-	/* 	position: absolute; */
-	/* 	content: ''; */
-	/* 	width: calc(100% - 1em); */
-	/* 	height: 2px; */
-	/* 	background-color: rgb(255,62,0); */
-	/* 	display: block; */
-	/* 	bottom: -1px; */
-	/* } */
 
   #header {
     $item-spacing: 1.5em;
