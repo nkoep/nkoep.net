@@ -90,6 +90,10 @@
       display: flex;
       justify-content: center;
     }
+
+    :global(nav li) {
+      font-size: $menu-fontsize;
+    }
   }
 </style>
 
@@ -104,7 +108,7 @@
     <div id="close-button">
       <button on:click={() => $showMenu = false}><Icon data={faTimes} scale="1.5"/></button>
     </div>
-    <Navbar forceVisible={true} {segment}/>
-    <Social forceVisible={true}/>
+    <Navbar overlayMenu={true} {segment}/>
+    <Social overlayMenu={true}/>
   </div>
 {/if}
