@@ -11,9 +11,9 @@
 </script>
 
 <style lang="scss">
-  @import "./style/global.scss";
+  @import "./style/theme.scss";
 
-  #posts {
+  div {
     h1,
     p {
       margin: 0;
@@ -31,13 +31,13 @@
       margin: 1em 0;
       padding: $inner-padding;
       transition: 250ms;
-    }
 
-    .post:hover,
-    .post:active {
-      background-color: rgba($fg-muted, 0.1);
-      border-left: solid 3px rgba($fg-muted, 0.25);
-      padding-left: 2 * $inner-padding;
+      &:hover,
+      &:active {
+        background-color: rgba($fg-muted, 0.1);
+        border-left: solid 3px rgba($fg-muted, 0.25);
+        padding-left: 2 * $inner-padding;
+      }
     }
   }
 </style>
@@ -46,7 +46,7 @@
 	<title>Niklas Koep</title>
 </svelte:head>
 
-<div id="posts">
+<div>
 	{#each posts as post}
     <a class="post" rel="prefetch" href="p/{post.slug}">
       <h1>{post.title}</h1>
