@@ -56,7 +56,7 @@
     display: flex;
     flex-direction: column;
     font-size: $menu-fontsize;
-    height: 100%;
+    height: calc(100%);
     overflow-x: hidden;
     position: fixed;
     right: 0;
