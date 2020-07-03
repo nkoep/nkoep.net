@@ -63,6 +63,7 @@
     height: 100vh;
     left: 0;
     overflow-x: hidden;
+    padding: 2em 0;
     position: fixed;
     top: 0;
     transition: width 250ms;
