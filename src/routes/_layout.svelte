@@ -94,6 +94,10 @@
   button {
     margin: 0;
     padding: 0;
+
+    &:focus {
+      outline: 0;
+    }
   }
 
   a {
