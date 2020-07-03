@@ -148,7 +148,7 @@
 <main>
   <Header {segment}/>
 
-  <div id="outlet" transition:fade>
+  <div id="outlet">
     <slot></slot>
   </div>
 </main>
