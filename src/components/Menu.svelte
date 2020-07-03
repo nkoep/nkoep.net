@@ -11,8 +11,6 @@
 
   export let segment;
 
-  let innerHeight;
-
   onMount(() => {
     onDestroy(showMenu.subscribe(value => {
       const html = document.querySelector("html");
@@ -62,11 +60,10 @@
     display: flex;
     flex-direction: column;
     font-size: $menu-fontsize;
-    /* height: 100%; */
-    padding: -1em;
+    height: 100vh;
+    left: 0;
     overflow-x: hidden;
     position: fixed;
-    right: 0;
     top: 0;
     transition: width 250ms;
     width: 100%;
@@ -103,14 +100,14 @@
   }
 </style>
 
-<svelte:window on:keyup|preventDefault={validateCloseMenu} bind:innerHeight/>
+<svelte:window on:keyup|preventDefault={validateCloseMenu}/>
 
 <div id="menu-button">
   <button on:click={() => $showMenu = true}><Icon data={faBars} scale="1.25"/></button>
 </div>
 
 {#if $showMenu}
-  <div id="menu" transition:slide={{duration: 300}} style="height: {innerHeight}px">
+  <div id="menu" transition:slide={{duration: 300}}>
     <div id="close-button">
       <button on:click={() => $showMenu = false}><Icon data={faTimes} scale="1.5"/></button>
     </div>
