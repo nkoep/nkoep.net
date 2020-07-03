@@ -45,9 +45,13 @@
       display: none;
     }
 
+    &::before {
+      content: "";
+      flex: 1 1 100%;
+    }
+
     display: flex;
     flex: 1 1 100%;
-    justify-content: right;
   }
 
   #menu {
@@ -88,7 +92,6 @@
     :global(ul) {
       align-items: center;
       display: flex;
-      justify-content: center;
     }
 
     :global(nav li) {
