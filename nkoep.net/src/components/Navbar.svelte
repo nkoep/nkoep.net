@@ -1,5 +1,8 @@
 <script>
+  import { showMenu } from "../stores.js";
+
   export let segment;
+  export let forceShow = false;
 
   const pages = ["about", "misc"];
 </script>
@@ -28,10 +31,10 @@
   }
 </style>
 
-<nav class="menu-breakpoint">
+<nav class={forceShow ? undefined : "menu-breakpoint"}>
   <ul>
     {#each pages as page}
-      <li><a aria-current={segment === page ? segment : undefined} href="{page}">{page}</a></li>
+      <li><a on:click={() => $showMenu = false} aria-current={segment === page ? segment : undefined} href="{page}">{page}</a></li>
     {/each}
   </ul>
 </nav>

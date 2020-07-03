@@ -2,6 +2,7 @@
   import Navbar from "./Navbar.svelte";
   import Logo from "./Logo.svelte";
   import Social from "./Social.svelte";
+  import Menu from "./Menu.svelte";
 
 	export let segment;
 </script>
@@ -30,20 +31,11 @@
   #close-button {
     font-size: $menubutton-fontsize;
   }
-
-  #menu-button {
-    margin: auto 0;
-    text-align: right;
-
-    @media only screen and (min-width: $menu-breakpoint) {
-      display: none;
-    }
-  }
 </style>
 
 <div>
-  <!-- <Menu />-->
   <Navbar {segment}/>
   <Logo/>
   <Social/>
+  <Menu {segment}/>
 </div>

@@ -7,6 +7,8 @@
     faTwitter
   } from "@fortawesome/free-brands-svg-icons";
 
+  export let forceShow = false;
+
   const socialPages = [
     { url: "https://github.com/nkoep/", icon: faGithub },
     { url: "https://instagram.com/polylith_", icon: faInstagram },
@@ -30,7 +32,7 @@
   }
 </style>
 
-<ul class="menu-breakpoint">
+<ul class={forceShow ? undefined : "menu-breakpoint"}>
   {#each socialPages as page}
     <li><a href="{page.url}" target="_blank"><Icon data={page.icon}/></a></li>
   {/each}

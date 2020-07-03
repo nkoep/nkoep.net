@@ -1,24 +1,68 @@
 <script>
+  import { onDestroy, onMount } from "svelte";
+  import { slide } from "svelte/transition";
+
+  import Icon from "svelte-awesome/components/Icon.svelte";
+  import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+  import { showMenu } from "../stores.js";
+  import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
 
-  let open = false;
+  export let segment;
 
-  const toggleMenu = () => {
-    open = !open;
-  };
+  onMount(() => {
+    onDestroy(showMenu.subscribe(value => {
+      const html = document.querySelector("html");
+      if (value) {
+        html.style.overflowY = "hidden";
+      } else {
+        html.style.overflowY = "unset";
+      }
+    }));
+  });
 
   const validateCloseMenu = event => {
     const key = event.key;
     if (key === "Escape" || key === "Esc") {
-      open = false;
+      $showMenu = false;
     }
   };
 </script>
 
-<style>
+<style lang="scss">
+  @import "../style/theme.scss";
+
+  div {
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: right;
+  }
+
+  button {
+    background: none;
+    border: none;
+
+    &:hover,
+    &:active {
+      cursor: pointer;
+    }
+  }
+
+  #menu-button {
+    @media only screen and (min-width: $menu-breakpoint) {
+      display: none;
+    }
+  }
+
+  #menu-button,
+  #close-button {
+    font-size: $menubutton-fontsize;
+  }
+
   .menu {
     align-items: center;
-    background: $fg;
+    background-color: $bg;//$fg;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -27,7 +71,7 @@
     right: 0;
     top: 0;
     transition: width 250ms;
-    width: 0;
+    width: 100%;
     z-index: 1;
 
     a {
@@ -67,28 +111,18 @@
       width: 35%;
     }
   }
-
-  .menu-open {
-    width: 100%;
-  }
 </style>
 
-<svelte:window on:keyup={validateCloseMenu|preventDefault}/>
+<svelte:window on:keyup|preventDefault={validateCloseMenu}/>
 
-{#if open}
-  <div>
-    <div>
-      <span class="fas fa-times">
-        <a href="javascript:void(0)" on:click={() => {open = false}}</a>
-      </span>
-    </div>
+<div id="menu-button">
+  <button on:click={() => $showMenu = true}><Icon data={faBars} scale="1.25"/></button>
+</div>
 
-    <Social/>
-  </div>
-{:else}
-  <div>
-    <span class="fas fa-bar">
-      <a href="javascript:void(0)" on:click={() => {open = true}}</a>
-    </span>
+{#if $showMenu}
+  <div class="menu" transition:slide>
+    <button on:click={() => $showMenu = false}><Icon data={faTimes} scale="1.25"/></button>
+    <Navbar forceShow={true} {segment}/>
+    <Social forceShow={true}/>
   </div>
 {/if}
