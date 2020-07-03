@@ -2,7 +2,7 @@
   import { showMenu } from "../stores.js";
 
   export let segment;
-  export let forceShow = false;
+  export let forceVisible = false;
 
   const pages = ["about", "misc"];
 </script>
@@ -31,7 +31,7 @@
   }
 </style>
 
-<nav class={forceShow ? undefined : "menu-breakpoint"}>
+<nav class={forceVisible ? undefined : "menu-breakpoint"}>
   <ul>
     {#each pages as page}
       <li><a on:click={() => $showMenu = false} aria-current={segment === page ? segment : undefined} href="{page}">{page}</a></li>

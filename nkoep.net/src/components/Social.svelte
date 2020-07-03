@@ -7,7 +7,7 @@
     faTwitter
   } from "@fortawesome/free-brands-svg-icons";
 
-  export let forceShow = false;
+  export let forceVisible = false;
 
   const socialPages = [
     { url: "https://github.com/nkoep/", icon: faGithub },
@@ -32,7 +32,7 @@
   }
 </style>
 
-<ul class={forceShow ? undefined : "menu-breakpoint"}>
+<ul class={forceVisible ? undefined : "menu-breakpoint"}>
   {#each socialPages as page}
     <li><a href="{page.url}" target="_blank"><Icon data={page.icon}/></a></li>
   {/each}

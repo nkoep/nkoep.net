@@ -16,20 +16,12 @@
 
     &::before {
       content: "";
+      flex: 1 1 100%;
+
       @media only screen and (min-width: $menu-breakpoint) {
         content: none;
       }
     }
-
-    &::before,
-    #logo {
-      flex: 1 1 100%;
-    }
-  }
-
-  #menu-button,
-  #close-button {
-    font-size: $menubutton-fontsize;
   }
 </style>
 

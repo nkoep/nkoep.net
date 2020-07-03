@@ -84,15 +84,20 @@ ul {
   padding-left: 2.5em;
 }
 
+button {
+  margin: 0;
+  padding: 0;
+}
+
 a {
   color: $link;
   text-decoration: none;
   transition: color 250ms;
-}
 
-a:hover {
-  color: $link-hover;
-  transition: color 100ms;
+  &:hover {
+    color: $link-hover;
+    transition: color 100ms;
+  }
 }
 
 a:active,

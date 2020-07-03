@@ -1,7 +1,8 @@
 @import "../theme.scss";
 
-a {
-  color: black;
+a,
+button {
+  color: $fg;
 
   &:hover {
     color: $link;
