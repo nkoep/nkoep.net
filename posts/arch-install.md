@@ -1,3 +1,9 @@
+---
+title: "Condensed Arch Linux Installation Guide"
+date: "December 06, 2019"
+slug: "arch-install"
+---
+
 Considering how often I seem to re-install Arch Linux on various machines and
 that I can never seem to remember the exact details, I figured I should write
 up a short installation guide, mainly as future reference for myself.
@@ -21,7 +27,6 @@ Next, hook up an ethernet cable and request an IP address
 ```shell
 # dhcpcd
 # ping www.google.de
-
 ```
 
 Finally, update the system clock via

@@ -1,3 +1,0 @@
-posts = [
-  { title = "Condensed Arch Linux Installation Guide", date = "December 06, 2019", basename = "arch-install" }
-]
