@@ -3,6 +3,7 @@ import * as fs from "fs";
 import babel from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 import config from "sapper/config/rollup.js";
+import json from "@rollup/plugin-json";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
@@ -45,6 +46,7 @@ export default {
     input: config.client.input(),
     output: config.client.output(),
     plugins: [
+      json(),
       watchPosts,
       replace({
         "process.browser": true,
@@ -90,6 +92,7 @@ export default {
     input: config.server.input(),
     output: config.server.output(),
     plugins: [
+      json(),
       watchPosts,
       replace({
         "process.browser": false,
