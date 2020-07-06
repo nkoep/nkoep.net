@@ -1,7 +1,22 @@
 <script>
+  import { onMount } from "svelte";
+  import { stores } from "@sapper/app";
+
 	import Header from "../components/Header.svelte";
 
 	export let segment;
+
+  const { page } = stores();
+  onMount(() => {
+    page.subscribe(() => {
+      document.querySelectorAll("a").forEach(a => {
+        if (!a.hash || !document.querySelectorAll(a.hash).length) {
+          return;
+        }
+        a.href = window.location.origin + window.location.pathname + a.hash;
+      });
+    });
+  });
 </script>
 
 <style lang="scss" global>

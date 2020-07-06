@@ -1,7 +1,7 @@
 ---
-title: "Condensed Arch Linux Installation Guide"
-date: "December 06, 2019"
-slug: "arch-install"
+title: Condensed Arch Linux Installation Guide
+date: December 06, 2019
+slug: arch-install
 ---
 
 Considering how often I seem to re-install Arch Linux on various machines and

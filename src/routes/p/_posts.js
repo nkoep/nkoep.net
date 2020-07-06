@@ -2,6 +2,7 @@ import frontMatter from "front-matter";
 import fs from "fs";
 import hljs from "highlight.js";
 import katex from "@neilsustc/markdown-it-katex";
+import footnotes from "markdown-it-footnote";
 import markdownIt from "markdown-it";
 
 import macros from "./_katex-macros.js";
@@ -25,7 +26,7 @@ const markdown = (new markdownIt({
 })).use(katex, {
   macros,
   throwOnError: true
-});
+}).use(footnotes);
 
 const posts = fs.readdirSync("./posts").map(postFilename => {
   const postContent = fs.readFileSync(`./posts/${postFilename}`, {

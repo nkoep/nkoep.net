@@ -1,5 +1,5 @@
 <script>
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { slide } from "svelte/transition";
 
   import Icon from "svelte-awesome/components/Icon.svelte";
@@ -12,10 +12,10 @@
   export let segment;
 
   onMount(() => {
-    onDestroy(showMenu.subscribe(value => {
+    showMenu.subscribe(value => {
       const html = document.querySelector("html");
       html.style.overflowY = value ? "hidden" : "unset";
-    }));
+    });
   });
 
   const validateCloseMenu = event => {
