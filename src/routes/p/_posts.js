@@ -19,7 +19,10 @@ const highlight = (str, language) => {
     return "";
 };
 
-const markdown = (new markdownIt({highlight})).use(katex, {
+const markdown = (new markdownIt({
+  highlight,
+  linkify: true
+})).use(katex, {
   macros,
   throwOnError: true
 });
