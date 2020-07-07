@@ -14,8 +14,16 @@
 <script>
 	export let post;
 
-  import "highlight.js/styles/paraiso-dark.css";
+  import "highlight.js/styles/paraiso-light.css";
 </script>
+
+<style lang="scss">
+  @import "../../style/theme.scss";
+
+  :global(.hljs) {
+    background-color: rgba($fg-muted, 0.02);
+  }
+</style>
 
 <svelte:head>
 	<title>{post.title} | Niklas Koep</title>
