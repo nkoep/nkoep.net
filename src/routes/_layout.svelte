@@ -1,23 +1,34 @@
 <script>
-  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
+  import { afterUpdate, onMount } from "svelte";
   import { stores } from "@sapper/app";
 
 	import Header from "../components/Header.svelte";
 
 	export let segment;
 
+  let show = true;
   const { page } = stores();
+
   onMount(() => {
     return page.subscribe(() => {
-      document.querySelectorAll("a").forEach(a => {
-        if (a.hostname !== window.location.hostname) {
-          return;
-        }
-        if (!a.hash || !document.querySelectorAll(a.hash).length) {
-          return;
-        }
-        a.href = window.location.origin + window.location.pathname + a.hash;
-      });
+      show = false;
+      setTimeout(() => show = true, 0);
+    });
+  });
+
+  afterUpdate(() => {
+    document.querySelectorAll("a").forEach(a => {
+      console.log(a.hostname, window.location.hostname);
+      if (a.hostname !== window.location.hostname) {
+        return;
+      }
+      console.log(a);
+      if (!a.hash || !document.querySelectorAll(a.hash).length) {
+        return;
+      }
+      a.href = window.location.origin + window.location.pathname + a.hash;
+      console.log(a);
     });
   });
 </script>
@@ -181,7 +192,9 @@
 <main>
   <Header {segment}/>
 
-  <div id="outlet">
-    <slot></slot>
-  </div>
+  {#if show}
+    <div id="outlet" in:fade={{duration: 650}}>
+      <slot></slot>
+    </div>
+  {/if}
 </main>
