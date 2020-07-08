@@ -171,6 +171,10 @@
       }
     }
   }
+
+  .katex-display {
+    /* overflow-x: scroll; */
+  }
 </style>
 
 <main>
