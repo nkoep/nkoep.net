@@ -8,8 +8,11 @@
 
   const { page } = stores();
   onMount(() => {
-    page.subscribe(() => {
+    return page.subscribe(() => {
       document.querySelectorAll("a").forEach(a => {
+        if (a.hostname !== window.location.hostname) {
+          return;
+        }
         if (!a.hash || !document.querySelectorAll(a.hash).length) {
           return;
         }
