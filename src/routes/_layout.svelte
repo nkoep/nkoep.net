@@ -45,6 +45,12 @@
 
   p {
     text-align: justify;
+
+    > img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
   }
 
   h1,
