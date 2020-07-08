@@ -240,8 +240,8 @@ top-down manner, the number of leaves depends on the number of times we can
 successfully split internal nodes.
 In practice, this sometimes leads to very large trees.
 Without additional construction constraints, we could theoretically end up with
-a tree in which each leaf contains exactly one observation, thus terribly
-overfitting the data.
+trees in which each leaf contains exactly one observation, thus terribly
+overfitting the training data.
 In order to keep complexity in check, one may therefore impose additional
 constraints, e.g. that internal nodes are only split if there are more than
 a specific number of observations left.
@@ -498,4 +498,10 @@ absolute error (MAE)*, which is a bit inconsistent.
 
 ## Closing Remarks
 
-TODO
+And with this, we've reached the end of the first post in this series on
+regression tree algorithms.
+While there is certainly more to say on the topic of decision trees, I believe
+we covered enough ground to be able to move on to more advanced methods.
+In the next post, we'll be looking at random forests, a simple extension of
+decision trees that consider an *ensemble* of trees rather than fitting a
+single tree.
