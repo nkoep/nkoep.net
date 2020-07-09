@@ -7,7 +7,7 @@
 
 	export let segment;
 
-  let show = true;
+  let show = false;
   const { page } = stores();
 
   onMount(() => {
