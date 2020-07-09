@@ -19,16 +19,13 @@
 
   afterUpdate(() => {
     document.querySelectorAll("a").forEach(a => {
-      console.log(a.hostname, window.location.hostname);
       if (a.hostname !== window.location.hostname) {
         return;
       }
-      console.log(a);
       if (!a.hash || !document.querySelectorAll(a.hash).length) {
         return;
       }
       a.href = window.location.origin + window.location.pathname + a.hash;
-      console.log(a);
     });
   });
 </script>
