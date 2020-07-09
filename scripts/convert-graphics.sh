@@ -9,7 +9,7 @@ if [ $# -ne 1 ]; then
   die "Article slug required"
 fi
 
-for p in inkscape; do
+for p in inkscape svgo; do
   if ! command -v "$p" >/dev/null; then
     die "Executable '$p' not found"
   fi
@@ -23,10 +23,11 @@ mkdir -p "$outputdir"
 for f in "$inputdir"/*.pdf; do
   filename="$(basename $f)"
   stem="${filename%.*}"
-  inkscape \
+  echo inkscape \
     --pdf-poppler \
     --export-plain-svg \
     --export-text-to-path \
     --export-filename "$outputdir/$stem.svg" \
     $f
 done
+svgo "$outputdir"/*.svg
