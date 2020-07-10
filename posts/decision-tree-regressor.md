@@ -147,11 +147,11 @@ This will also become clear as we move on to more sophisticated regression tree
 algorithms, which share the same property but which use clever techniques to
 significantly increase the size of the prediction space.
 
-[^linear-regression]: This is because a linear regressor $f$ maps an observation
-  $\vmx$ from $\R^\nfeat$ to $\R$ according to $f(\vmx) = \langle \vmx, \vmw
-  \rangle + b$, where $\vmw \in \R^\nfeat$ is a weight vector, $b \in \R$ is
-  a constant offset or bias term, and $\langle \cdot, \cdot \rangle$ is the
-  canonical inner product on $\R^\nfeat$.
+[^linear-regression]: This is because a linear regressor $f$ maps an
+  observation $\vmx$ from $\R^\nfeat$ to $\R$ according to $f(\vmx) = \langle
+  \vmx, \vmw \rangle + b$, where $\vmw \in \R^\nfeat$ is a weight vector, $b
+  \in \R$ is a constant offset or bias term, and $\langle \cdot, \cdot \rangle$
+  is the canonical inner product on $\R^\nfeat$.
 
 ## Tree Construction
 
@@ -218,12 +218,12 @@ decision threshold according to
 $$
   \opt{s_i}
   = \argmin_{s_i \in \{(\vmx_1)_i, \ldots, (\vmx_\ntrain)_i\}}\left\{
-    \sum_{j : (\vmx_j)_i < s_i} (y_j - \yhat_1)^2 +
-    \sum_{j : (\vmx_j)_i \geq s_i} (y_j - \yhat_2)^2
+    \sum_{j : (\vmx_j)_i < s_i} (y_j - \yhat_1(s_i))^2 +
+    \sum_{j : (\vmx_j)_i \geq s_i} (y_j - \yhat_2(s_i))^2
   \right\},
 $$
-where $\yhat_1$ and $\yhat_2$ are the mean responses of all observations with
-$(\vmx_j)_i < s_i$ and $(\vmx_j)_i \geq s_i$, respectively.
+where $\yhat_1(s_i)$ and $\yhat_2(s_i)$ are the mean responses of all
+observations with $(\vmx_j)_i < s_i$ and $(\vmx_j)_i \geq s_i$, respectively.
 We repeat this process for every feature index $i$, and finally pick the
 feature with the lowest score to split on, where the corresponding threshold
 $\opt{s_i}$ is used as decision threshold in the internal node.
