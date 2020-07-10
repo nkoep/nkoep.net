@@ -14,5 +14,5 @@ export default {
   "\\defeq": ":=",
   "\\card": "|#1|",
   "\\opt": "#1^\\ast",
-  "\\argmin": "\\operatorname{argmin}"
+  "\\argmin": "\\mathop{\\operatorname{argmin}}\\limits"
 };
