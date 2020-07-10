@@ -4,48 +4,6 @@
 
 # Miscellaneous
 
-## Reading Log
-
-<details open><summary>Currently Reading</summary>
-
-- Andrey Platonov - The Foundation Pit
-- Frank Schätzing - Breaking News
-- Thomas Mann - Der Tod in Venedig
-- Anne Frank - Tagebuch
-- Heinrich Böll - Ende einer Dienstfahrt
-
-</details>
-
-<details open><summary>2020</summary>
-
-- Bertrand Russell - In Praise of Idleness
-- Frank Herbert - Dune
-- John Steinbeck - The Pearl
-- Tennessee Williams - A Streetcar Named Desire
-- Heinrich Böll - Ansichten eines Clowns
-
-</details>
-
-<details><summary>2019</summary>
-
-- Harper Lee - To Kill a Mockingbird
-- F. Scott Fitzgerald - The Great Gatsby
-- Ernest Hemingway - The Sun Also Rises
-- David Foster Wallace - This is Water
-- Jack Kerouac - On the Road
-- Hermann Hesse - Siddhartha
-- Philip Pullman - Der Goldene Kompass (Northern Lights)
-- Philip Pullman - Das Magische Messer (The Subtle Knife)
-- Philip Pullman - Das Bernstein-Teleskop (The Amber Spyglass)
-- Henry Miller - Tropic of Cancer
-- Matt Ruff - Bad Monkeys
-- Friedrich Dürrenmatt - Die Physiker
-- Albert Camus - Der Fremde (The Stranger)
-- Gore Vidal - The City and the Pillar
-- Albert Camus - Der Fall (The Fall)
-
-</details>
-
 ## Quotes
 
 **Jack Kerouac - On the Road**
