@@ -7,11 +7,16 @@
 
 	export let segment;
 
-  let show = false;
+  let show = true;
+  let initialPageLoad = true;
   const { page } = stores();
 
   onMount(() => {
     return page.subscribe(() => {
+      if (initialPageLoad) {
+        initialPageLoad = false;
+        return;
+      }
       show = false;
       setTimeout(() => show = true, 0);
     });
