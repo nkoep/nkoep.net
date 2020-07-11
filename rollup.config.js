@@ -6,6 +6,7 @@ import config from "sapper/config/rollup.js";
 import json from "@rollup/plugin-json";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
+import slug from "remark-slug";
 import svelte from "rollup-plugin-svelte";
 import sveltePreprocess from "svelte-preprocess";
 import { mdsvex } from "mdsvex";
@@ -39,7 +40,13 @@ const scssInSvelte = sveltePreprocess({
   }
 });
 
-const preprocess = [mdsvex({extension: ".md"}), scssInSvelte];
+const preprocess = [
+  mdsvex({
+    extension: ".md",
+    remarkPlugins: [slug]
+  }),
+  scssInSvelte
+];
 
 export default {
   client: {
