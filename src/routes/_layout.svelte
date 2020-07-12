@@ -193,15 +193,25 @@
 
   h1, h2, h3 {
     .icon-link {
-      margin-left: 8px;
+      $offset: 1em;
+
+      display: block;
+      float: left;
+      margin-left: -$offset;
       opacity: 0;
       transition: 250ms;
+      width: $offset;
     }
 
     &:hover .icon-link {
       opacity: 1;
       transition: 100ms;
     }
+  }
+
+  // Hack to hide anchor tags on page headings.
+  h1 .icon-link {
+    display: none;
   }
 </style>
 

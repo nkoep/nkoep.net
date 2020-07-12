@@ -47,7 +47,6 @@ const preprocess = [
     remarkPlugins: [
       slug,
       [headings, {
-        behavior: "append",
         linkProperties: {ariaHidden: true, tabIndex: -1, className: "icon-link"},
         content: {
           type: "text",

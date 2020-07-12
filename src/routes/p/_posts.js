@@ -4,6 +4,7 @@ import hljs from "highlight.js";
 import katex from "@neilsustc/markdown-it-katex";
 import footnotes from "markdown-it-footnote";
 import markdownIt from "markdown-it";
+import headings from "markdown-it-github-headings";
 
 import macros from "./_katex-macros.js";
 
@@ -26,7 +27,11 @@ const markdown = (new markdownIt({
 })).use(katex, {
   macros,
   throwOnError: true
-}).use(footnotes);
+}).use(footnotes).use(headings, {
+  className: "icon-link",
+  prefixHeadingIds: false,
+  linkIcon: "#"
+});
 
 const posts = fs.readdirSync("./posts").map(postFilename => {
   const postContent = fs.readFileSync(`./posts/${postFilename}`, {
