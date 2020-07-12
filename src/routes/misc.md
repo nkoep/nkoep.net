@@ -1,8 +1,6 @@
-<svelte:head>
-	<title>Misc | Niklas Koep</title>
-</svelte:head>
-
-# Miscellaneous
+---
+title: Miscellaneous
+---
 
 ## Quotes
 

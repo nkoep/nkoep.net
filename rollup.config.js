@@ -43,6 +43,7 @@ const scssInSvelte = sveltePreprocess({
 
 const preprocess = [
   mdsvex({
+    layout: "src/routes/_mdsvex_layout.svelte",
     extension: ".md",
     remarkPlugins: [
       slug,
