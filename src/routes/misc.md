@@ -6,7 +6,7 @@
 
 ## Quotes
 
-**Jack Kerouac - On the Road**
+### Jack Kerouac - On the Road
 
 > [...] the only people for me are the mad ones, the ones who are mad to live,
 > mad to talk, mad to be saved, desirous of everything at the same time, the
@@ -22,18 +22,18 @@
 > going the opposite direction in this too-big world.
 
 
-**Henry Miller - Tropic of Cancer**
+### Henry Miller - Tropic of Cancer
 
 > I sit down beside her and she talks---a flood of talk. Wild consumptive notes
 > of hysteria, perversion, leprosy. I hear not a word because she is beautiful
 > and I love her and now I am happy and willing to die.
 
-**Albert Camus - The Fall**
+### Albert Camus - The Fall
 
 > As people commonly say, I loved women---which amounts to saying that I never
 > loved any one of them.
 
-**Gore Vidal - The City and the Pillar**
+### Gore Vidal - The City and the Pillar
 
 > There had been a yesterday and a day before, and twenty-five years of being
 > alive before he found the bar.

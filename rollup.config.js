@@ -3,6 +3,7 @@ import * as fs from "fs";
 import babel from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 import config from "sapper/config/rollup.js";
+import headings from "remark-autolink-headings";
 import json from "@rollup/plugin-json";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
@@ -43,7 +44,17 @@ const scssInSvelte = sveltePreprocess({
 const preprocess = [
   mdsvex({
     extension: ".md",
-    remarkPlugins: [slug]
+    remarkPlugins: [
+      slug,
+      [headings, {
+        behavior: "append",
+        linkProperties: {ariaHidden: true, tabIndex: -1, className: "icon-link"},
+        content: {
+          type: "text",
+          value: "#"
+        }
+      }]
+    ]
   }),
   scssInSvelte
 ];

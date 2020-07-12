@@ -88,7 +88,7 @@
 
   h3,
   summary {
-    font-size: 1.15em;
+    font-size: 1.05em;
   }
 
   code {
@@ -189,6 +189,19 @@
   .katex-display {
     overflow-x: auto;
     overflow-y: hidden;
+  }
+
+  h1, h2, h3 {
+    .icon-link {
+      margin-left: 8px;
+      opacity: 0;
+      transition: 250ms;
+    }
+
+    &:hover .icon-link {
+      opacity: 1;
+      transition: 100ms;
+    }
   }
 </style>
 
