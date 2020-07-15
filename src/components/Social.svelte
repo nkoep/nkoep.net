@@ -7,7 +7,7 @@
     faTwitter
   } from "@fortawesome/free-brands-svg-icons";
 
-  export let overlayMenu = false;
+  export let iconScale = 1;
 
   const socialPages = [
     { url: "https://github.com/nkoep/", icon: faGithub },
@@ -22,7 +22,6 @@
   @import "../style/components/Header.scss";
 
   ul {
-    flex: 1 1 100%;
     text-align: right;
   }
 
@@ -32,8 +31,8 @@
   }
 </style>
 
-<ul class={overlayMenu ? undefined : "menu-breakpoint"}>
+<ul>
   {#each socialPages as page}
-    <li><a href="{page.url}" target="_blank"><Icon data={page.icon} scale="{overlayMenu ? 1.5 : 1.0}"/></a></li>
+    <li><a href="{page.url}" target="_blank"><Icon data={page.icon} scale="{iconScale}"/></a></li>
   {/each}
 </ul>

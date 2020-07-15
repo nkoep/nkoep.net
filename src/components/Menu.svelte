@@ -3,7 +3,7 @@
   import { slide } from "svelte/transition";
 
   import Icon from "svelte-awesome/components/Icon.svelte";
-  import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+  import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
@@ -27,18 +27,8 @@
 </script>
 
 <style lang="scss">
-  @import "../style/theme.scss";
   @import "../style/components/Header.scss";
-
-  button {
-    background: none;
-    border: none;
-
-    &:hover,
-    &:active {
-      cursor: pointer;
-    }
-  }
+  @import "../style/theme.scss";
 
   #menu-button {
     @media only screen and (min-width: $menu-breakpoint) {
@@ -51,6 +41,10 @@
     }
 
     display: flex;
+    flex: 1 1 100%;
+  }
+
+  #close-button {
     flex: 1 1 100%;
   }
 
@@ -71,6 +65,7 @@
     z-index: 1;
 
     :global(li) {
+      font-size: $menu-fontsize;
       margin: $item-spacing;
     }
 
@@ -84,35 +79,24 @@
       color: $link-hover;
     }
 
-    #close-button {
-      flex: 1 1 100%;
-    }
-
     #close-button,
     :global(nav),
     :global(ul) {
       align-items: center;
       display: flex;
-    }
-
-    :global(nav li) {
-      font-size: $menu-fontsize;
+      flex: 1 1 100%;
     }
   }
 </style>
 
 <svelte:window on:keyup|preventDefault={validateCloseMenu}/>
 
-<div id="menu-button">
-  <button on:click={() => $showMenu = true}><Icon data={faBars} scale="1.25"/></button>
-</div>
-
-{#if $showMenu}
-  <div id="menu" transition:slide={{duration: 300}}>
-    <div id="close-button">
-      <button on:click={() => $showMenu = false}><Icon data={faTimes} scale="1.5"/></button>
-    </div>
-    <Navbar overlayMenu={true} {segment}/>
-    <Social overlayMenu={true}/>
+<div id="menu" transition:slide={{duration: 300}}>
+  <div id="close-button">
+    <button on:click={() => $showMenu = false}>
+      <Icon data={faTimes} scale="1.5"/>
+    </button>
   </div>
-{/if}
+  <Navbar {segment}/>
+  <Social iconScale={1.5}/>
+</div>

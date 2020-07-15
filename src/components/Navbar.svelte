@@ -2,7 +2,6 @@
   import { showMenu } from "../stores.js";
 
   export let segment;
-  export let overlayMenu = false;
 
   const pages = ["about", "misc"];
 </script>
@@ -17,7 +16,6 @@
 	}
 
   nav {
-    flex: 1 1 100%;
     font-family: "Montserrat", sans-serif;
     font-size: 11px;
     font-weight: 400;
@@ -31,7 +29,7 @@
   }
 </style>
 
-<nav class={overlayMenu ? undefined : "menu-breakpoint"}>
+<nav>
   <ul>
     {#each pages as page}
       <li><a on:click={() => $showMenu = false} aria-current={segment === page ? segment : undefined} href="{page}">{page}</a></li>

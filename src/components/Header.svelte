@@ -1,8 +1,12 @@
 <script>
-  import Navbar from "./Navbar.svelte";
   import Logo from "./Logo.svelte";
-  import Social from "./Social.svelte";
   import Menu from "./Menu.svelte";
+  import Navbar from "./Navbar.svelte";
+  import Social from "./Social.svelte";
+  import { showMenu } from "../stores.js";
+
+  import Icon from "svelte-awesome/components/Icon.svelte";
+  import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 	export let segment;
 </script>
@@ -12,6 +16,16 @@
   @import "../style/components/Header.scss";
 
   div {
+    display: none;
+    flex: 1 1 100%;
+    margin: auto 0;
+
+    @media only screen and (min-width: $menu-breakpoint) {
+      display: block;
+    }
+  }
+
+  header {
     display: flex;
 
     &::before {
@@ -23,11 +37,39 @@
       }
     }
   }
+
+  #menu-button {
+    display: flex;
+
+    @media only screen and (min-width: $menu-breakpoint) {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+      flex: 1 1 100%;
+    }
+  }
 </style>
 
-<div>
-  <Navbar {segment}/>
+<header>
+  <div>
+    <Navbar {segment}/>
+  </div>
+
   <Logo/>
-  <Social/>
+
+  <div>
+    <Social/>
+  </div>
+
+  <div id="menu-button">
+    <button on:click={() => $showMenu = true}>
+      <Icon data={faBars} scale="1.25"/>
+    </button>
+  </div>
+</header>
+
+{#if $showMenu}
   <Menu {segment}/>
-</div>
+{/if}
