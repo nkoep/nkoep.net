@@ -4,7 +4,7 @@
 		const data = await res.json();
 
 		if (res.status === 200) {
-			return { post: data };
+			return {post: data};
 		} else {
 			this.error(res.status, data.message);
 		}

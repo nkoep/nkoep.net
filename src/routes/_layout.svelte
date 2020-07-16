@@ -66,7 +66,7 @@
       display: block;
       margin: 0 auto;
       max-width: 100%;
-      min-width: 50%;
+      min-width: 40%;
     }
   }
 
@@ -174,7 +174,7 @@
 
   main {
     margin: auto;
-    max-width: 750px;
+    max-width: 700px;
     width: 85%;
 
     #outlet {
