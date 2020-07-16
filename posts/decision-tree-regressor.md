@@ -45,7 +45,7 @@ trees are used to make predictions, while mostly skipping over the way these
 trees are actually constructed.
 Arguably, the latter is much less important from a practical perspective since
 there's very little reason to ever use your own hand-rolled implementation
-instead a battle-tested one.
+instead of a battle-tested one.
 It still bugged me, however, that the topic seemed to be rarely covered.
 I therefore decided to dig a little deeper and implement various tree-based
 regression algorithms from scratch.
