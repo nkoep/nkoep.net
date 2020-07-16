@@ -14,5 +14,11 @@ export default {
   "\\defeq": ":=",
   "\\card": "|#1|",
   "\\opt": "#1^\\ast",
-  "\\argmin": "\\mathop{\\operatorname{argmin}}\\limits"
+  "\\argmin": "\\mathop{\\operatorname{argmin}}\\limits",
+  "\\E": "\\mathbb{E}",
+  "\\P": "\\mathbb{P}",
+  "\\comp": "\\bar",
+  "\\parens": "\\left(#1\\right)",
+  "\\event": "\\mathcal{E}",
+  "\\ind": "\\chi_{{#1}}"
 };
