@@ -183,6 +183,36 @@ training set of size $\nsamp$ with replacement, on average we will use around
 
 ## Python Implementation of a Random Forest Regressor
 
+We now turn to the Python implementation of a random forest regressor,
+leveraging the `Tree` class we wrote last time that implements the core logic
+of regression trees.
+As the informal runtime benchmark in the last post alluded to, our
+implementation is rather slow as we require $\bigO(\nsamp \nfeat)$ operations
+to find the best split in each internal node, where $\nsamp$ denotes the size
+of the training set.
+This will come back to bite us now since we have to train several independent
+trees, albeit with fewer samples per tree as before.
+While we could train each tree in parallel, a simpler approach to speed things
+up a bit is through [numba](http://numba.pydata.org/).
+
 ### Speeding Up Our Decision Tree Regressor with Numba
+
+Numba is a just-in-time (JIT) compiler for Python that utilizes the
+[LLVM](https://llvm.org/) ecosystem to compile Python bytecode to efficient
+machine code.
+The dynamic nature of Python makes this process rather difficult if not
+impossible for arbitrary Python code.
+For the type of code often encountered in scientific computing, however, numba
+can often generate incredibly fast code, especially due to its first-class
+support for numpy arrays.
+
+In its simplest form, it suffices to decorate a function with the `njit`
+decorator imported from the `numba` package.
+For brevity, we refer to the numba
+[documentation](http://numba.pydata.org/numba-doc/latest/index.html) for
+further details.
+With these changes to our `Tree` class (which are fairly small, see
+https://git.io/JJZbz), the runtime to run our decision tree example from the
+previous post improves from 1.7775 seconds to 0.1233 seconds.
 
 ## Closing Remarks
