@@ -1,6 +1,6 @@
 ---
 title: "Tree-Based Regression Methods (Part II): Random Forests"
-date: July 17, 2020
+date: July 18, 2020
 slug: random-forest-regressor
 ---
 
@@ -18,7 +18,7 @@ in extreme cases.
 Imposing limits on the tree depth, the minimum number of samples required in a
 leaf node, or the minimum number of samples to split an internal node can all
 help improve the generalization of trees.
-Howver, the performance on unseen data ultimately remains rather poor
+However, the performance on unseen data ultimately remains rather poor
 unfortunately.
 
 One common way to combat this effect is by considering *ensembles* of trees,
@@ -44,7 +44,7 @@ context of our decision tree regressor.
 As alluded to before, random forests are conceivably simple to apply in
 practice.
 Given an ensemble of trained decision tree regressors, ensemble methods such
-as random forests simply combine the individual predictions into a concensus
+as random forests simply combine the individual predictions into a consensus
 prediction of the entire ensemble.
 In a classification task, this is a simple majority vote, i.e., the most
 commonly predicted class among all trees wins, whereas in the context of
@@ -81,8 +81,8 @@ We first cover a bit of customary terminology.
 ### Bootstrapping, Aggregating and Bagging
 
 Since regression trees suffer from rather poor generalization (i.e., high
-variance in the bias-variance tradeoff), the fundamental idea of random forests
-is to inject some variation into the training procedure.
+variance in the bias-variance trade-off), the fundamental idea of random
+forests is to inject some variation into the training procedure.
 In particular, we consider $\nest$ different trees, which are all trained on a
 different subset of the training data.
 The intuition here is that while each individual tree might slightly overfit
@@ -152,7 +152,7 @@ $$
 $$
 
 Moreover, by [Hoeffding's
-inquality](https://en.wikipedia.org/wiki/Hoeffding%27s_inequality#General_case_of_bounded_random_variables)
+inequality](https://en.wikipedia.org/wiki/Hoeffding%27s_inequality#General_case_of_bounded_random_variables)
 the random variable $\card{S}$ concentrates sharply around its mean.
 To see this, note that by the previous representation of $\card{S}$, we have
 $$
@@ -195,16 +195,16 @@ trees, albeit with fewer samples per tree as before.
 While we could train each tree in parallel, a simpler approach to speed things
 up a bit is through [numba](http://numba.pydata.org/).
 
-### Speeding Up Our Decision Tree Regressor with Numba
+### Speeding Up Decision Tree Fitting with Numba
 
 Numba is a just-in-time (JIT) compiler for Python that utilizes the
 [LLVM](https://llvm.org/) ecosystem to compile Python bytecode to efficient
 machine code.
-The dynamic nature of Python makes this process rather difficult if not
-impossible for arbitrary Python code.
+The dynamic nature of the Python language makes this process rather difficult
+if not impossible for arbitrary Python code.
 For the type of code often encountered in scientific computing, however, numba
-can often generate incredibly fast code, especially due to its first-class
-support for numpy arrays.
+can generate incredibly fast code, especially due to its first-class support
+for numpy arrays.
 
 In its simplest form, it suffices to decorate a function with the `njit`
 decorator imported from the `numba` package.
@@ -212,7 +212,89 @@ For brevity, we refer to the numba
 [documentation](http://numba.pydata.org/numba-doc/latest/index.html) for
 further details.
 With these changes to our `Tree` class (which are fairly small, see
-https://git.io/JJZbz), the runtime to run our decision tree example from the
-previous post improves from 1.7775 seconds to 0.1233 seconds.
+https://git.io/JJZbz), the runtime of our decision tree example from the
+previous post improves from 1.7775 to 0.1233 seconds.
+
+### Random Forest Regressor
+
+We finally turn to the implementation of our `RandomForest` class.
+Due to the simple construction procedure of random forests, the implementation
+is very concise.
+We begin with the constructor.
+
+```python
+import numpy as np
+from sklearn.base import BaseEstimator, RegressorMixin
+
+from tree import Tree
+
+
+class RandomForest(BaseEstimator, RegressorMixin):
+    def __init__(self, n_estimators=100, min_samples_split=2,
+                 random_state=None):
+        self.n_estimators_ = n_estimators
+        self.min_samples_split_ = min_samples_split
+        self.random_state_ = random_state
+
+        self._trees = []
+```
+
+The most important parameter, which should generally be optimized via
+hyperparameter tuning, is `n_estimators`, controlling the number of regressors
+in the ensemble.
+To keep things simple, we ignore any other parameters scikit-learn's
+`RandomForestRegressor` supports except for `min_samples_split` and
+`random_state`.
+The latter is necessary to seed our internal random number generator (RNG) with
+a fixed seed to make tree construction reproducible.
+The rest of the implementation is self-explanatory.
+
+```python
+    def fit(self, X, y):
+        X, y = map(np.array, (X, y))
+
+        rng = np.random.default_rng(self.random_state_)
+        num_samples = X.shape[0]
+
+        for _ in range(self.n_estimators_):
+            tree = Tree(self.min_samples_split_)
+            indices = rng.integers(num_samples, size=num_samples)
+            tree.construct_tree(X[indices, :], y[indices])
+            self._trees.append(tree)
+
+    def _predict_sample(self, x):
+        return np.array(
+            [tree.apply_to_sample(x) for tree in self._trees]).mean()
+
+    def predict(self, X):
+        if not self._trees:
+            raise RuntimeError("Estimator needs to be fitted first")
+        return np.array([self._predict_sample(row) for row in np.array(X)])
+```
+
+To see how this implementation fares against scikit-learn's
+`RandomForestRegressor`, we train both algorithms with 25 trees each, and
+compare their performances on the Boston house-prices dataset as before.
+
+```shell
+$ python test_random_forest_regressor.py
+sklearn
+-------
+MAE: 2.581354330708661
+R^2 score: 0.7265594550869257
+Time elapsed: 0.061501 seconds
+
+naive
+-----
+MAE: 2.574992125984252
+R^2 score: 0.7180459986368835
+Time elapsed: 1.779618 seconds
+```
+
+The results show a clear improvement over the predictive performance of the
+simple decision tree regressors we considered last time.
+Once again the prediction accuracy of both implementations is very close, with
+the scikit-learn version having a significant edge in terms of runtime as
+expected.
 
 ## Closing Remarks

@@ -478,7 +478,7 @@ if __name__ == "__main__":
 ```
 
 ```shell
-[archibald ⚡ ~/git/regression-trees] » python test_decision_tree_regressor.py
+$ python test_decision_tree_regressor.py
 Mean absolute error (sklearn): 3.299212598425196
 Time elapsed: 0.002483 seconds
 
