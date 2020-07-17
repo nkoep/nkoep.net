@@ -256,7 +256,7 @@ To keep things simple, we will not concern ourselves with pruning here.
 With the mathematical details covered, we'll move on to our Python
 implementation.
 We start with the `DecisionTree` implementation, which simply implements the
-necessary `sklearn`
+necessary scikit-learn
 [interface](https://scikit-learn.org/stable/developers/develop.html#rolling-your-own-estimator)
 for estimators.
 Most crucially, this requires the two methods `fit` and `predict`, where for
@@ -264,7 +264,7 @@ technical reasons the former needs to return `self`.
 Otherwise, their implementations are self-explanatory.
 For the moment, the constructor of our `DecisionTree` class only accepts a
 single parameter, namely `min_samples_split` with the same meaning as its
-`sklearn`
+scikit-learn
 [counterpart](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html#sklearn.tree.DecisionTreeRegressor).
 As mentioned above, this parameter can be used to control the complexity of the
 tree by requiring that we only split internal nodes if the available number of
@@ -438,7 +438,7 @@ or right branch, we simply move on to the next threshold candidate.
 And that's it!
 In order to test whether the algorithm is working as intended, we'll run
 prediction on the Boston house-prices dataset and compare our predictive
-performance against Scikit-learn's `DecisionTreeRegressor` class.
+performance against scikit-learn's `DecisionTreeRegressor` class.
 
 ```python
 import time
@@ -488,9 +488,9 @@ Time elapsed: 1.556536 seconds
 ```
 
 As we can see, for the random state we picked to split the dataset, our naive
-implementation performs slightly better than Scikit-learn's version.
+implementation performs slightly better than scikit-learn's version.
 Due to our naive and unoptimized implementation, training and prediction take
-orders of magnitude longer than Scikit-learn's efficient
+orders of magnitude longer than scikit-learn's efficient
 [Cython](https://cython.org/) implementation though.
 I also want to point out that while we're training both models to optimize for
 lowest MSE, we're scoring performance on the test set in terms of *mean
