@@ -1,5 +1,5 @@
 ---
-title: "Regression Trees (Part I): Decision Trees"
+title: "Tree-Based Regression Methods (Part I): Decision Trees"
 date: July 08, 2020
 slug: decision-tree-regressor
 ---
@@ -72,7 +72,7 @@ topic at hand.
 > interface of the simple `DecisionTree` class we'll be looking at in this post
 > are likely to change in the future.
 > For reference, I tagged the code relating to this post in the Github repo:
-> https://github.com/nkoep/regression-trees/tree/v1-decision-tree.
+> https://github.com/nkoep/fundamental-ml/tree/v1-decision-tree.
 
 ## Problem Formulation and Outline
 

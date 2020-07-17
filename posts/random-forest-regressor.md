@@ -1,14 +1,14 @@
 ---
-title: "Regression Trees (Part II): Random Forests"
+title: "Tree-Based Regression Methods (Part II): Random Forests"
 date: July 17, 2020
 slug: random-forest-regressor
 ---
 
 ## Introduction and Recap
 
-In the previous [post](/p/decision-tree-regressor) of this series, we
-introduced the concept of *decision trees* for the purpose of regression in the
-context of supervised learning.
+In the previous [post](/p/decision-tree-regressor), we introduced the concept
+of *decision trees* for the purpose of regression in the context of supervised
+learning.
 Decision trees are very simple models, which are easy to understand and apply,
 but which suffer from rather poor performance as they tend to be fairly biased
 towards the training data.
@@ -34,9 +34,9 @@ We then briefly explain how random forests are constructed, before going
 through a simple Python implementation that builds on the `Tree` class that
 we wrote in the context of our decision tree regressor.
 
-> The Python code that we will be discussing below can be found under the
-> following tag of the Github repository:
-> https://github.com/nkoep/regression-trees/tree/v2-random-forest.
+> The Python code we will be discussing below can be found under the following
+> tag of the Github repository:
+> https://github.com/nkoep/fundamental-ml/tree/v2-random-forest.
 
 ## Prediction via Ensembles of Trees
 
@@ -132,8 +132,8 @@ $$
   \approx 0.63212 \nsamp.
 $$
 This means that by drawing $\nsamp$ samples uniformly at random from the
-training set with replacement, on average we will use around 2/3 of the
-training set to fit each individual tree in the ensemble.
+training set of size $\nsamp$ with replacement, on average we will use around
+2/3 of the training set to fit each individual tree in the ensemble.
 
 ## Python Implementation of a Random Forest Regressor
 
