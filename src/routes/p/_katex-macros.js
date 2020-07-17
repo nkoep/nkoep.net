@@ -6,7 +6,6 @@ export default {
   "\\vmX": "{\\bf{X}}",
   "\\nsamp": "k",
   "\\nfeat": "p",
-  "\\ntrain": "T",
   "\\npart": "J",
   "\\xhat": "\\hat{\\vmx}",
   "\\yhat": "\\hat{y}",
@@ -19,6 +18,10 @@ export default {
   "\\P": "\\mathbb{P}",
   "\\comp": "\\bar",
   "\\parens": "\\left(#1\\right)",
+  "\\braces": "\\left\\{#1\\right\\}",
+  "\\brackets": "\\left[#1]\\right",
   "\\event": "\\mathcal{E}",
-  "\\ind": "\\chi_{{#1}}"
+  "\\ind": "\\chi_{{#1}}",
+  "\\inner": "\\left\\langle#1,#2\\right\\rangle",
+  "\\set": "\\{#1\\}",
 };

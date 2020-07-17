@@ -87,8 +87,8 @@ an observation of one of $\nfeat$ different features (predictors), we aim to
 infer the value of some *target* or *response* variable $y \in \R$.
 Since the exact nature of the relationship between $\vmx$ and $y$ is rarely
 if ever known, we may turn to a data-driven approach, where we try to *infer*
-the relationship based on a set of representative observations $\{(\vmx_1,
-y_1), \ldots, (\vmx_\ntrain, y_\ntrain)\}$.
+the relationship based on a set of representative observations $\set{(\vmx_1,
+y_1), \ldots, (\vmx_\nsamp, y_\nsamp)}$.
 This is known as the *supervised learning problem*.
 
 The remainder of this post is structured as follows.
@@ -123,7 +123,7 @@ what the decision tree predicts for the given sample.
 ![Sketch of a decision tree](img/decision-tree-regressor/decision-tree.svg)
 
 To better visualize how this decision tree partitions the nonnegative feature
-orthant $\{(x_1, x_2) \in \R^2 \mid x_1, x_2 \geq 0\}$, we may draw the
+orthant $\set{(x_1, x_2) \in \R^2 \mid x_1, x_2 \geq 0}$, we may draw the
 decision boundaries in a feature plane as shown below.
 Since inputs are (in theory) unbounded, there is no way to partition the domain
 into boxes of equal size.
@@ -148,10 +148,10 @@ algorithms, which share the same property but which use clever techniques to
 significantly increase the size of the prediction space.
 
 [^linear-regression]: This is because a linear regressor $f$ maps an
-  observation $\vmx$ from $\R^\nfeat$ to $\R$ according to $f(\vmx) = \langle
-  \vmx, \vmw \rangle + b$, where $\vmw \in \R^\nfeat$ is a weight vector, $b
-  \in \R$ is a constant offset or bias term, and $\langle \cdot, \cdot \rangle$
-  is the canonical inner product on $\R^\nfeat$.
+  observation $\vmx$ from $\R^\nfeat$ to $\R$ according to $f(\vmx) =
+  \inner{\vmx}{\vmw} + b$, where $\vmw \in \R^\nfeat$ is a weight vector, $b
+  \in \R$ is a constant offset or bias term, and $\inner{\cdot}{\cdot}$ is the
+  canonical inner product on $\R^\nfeat$.
 
 ## Tree Construction
 
@@ -168,17 +168,17 @@ In particular, the following questions come to mind.
 Let's assume for the moment that we are given a tree which induces $\npart$
 partitions $P_1, \ldots, P_\npart\subset \R^\nfeat$ with corresponding response
 predictions $\yhat_1, \ldots, \yhat_\npart$.
-With the training set $\{(\vmx_1, y_1), \ldots, (\vmx_\ntrain,
-y_\ntrain)\}$, we can measure the performance of the decision tree using the
+With the training set $\set{(\vmx_1, y_1), \ldots, (\vmx_\nsamp,
+y_\nsamp)}$, we can measure the performance of the decision tree using the
 loss function
 $$
   \loss(\npart, P_1, \ldots, P_\npart, \yhat_1, \ldots, \yhat_\npart)
   = \sum_{j=1}^\npart \sum_{i : \vmx_i \in P_j} (y_i - \yhat_j)^2.
 $$
 In words, for each partition $P_j$, we select the training examples $E_j \defeq
-\{(\vmx_i, y_i) \mid \vmx_i \in P_j\}$ that are mapped to the partition $P_j$,
-and sum up the squared errors that arise from assigning the same prediction
-$\yhat_j$ to all training examples in $E_j$.
+\set{(\vmx_i, y_i) \mid \vmx_i \in P_j}$ that are mapped to the partition
+$P_j$, and sum up the squared errors that arise from assigning the same
+prediction $\yhat_j$ to all training examples in $E_j$.
 The goal now is to simultaneously optimize $L$ w.r.t. $\npart$ and the
 sequence of partition/predictor pairs $(P_1, \yhat_1), \ldots, (P_\npart,
 \yhat_\npart)$.
@@ -217,10 +217,10 @@ To that end, we first fix an arbitrary feature index $i$ and choose the best
 decision threshold according to
 $$
   \opt{s_i}
-  = \argmin_{s_i \in \{(\vmx_1)_i, \ldots, (\vmx_\ntrain)_i\}}\left\{
+  = \argmin_{s_i \in \set{(\vmx_1)_i, \ldots, (\vmx_\nsamp)_i}} \braces{
     \sum_{j : (\vmx_j)_i < s_i} (y_j - \yhat_1(s_i))^2 +
     \sum_{j : (\vmx_j)_i \geq s_i} (y_j - \yhat_2(s_i))^2
-  \right\},
+  },
 $$
 where $\yhat_1(s_i)$ and $\yhat_2(s_i)$ are the mean responses of all
 observations with $(\vmx_j)_i < s_i$ and $(\vmx_j)_i \geq s_i$, respectively.
