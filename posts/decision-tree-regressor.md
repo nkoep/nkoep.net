@@ -41,7 +41,7 @@ crucial ideas to the point of irrelevance.[^ft-note]
 
 In reading up on decision trees, the topic of the first post in this series,
 I noticed that most introductions focus (justifiably so) on the way decision
-trees are used to make predictions, while mostly skipping over the way these
+trees are used to make predictions, while mostly skipping over the way such
 trees are actually constructed.
 Arguably, the latter is much less important from a practical perspective since
 there's very little reason to ever use your own hand-rolled implementation
@@ -58,10 +58,9 @@ Personally, I certainly feel a lot more comfortable and confident after gaining
 a better understanding of what's going on inside what previously amounted to a
 black box.
 
-Over the next few weeks, I plan to implement and write about various regression
-tree algorithms.
-We'll start with the most naive form of a regression tree, a *binary decision
-tree*.
+Over the next few weeks, I plan to implement and write about various tree-based
+regression algorithms.
+We'll start with the most naive form, a *binary decision tree*.
 We then slowly ramp up complexity by implementing more advanced
 approaches such as *random forests*, as well as *gradient-boosted trees*, all
 of which build upon the foundation of decision trees.
@@ -143,7 +142,7 @@ However, since the standing assumption is that similar observations have
 similar responses, and that the training set ought to be representative of the
 underlying data distribution, the finite nature of the prediction domain is not
 as limiting as it may seem.
-This will also become clear as we move on to more sophisticated regression tree
+This will also become clear as we move on to more sophisticated regression
 algorithms, which share the same property but which use clever techniques to
 significantly increase the size of the prediction space.
 
@@ -499,7 +498,7 @@ absolute error (MAE)*, which is a bit inconsistent.
 ## Closing Remarks
 
 And with this, we've reached the end of the first post in this series on
-regression tree algorithms.
+tree-based regression algorithms.
 While there is certainly more to say on the topic of decision trees, I believe
 we covered enough ground to be able to move on to more advanced methods.
 In the next post, we'll be looking at random forests, a simple extension of
