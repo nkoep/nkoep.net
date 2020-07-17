@@ -6,6 +6,7 @@ export default {
   "\\vmX": "{\\bf{X}}",
   "\\nsamp": "k",
   "\\nfeat": "p",
+  "\\nest": "T",
   "\\npart": "J",
   "\\xhat": "\\hat{\\vmx}",
   "\\yhat": "\\hat{y}",
@@ -26,4 +27,7 @@ export default {
   "\\ind": "\\chi_{{#1}}",
   "\\inner": "\\left\\langle#1,#2\\right\\rangle",
   "\\set": "\\{#1\\}",
+  "\\setpred": "\\{#1 \\mid #2 \\}", // Set with predicate
+  "\\family": "\\mathcal{F}",
+  "\\function": "#1\\colon#2\\to#3"
 };

@@ -17,8 +17,8 @@ we may end up with trees where each leaf contains exactly one training sample
 in the extreme case.
 Imposing limits on the tree depth, the minimum number of samples required in a
 leaf node, or the minimum number of samples to split an internal node can all
-help improve the generalizability of trees.
-The performance on unseen data ultimately remains rather poor, however.
+help improve the generalization of trees.
+The performance on unseen data ultimately remains rather poor unfortunately.
 
 One common way to combat this effect is by considering *ensembles* of trees,
 where each tree in the ensemble "votes" on the final
@@ -40,10 +40,29 @@ we wrote in the context of our decision tree regressor.
 
 ## Prediction via Ensembles of Trees
 
-In a classification task, this is a true majority vote, i.e., the most commonly
-predicted class among all trees wins, whereas in the context of regression, the
-predictions of each tree are averaged to form the final prediction of the
-random forest.
+As alluded to before, random forests are conceivably simple to apply in
+practice.
+Given an ensemble of trained decision tree regressors, ensemble methods such
+as random forests simply combine the individual predictions into a concensus
+prediction of the entire ensemble.
+In a classification task, this is a simple majority vote, i.e., the most
+commonly predicted class among all trees wins, whereas in the context of
+regression, the target predictions of each tree are averaged to form the final
+prediction of the ensemble.
+More concretely, consider a family of decision trees $\family =
+\setpred{\function{f_i}{\R^\nfeat}{\R}}{i = 1, \ldots, \nest}$.
+Given an unseen observation $\vmx \in \R^\nfeat$, the random forest regressor
+returns
+$$
+  \yhat
+  = \frac{1}{\nest} \sum_{i=1}^\nest f_i(\vmx).
+$$
+And that's all there is to it.
+Since all trees are created independently from each other (as we will discuss
+next), each tree's prediction contributes equally to the final prediction.
+This is in stark contrast to some of the more advanced methods we'll be looking
+at in future posts, where different members of the ensemble might have more
+influence on the final result than others.
 
 ## Seeing the Random Forest for the Decision Trees
 

@@ -122,7 +122,7 @@ what the decision tree predicts for the given sample.
 ![Sketch of a decision tree](img/decision-tree-regressor/decision-tree.svg)
 
 To better visualize how this decision tree partitions the nonnegative feature
-orthant $\set{(x_1, x_2) \in \R^2 \mid x_1, x_2 \geq 0}$, we may draw the
+orthant $\setpred{(x_1, x_2) \in \R^2}{x_1, x_2 \geq 0}$, we may draw the
 decision boundaries in a feature plane as shown below.
 Since inputs are (in theory) unbounded, there is no way to partition the domain
 into boxes of equal size.
@@ -175,7 +175,7 @@ $$
   = \sum_{j=1}^\npart \sum_{i : \vmx_i \in P_j} (y_i - \yhat_j)^2.
 $$
 In words, for each partition $P_j$, we select the training examples $E_j \defeq
-\set{(\vmx_i, y_i) \mid \vmx_i \in P_j}$ that are mapped to the partition
+\setpred{(\vmx_i, y_i)}{\vmx_i \in P_j}$ that are mapped to the partition
 $P_j$, and sum up the squared errors that arise from assigning the same
 prediction $\yhat_j$ to all training examples in $E_j$.
 The goal now is to simultaneously optimize $L$ w.r.t. $\npart$ and the
@@ -501,6 +501,6 @@ And with this, we've reached the end of the first post in this series on
 tree-based regression algorithms.
 While there is certainly more to say on the topic of decision trees, I believe
 we covered enough ground to be able to move on to more advanced methods.
-In the next post, we'll be looking at random forests, a simple extension of
-decision trees that consider an *ensemble* of trees rather than fitting a
-single tree.
+In the [next post](/p/random-forest-regressor), we'll be looking at random
+forests, a simple extension of decision trees that consider an *ensemble* of
+trees rather than fitting a single tree.
