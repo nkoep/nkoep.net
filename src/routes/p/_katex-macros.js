@@ -29,5 +29,6 @@ export default {
   "\\set": "\\{#1\\}",
   "\\setpred": "\\{#1 \\mid #2 \\}", // Set with predicate
   "\\family": "\\mathcal{F}",
-  "\\function": "#1\\colon#2\\to#3"
+  "\\function": "#1\\colon#2\\to#3",
+  "\\bigO": "\\mathcal{O}"
 };

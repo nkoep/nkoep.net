@@ -4,7 +4,7 @@ date: July 17, 2020
 slug: random-forest-regressor
 ---
 
-## Introduction and Recap
+## Introduction
 
 In the previous [post](/p/decision-tree-regressor), we introduced the concept
 of *decision trees* for the purpose of regression in the context of supervised
@@ -14,11 +14,12 @@ but which suffer from rather poor performance as they tend to be fairly biased
 towards the training data.
 Without deliberate measures to limit the complexity of the constructed trees,
 we may end up with trees where each leaf contains exactly one training sample
-in the extreme case.
+in extreme cases.
 Imposing limits on the tree depth, the minimum number of samples required in a
 leaf node, or the minimum number of samples to split an internal node can all
 help improve the generalization of trees.
-The performance on unseen data ultimately remains rather poor unfortunately.
+Howver, the performance on unseen data ultimately remains rather poor
+unfortunately.
 
 One common way to combat this effect is by considering *ensembles* of trees,
 where each tree in the ensemble "votes" on the final
@@ -31,8 +32,8 @@ The rest of the post is structured as follows.
 We first explain how an existing random forest is used to perform prediction on
 new samples.
 We then briefly explain how random forests are constructed, before going
-through a simple Python implementation that builds on the `Tree` class that
-we wrote in the context of our decision tree regressor.
+through a simple Python implementation that builds on the code we wrote in the
+context of our decision tree regressor.
 
 > The Python code we will be discussing below can be found under the following
 > tag of the Github repository:
@@ -51,45 +52,72 @@ regression, the target predictions of each tree are averaged to form the final
 prediction of the ensemble.
 More concretely, consider a family of decision trees $\family =
 \setpred{\function{f_i}{\R^\nfeat}{\R}}{i = 1, \ldots, \nest}$.
+The collection or ensemble $\family$ of trees is collectively referred to as
+a *random forest*.
 Given an unseen observation $\vmx \in \R^\nfeat$, the random forest regressor
-returns
+now simply returns
 $$
   \yhat
-  = \frac{1}{\nest} \sum_{i=1}^\nest f_i(\vmx).
+  = \frac{1}{\nest} \sum_{i=1}^\nest f_i(\vmx)
 $$
+as its final prediction.
 And that's all there is to it.
-Since all trees are created independently from each other (as we will discuss
+Since all trees are created in the same if randomized way (as we will discuss
 next), each tree's prediction contributes equally to the final prediction.
 This is in stark contrast to some of the more advanced methods we'll be looking
 at in future posts, where different members of the ensemble might have more
 influence on the final result than others.
 
-## Seeing the Random Forest for the Decision Trees
+## Seeing the Random Forest for the Decision Trees[^sorry]
 
-In this section, we will briefly go over the construction of random forests.
+[^sorry]: Sorry, I couldn't help myself.
+
+In this section, we briefly go over the construction of random forests.
 Since a random forest is just a collection of trees trained on independently
-sampled subsets of the training set, the heavy lifting happens in the
-construction of individual trees.
+sampled subsets of the training set, the most complicated aspect of
+constructing a random forest was already covered in the previous post.
+We first cover a bit of customary terminology.
 
 ### Bootstrapping, Aggregating and Bagging
 
-### Aside: Random Sampling of the Training Set
+Since regression trees suffer from rather poor generalization (i.e., high
+variance in the bias-variance tradeoff), the fundamental idea of random forests
+is to inject some variation into the training procedure.
+In particular, we consider $\nest$ different trees, which are all trained on a
+different subset of the training data.
+The intuition here is that while each individual tree might slightly overfit
+the samples it was trained on, by averaging the predictions of each individual
+tree this effect may be reduced, thereby reducing variance.
 
-There is one section in the parameter description of scikit-learn's
-`RandomForestRegressor` class that first might appear a little
-counterintuitive.
-When bootstrapping is used to construct the individual trees (the default
-behavior), the number of samples drawn for each tree is controlled by the
-`max_samples` parameter, which defaults to the total number of training
-samples.
-At first glance, this sounds like the samples are simply shuffled (which
-wouldn't affect the resulting forest as the training set is unordered to begin
-with).
-The key is that observations are sampled uniformly at random from the training
-set *with* replacement.
+Subsampling the training set is more commonly referred to as *bootstrapping*;
+a training (sub)set created in this way is called a *bootstrapped set*.
+The combination of **b**ootstrapping the training set and **agg**regat**ing**
+the individual predictions to form the ensemble's final prediction is what is
+generally known as *bagging*.
+
+Apart from randomly subsampling the training data, there are other methods to
+force more variation into the individual regression trees.
+One common approach is to limit the number of features regression trees are
+allowed to consider when splitting internal nodes.
+In particular, at each node one randomly selects a fixed-size subset of
+features to consider.
+This may help avoid the tendency of trees to split on the same features as the
+other trees in the ensemble, even if they are trained on (different)
+bootstrapped samples, which ultimately helps reduce variance further.
+
+### Random Sampling of the Training Set
+
+While the number of samples drawn from the training (*with* replacement) set to
+form the bootstrapped sample is usually around $\nsamp / 3$ in classification
+tasks, in regression it is more common to draw $\nsamp$ samples from the
+training set.
+This may seem slightly counterintuitive at first glance as one might assume the
+bootstrapped set to almost coincide with the entire training set.
 Intuitively, the probability of selecting each sample only once is vanishingly
 small, so we can generally expect that a certain fraction of samples is chosen
 multiple times.
+In actuality, however, this sampling procedure turns out to always select
+roughly 2/3 of the training samples.
 The question now is how many unique samples are drawn on average.
 
 To frame this question mathematically, let $S$ be a random subset of $[\nsamp]
@@ -134,8 +162,7 @@ $$
   \parens{\frac{\nsamp-1}{\nsamp}}^\nsamp}
   \eqdef \sum_{i=1}^\nsamp X_i.
 $$
-Clearly, we have that $\E X_i = 0$ and $\abs{X_i} \leq 1$ a.s. for all $i \in
-[\nsamp]$.
+Clearly, $\E X_i = 0$ and $\abs{X_i} \leq 1$ a.s. for all $i \in [\nsamp]$.
 Hence Hoeffding's inequality states that for $t > 0$,
 $$
   \P(\abs{\card{S} - \E\card{S}} \geq t)
