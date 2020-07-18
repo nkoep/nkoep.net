@@ -1,12 +1,11 @@
 <script>
   import Logo from "./Logo.svelte";
-  import Menu from "./Menu.svelte";
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
   import { showMenu } from "../stores.js";
 
   import Icon from "svelte-awesome/components/Icon.svelte";
-  import { faBars } from "@fortawesome/free-solid-svg-icons";
+  import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 	export let segment;
 </script>
@@ -64,12 +63,8 @@
   </div>
 
   <div id="menu-button">
-    <button on:click={() => $showMenu = true}>
-      <Icon data={faBars} scale="1.25"/>
+    <button on:click={() => $showMenu = !$showMenu}>
+      <Icon data={$showMenu ? faTimes : faBars} scale="1.25"/>
     </button>
   </div>
 </header>
-
-{#if $showMenu}
-  <Menu {segment}/>
-{/if}

@@ -4,6 +4,8 @@
   import { stores } from "@sapper/app";
 
 	import Header from "../components/Header.svelte";
+  import Menu from "../components/Menu.svelte";
+  import { showMenu } from "../stores.js";
 
 	export let segment;
 
@@ -213,10 +215,22 @@
   h1 .icon-link {
     display: none;
   }
+
+  .small-screen {
+    @media only screen and (min-width: $menu-breakpoint) {
+      display: none;
+    }
+  }
 </style>
 
 <main>
   <Header {segment}/>
+
+  {#if $showMenu}
+    <div class="small-screen">
+      <Menu {segment}/>
+    </div>
+  {/if}
 
   {#if show}
     <div id="outlet" in:fade={{duration: 650}}>
