@@ -19,6 +19,7 @@
         initialPageLoad = false;
         return;
       }
+      $showMenu = false;
       show = false;
       setTimeout(() => show = true, 0);
     });
