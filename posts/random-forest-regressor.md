@@ -52,21 +52,22 @@ as random forests simply combine the individual predictions into a consensus
 prediction of the entire ensemble.
 In a classification task, this is a simple majority vote, i.e., the most
 commonly predicted class among all trees wins, whereas in the context of
-regression, the target predictions of each tree are averaged to form the final
+regression, the target predictions of all trees are averaged to form the final
 prediction of the ensemble.
 More concretely, consider a family of decision trees $\family =
 \setpred{\function{f_i}{\R^\nfeat}{\R}}{i = 1, \ldots, \nest}$ collectively
-forming the basis of a random forest.[^not-basis]
+forming the basis of the random forest.[^not-basis]
 Given an unseen observation $\vmx \in \R^\nfeat$, the random forest regressor
 now simply returns
 $$
   \yhat
-  = \frac{1}{\nest} \sum_{i=1}^\nest f_i(\vmx)
+  = \frac{1}{\nest} \sum_{f \in \family} f(\vmx)
 $$
 as its final prediction.
 And that's all there is to it.
-Since all trees are created in the same if randomized way (as we will discuss
-next), each tree's prediction contributes equally to the final prediction.
+Since all trees are created in the same if randomized way (the details of which
+we will discuss next), each tree's prediction contributes equally to the final
+prediction.
 This is in stark contrast to some of the more advanced methods we'll be looking
 at in future posts, where different members of the ensemble might have a
 stronger influence on the final prediction than others.
@@ -92,8 +93,7 @@ In particular, we consider $\nest$ different trees, which are all trained on
 different subsets of the training data.
 The intuition here is that while each individual tree might slightly overfit
 the samples it was trained on, by averaging the predictions of each individual
-tree this effect may be reduced, which in turn reduces prediction variance of
-unseen data.
+tree this effect may be reduced, which in turn reduces variance on unseen data.
 
 Subsampling the training set is more commonly referred to as *bootstrapping*;
 a training (sub)set created in this way is called a *bootstrapped set*.
@@ -111,7 +111,7 @@ This often helps avoid the tendency of trees to split on the same features as
 other trees in the ensemble due to highly correlated, dominant features, even
 if they are trained on bootstrapped samples.
 A closely related ensemble method called *extremely randomized trees* (or
-*extra trees* for short), take things one step further.
+*extra trees* for short), takes things one step further.
 Instead of choosing the best split threshold based on the samples in a node,
 they randomly generate a set of candidate thresholds and pick the threshold
 with the best score to further decouple individual trees from the
@@ -124,8 +124,8 @@ While the number of samples drawn from the training set (*with* replacement) to
 form the bootstrapped sample is usually around $\nsamp / 3$ in classification
 tasks, in regression it is more common to draw $\nsamp$ samples from the
 training set.
-This may seem slightly counterintuitive at first glance as one might assume the
-bootstrapped set to almost coincide with the entire training set.
+This may seem slightly counterintuitive at first glance as one might assume
+that the bootstrapped set almost coincides with the entire training set.
 Intuitively, the probability of selecting each sample only once is rather
 small, so we can generally expect that a certain fraction of samples is chosen
 multiple times.
@@ -139,7 +139,7 @@ In order to evaluate $\E\card{S}$, we'll use a common trick in probability
 theory by expressing $\card{S}$ in terms of indicator functions.
 In particular, denote by $\event_i$ the event that $i \in S$.
 Then $|S| = \sum_{i=1}^\nsamp \ind{\event_i}$, where
-$\ind{\event_i}$ is $1$ if $\event_i$ happens, and 0 otherwise.
+$\ind{\event_i}$ is 1 if $\event_i$ happens, and 0 otherwise.
 By linearity of expectation, this yields
 $$
   \E\card{S}
@@ -148,8 +148,8 @@ $$
   = \sum_{i=1}^\nsamp (1 - \P(\comp{\event_i})).
 $$
 It remains to estimate the probability of the complementary event
-$\comp{\event_i}$, i.e., we never pick $i$ when drawing $\nsamp$ elements
-from $[\nsamp]$.
+$\comp{\event_i}$, i.e., we never pick element $i$ when drawing $\nsamp$
+elements from $[\nsamp]$.
 Since each element of $[\nsamp]$ is equally likely, we have by independence of
 individual draws that
 $$
@@ -180,8 +180,8 @@ $$
   = \P\parens{\abs{\sum_{i=1}^\nsamp X_i} \geq t}
   \leq 2 \exp\parens{-\frac{t^2}{2\nsamp}}.
 $$
-In other words, the probability that $\card{S}$ deviates a lot from its mean
-decays exponentially fast.
+In other words, the probability that $\card{S}$ deviates significantly from its
+mean decays exponentially fast.
 
 Note that with the limit representation $e^x = \lim_{n \to \infty} (1 +
 x/n)^n$, for large $\nsamp$ we roughly have that
@@ -207,7 +207,7 @@ This will come back to bite us now since we have to train several independent
 trees instead of just one, albeit with fewer samples per tree than before.
 While we could train each tree in parallel to try improve runtime performance,
 a simpler approach to speed things up a bit is through
-[numba](http://numba.pydata.org/).
+[Numba](http://numba.pydata.org/).
 
 ### Speeding Up Decision Tree Fitting with Numba
 
@@ -268,9 +268,9 @@ and `random_state`.
 The `max_features` parameter limits the size of the randomly chosen feature set
 to consider during internal splits.
 The `random_state` parameter is necessary to seed our random number generator
-(RNG) with a fixed seed to make tree construction reproducible.
+(RNG) with a fixed seed to make training reproducible across different runs.
 
-The rest of the implementation is self-explanatory.
+The rest of the implementation is fairly self-explanatory.
 
 ```python
     def fit(self, X, y):
@@ -295,19 +295,19 @@ The rest of the implementation is self-explanatory.
         return np.array([self._predict_sample(row) for row in np.array(X)])
 ```
 
-In the `fit` method, we instantiate an RNG based on `random_state`, and then
+In the `fit` method, we instantiate an RNG seeded with `random_state`, and then
 generate a bootstrapped dataset for each individual tree.
 We also change the constructor of the `Tree` class to accept a reference to our
 internal RNG in order to randomize the feature set if `max_features` is
 specified.
 The changes to the `Tree` class's `construct_tree` method to accommodate random
-feature selection are also very straightforward (see https://git.io/JJnq7)
+feature selection are also straightforward (see https://git.io/JJnq7).
 
 To see how this implementation fares against scikit-learn's
 `RandomForestRegressor`, we train both algorithms with ensembles of 25 trees
-each and limit the number of features to consider in each split
+and limit the number of features to consider in each split
 (`max_features`) to 5.
-As before, we compare the performance of both implementations on the Boston
+As before, we evaluate the performance of both implementations on the Boston
 house-prices dataset.
 
 ```shell
@@ -333,6 +333,8 @@ prediction performance over single trees.
 Once again the prediction accuracy of both implementations is very close, with
 the scikit-learn version having a significant edge in terms of runtime as
 expected.
+However, by leveraging Numba in our `Tree` class, we manage to bring the
+training time of our random forest down from around 10 seconds to 1 second.
 
 ## Closing Remarks
 
@@ -344,12 +346,13 @@ assuming a fast construction algorithm for single decision trees.
 By randomizing both the training set and features considered when splitting
 internal nodes of decision trees in the ensemble, random forests tend to reduce
 overfitting, and thereby improve generalization and reduce variance.
+
 Due to the independence of individual trees in the ensemble, random forests
 lend themselves well to parallel training, which can be very beneficial for
 very large datasets.
 However, the independent nature in which individual estimators of the ensemble
 are trained leaves a lot of unused potential to improve predictive performance
-of the ensemble on the table.
+on the table.
 In the next post, we'll be looking at a classical example of an ensemble method
-based on *boosting*, which gradually improve the performance of the ensemble as
-training progresses.
+based on *boosting*, which gradually improves the performance of the ensemble
+as training progresses.
