@@ -12,28 +12,32 @@ learning.
 Decision trees are very simple models, which are easy to understand and apply,
 but which suffer from rather poor performance as they tend to be fairly biased
 towards the training data.
-Without deliberate measures to limit the complexity of the constructed trees,
-we may end up with trees where each leaf contains exactly one training sample
-in extreme cases.
+Without deliberate measures to limit the complexity of constructed trees, we
+may potentially end up with trees where each leaf contains exactly one training
+sample.
 Imposing limits on the tree depth, the minimum number of samples required in a
 leaf node, or the minimum number of samples to split an internal node can all
 help improve the generalization of trees.
-However, the performance on unseen data ultimately remains rather poor
-unfortunately.
+However, the performance on unseen data ultimately remains rather poor.
 
 One common way to combat this effect is by considering *ensembles* of trees,
-where each tree in the ensemble "votes" on the final
-prediction.
+where each tree in the ensemble "votes" on the final prediction.
 *Random forests*, the topic of this post, are a popular method in this
-category, which consider *randomized ensembles* constructed in a way that
-avoids some issues that more naive ensemble methods suffer from.
+category which consider *randomized ensembles*.
+In particular, random forests grow a collection of decision trees in isolation.
+On the one hand this means that the construction procedure is simple and easily
+parallelizable. On the other hand it means there is no mechanism to gradually
+improve the performance of the ensemble based on previously constructed trees.
+In contrast, *boosting* methods such as *AdaBoost* or *gradient-boosted trees*,
+which we will discuss in upcoming posts, incrementally improve the performance
+of the ensemble as it grows.
 
 The rest of the post is structured as follows.
 We first explain how an existing random forest is used to perform prediction on
 new samples.
 We then briefly explain how random forests are constructed, before going
-through a simple Python implementation that builds on the code we wrote in the
-context of our decision tree regressor.
+through a simple Python implementation that builds on the code we discussed
+last time in the context of our decision tree regressor.
 
 > The Python code we will be discussing below can be found under the following
 > tag of the Github repository:
@@ -51,9 +55,8 @@ commonly predicted class among all trees wins, whereas in the context of
 regression, the target predictions of each tree are averaged to form the final
 prediction of the ensemble.
 More concretely, consider a family of decision trees $\family =
-\setpred{\function{f_i}{\R^\nfeat}{\R}}{i = 1, \ldots, \nest}$.
-The collection or ensemble $\family$ of trees is collectively referred to as
-a *random forest*.
+\setpred{\function{f_i}{\R^\nfeat}{\R}}{i = 1, \ldots, \nest}$ collectively
+forming the basis of a random forest.[^not-basis]
 Given an unseen observation $\vmx \in \R^\nfeat$, the random forest regressor
 now simply returns
 $$
@@ -65,8 +68,11 @@ And that's all there is to it.
 Since all trees are created in the same if randomized way (as we will discuss
 next), each tree's prediction contributes equally to the final prediction.
 This is in stark contrast to some of the more advanced methods we'll be looking
-at in future posts, where different members of the ensemble might have more
-influence on the final result than others.
+at in future posts, where different members of the ensemble might have a
+stronger influence on the final prediction than others.
+
+[^not-basis]: We emphasize that we *don't* mean a basis in the linear algebraic
+  sense here.
 
 ## Seeing the Random Forest for the Decision Trees[^sorry]
 
@@ -75,50 +81,55 @@ influence on the final result than others.
 In this section, we briefly go over the construction of random forests.
 Since a random forest is just a collection of trees trained on independently
 sampled subsets of the training set, the most complicated aspect of
-constructing a random forest was already covered in the previous post.
-We first cover a bit of customary terminology.
+constructing a random forest was already discussed in the previous post.
 
 ### Bootstrapping, Aggregating and Bagging
 
 Since regression trees suffer from rather poor generalization (i.e., high
 variance in the bias-variance trade-off), the fundamental idea of random
 forests is to inject some variation into the training procedure.
-In particular, we consider $\nest$ different trees, which are all trained on a
-different subset of the training data.
+In particular, we consider $\nest$ different trees, which are all trained on
+different subsets of the training data.
 The intuition here is that while each individual tree might slightly overfit
 the samples it was trained on, by averaging the predictions of each individual
-tree this effect may be reduced, thereby reducing variance.
+tree this effect may be reduced, which in turn reduces prediction variance of
+unseen data.
 
 Subsampling the training set is more commonly referred to as *bootstrapping*;
 a training (sub)set created in this way is called a *bootstrapped set*.
 The combination of **b**ootstrapping the training set and **agg**regat**ing**
 the individual predictions to form the ensemble's final prediction is what is
 generally known as *bagging*.
+This principle is not restricted to decision trees but can be applied to any
+classification or regression method in supervised learning.
 
-Apart from randomly subsampling the training data, there are other methods to
-force more variation into the individual regression trees.
-One common approach is to limit the number of features regression trees are
-allowed to consider when splitting internal nodes.
-In particular, at each node one randomly selects a fixed-size subset of
-features to consider.
-This may help avoid the tendency of trees to split on the same features as the
-other trees in the ensemble, even if they are trained on (different)
-bootstrapped samples, which ultimately helps reduce variance further.
+Apart from randomly subsampling the training data, random forests inject an
+additional source of randomness into the training procedure by limiting and
+randomizing the features individual trees are allowed to consider when
+splitting internal nodes.
+This often helps avoid the tendency of trees to split on the same features as
+other trees in the ensemble due to highly correlated, dominant features, even
+if they are trained on bootstrapped samples.
+A closely related ensemble method called *extremely randomized trees* (or
+*extra trees* for short), take things one step further.
+Instead of choosing the best split threshold based on the samples in a node,
+they randomly generate a set of candidate thresholds and pick the threshold
+with the best score to further decouple individual trees from the
+(bootstrapped) training set, thus potentially reducing variance.
+For simplicity, we will limit ourselves to random forests in this post.
 
 ### Random Sampling of the Training Set
 
-While the number of samples drawn from the training (*with* replacement) set to
+While the number of samples drawn from the training set (*with* replacement) to
 form the bootstrapped sample is usually around $\nsamp / 3$ in classification
 tasks, in regression it is more common to draw $\nsamp$ samples from the
 training set.
 This may seem slightly counterintuitive at first glance as one might assume the
 bootstrapped set to almost coincide with the entire training set.
-Intuitively, the probability of selecting each sample only once is vanishingly
+Intuitively, the probability of selecting each sample only once is rather
 small, so we can generally expect that a certain fraction of samples is chosen
 multiple times.
-In actuality, however, this sampling procedure turns out to always select
-roughly 2/3 of the training samples.
-The question now is how many unique samples are drawn on average.
+The question remains though how many unique samples are drawn on average.
 
 To frame this question mathematically, let $S$ be a random subset of $[\nsamp]
 \defeq \set{1, \ldots, \nsamp}$ generated by picking $\nsamp$ values uniformly
@@ -169,6 +180,8 @@ $$
   = \P\parens{\abs{\sum_{i=1}^\nsamp X_i} \geq t}
   \leq 2 \exp\parens{-\frac{t^2}{2\nsamp}}.
 $$
+In other words, the probability that $\card{S}$ deviates a lot from its mean
+decays exponentially fast.
 
 Note that with the limit representation $e^x = \lim_{n \to \infty} (1 +
 x/n)^n$, for large $\nsamp$ we roughly have that
@@ -184,36 +197,42 @@ training set of size $\nsamp$ with replacement, on average we will use around
 ## Python Implementation of a Random Forest Regressor
 
 We now turn to the Python implementation of a random forest regressor,
-leveraging the `Tree` class we wrote last time that implements the core logic
-of regression trees.
+leveraging the `Tree` class we wrote last time to implement the core logic of
+regression trees.
 As the informal runtime benchmark in the last post alluded to, our
-implementation is rather slow as we require $\bigO(\nsamp \nfeat)$ operations
-to find the best split in each internal node, where $\nsamp$ denotes the size
-of the training set.
+implementation is rather slow.
+In general, one requires $\bigO(\nsamp \nfeat)$ operations to find the best
+split in each internal node.
 This will come back to bite us now since we have to train several independent
-trees, albeit with fewer samples per tree as before.
-While we could train each tree in parallel, a simpler approach to speed things
-up a bit is through [numba](http://numba.pydata.org/).
+trees instead of just one, albeit with fewer samples per tree than before.
+While we could train each tree in parallel to try improve runtime performance,
+a simpler approach to speed things up a bit is through
+[numba](http://numba.pydata.org/).
 
 ### Speeding Up Decision Tree Fitting with Numba
 
 Numba is a just-in-time (JIT) compiler for Python that utilizes the
 [LLVM](https://llvm.org/) ecosystem to compile Python bytecode to efficient
 machine code.
-The dynamic nature of the Python language makes this process rather difficult
-if not impossible for arbitrary Python code.
-For the type of code often encountered in scientific computing, however, numba
-can generate incredibly fast code, especially due to its first-class support
-for numpy arrays.
+The dynamic nature of Python makes this process rather difficult if not
+impossible for arbitrary Python code.
+For the type of code regularly encountered in scientific computing, however,
+Numba can often generate incredibly fast code, especially due to its
+first-class support for NumPy arrays.
 
 In its simplest form, it suffices to decorate a function with the `njit`
-decorator imported from the `numba` package.
-For brevity, we refer to the numba
-[documentation](http://numba.pydata.org/numba-doc/latest/index.html) for
-further details.
-With these changes to our `Tree` class (which are fairly small, see
-https://git.io/JJZbz), the runtime of our decision tree example from the
-previous post improves from 1.7775 to 0.1233 seconds.
+decorator imported from the `numba` package to unlock the benefits of JIT
+compilation.
+In reality, however, there are usually a few tweaks and changes necessary to
+enable Numba to do its magic.
+In the interest of brevity, we skip any further details at this point and
+simply refer to the Numba
+[documentation](http://numba.pydata.org/numba-doc/latest/index.html).
+With a few minor changes to our `Tree` class (see https://git.io/JJZbz), the
+runtime of our decision tree example from the previous post improves from
+1.7775 to 0.1233 seconds.
+This puts us in a decent starting position to build our random forest
+regressor.
 
 ### Random Forest Regressor
 
@@ -231,9 +250,10 @@ from tree import Tree
 
 class RandomForest(BaseEstimator, RegressorMixin):
     def __init__(self, n_estimators=100, min_samples_split=2,
-                 random_state=None):
+                 max_features=None, random_state=None):
         self.n_estimators_ = n_estimators
         self.min_samples_split_ = min_samples_split
+        self.max_features_ = max_features
         self.random_state_ = random_state
 
         self._trees = []
@@ -243,10 +263,13 @@ The most important parameter, which should generally be optimized via
 hyperparameter tuning, is `n_estimators`, controlling the number of regressors
 in the ensemble.
 To keep things simple, we ignore any other parameters scikit-learn's
-`RandomForestRegressor` supports except for `min_samples_split` and
-`random_state`.
-The latter is necessary to seed our internal random number generator (RNG) with
-a fixed seed to make tree construction reproducible.
+`RandomForestRegressor` supports except for `min_samples_split`, `max_features`
+and `random_state`.
+The `max_features` parameter limits the size of the randomly chosen feature set
+to consider during internal splits.
+The `random_state` parameter is necessary to seed our random number generator
+(RNG) with a fixed seed to make tree construction reproducible.
+
 The rest of the implementation is self-explanatory.
 
 ```python
@@ -257,7 +280,7 @@ The rest of the implementation is self-explanatory.
         num_samples = X.shape[0]
 
         for _ in range(self.n_estimators_):
-            tree = Tree(self.min_samples_split_)
+            tree = Tree(self.min_samples_split_, self.max_features_, rng)
             indices = rng.integers(num_samples, size=num_samples)
             tree.construct_tree(X[indices, :], y[indices])
             self._trees.append(tree)
@@ -272,29 +295,61 @@ The rest of the implementation is self-explanatory.
         return np.array([self._predict_sample(row) for row in np.array(X)])
 ```
 
+In the `fit` method, we instantiate an RNG based on `random_state`, and then
+generate a bootstrapped dataset for each individual tree.
+We also change the constructor of the `Tree` class to accept a reference to our
+internal RNG in order to randomize the feature set if `max_features` is
+specified.
+The changes to the `Tree` class's `construct_tree` method to accommodate random
+feature selection are also very straightforward (see https://git.io/JJnq7)
+
 To see how this implementation fares against scikit-learn's
-`RandomForestRegressor`, we train both algorithms with 25 trees each, and
-compare their performances on the Boston house-prices dataset as before.
+`RandomForestRegressor`, we train both algorithms with ensembles of 25 trees
+each and limit the number of features to consider in each split
+(`max_features`) to 5.
+As before, we compare the performance of both implementations on the Boston
+house-prices dataset.
 
 ```shell
 $ python test_random_forest_regressor.py
 sklearn
 -------
-MAE: 2.581354330708661
-R^2 score: 0.7265594550869257
-Time elapsed: 0.061501 seconds
+MAE: 2.6788661417322834
+R^2 score: 0.6184095609224545
+Time elapsed: 0.042606 seconds
 
 naive
 -----
-MAE: 2.574992125984252
-R^2 score: 0.7180459986368835
-Time elapsed: 1.779618 seconds
+MAE: 2.6311585763318037
+R^2 score: 0.6216081856563564
+Time elapsed: 1.024935 seconds
 ```
 
 The results show a clear improvement over the predictive performance of the
 simple decision tree regressors we considered last time.
+This confirms that while estimators in the ensembles might be less optimized
+individually, randomization and aggregation overall helps improve the
+prediction performance over single trees.
 Once again the prediction accuracy of both implementations is very close, with
 the scikit-learn version having a significant edge in terms of runtime as
 expected.
 
 ## Closing Remarks
+
+Random forests constitute a simple extension of decision trees that build on
+ensembles of independently constructed trees trained on randomly sampled
+subsets of the training set.
+This makes random forests easy to implement and fairly efficient to train,
+assuming a fast construction algorithm for single decision trees.
+By randomizing both the training set and features considered when splitting
+internal nodes of decision trees in the ensemble, random forests tend to reduce
+overfitting, and thereby improve generalization and reduce variance.
+Due to the independence of individual trees in the ensemble, random forests
+lend themselves well to parallel training, which can be very beneficial for
+very large datasets.
+However, the independent nature in which individual estimators of the ensemble
+are trained leaves a lot of unused potential to improve predictive performance
+of the ensemble on the table.
+In the next post, we'll be looking at a classical example of an ensemble method
+based on *boosting*, which gradually improve the performance of the ensemble as
+training progresses.
