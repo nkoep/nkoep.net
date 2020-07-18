@@ -64,7 +64,7 @@
 
   <div id="menu-button">
     <button on:click={() => $showMenu = !$showMenu}>
-      <Icon data={$showMenu ? faTimes : faBars} scale="1.25"/>
+      <Icon data={$showMenu ? faTimes : faBars} scale="1.5"/>
     </button>
   </div>
 </header>
