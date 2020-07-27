@@ -24,7 +24,7 @@ header: img/mug.jpg
 
 ### Publications
 
-<https://dblp.uni-trier.de/pers/hd/k/Koep:Niklas>
+<https://scholar.google.com/citations?user=CpQ1YvMAAAAJ>
 
 ## Projects
 
