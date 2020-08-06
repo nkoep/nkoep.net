@@ -245,10 +245,12 @@ In order to keep complexity in check, one may therefore impose additional
 constraints, e.g. that internal nodes are only split if there are more than
 a specific number of observations left.
 Other options involve limiting the depth of the tree or the number of leaf
-nodes.
-The latter option complicates tree construction slightly by requiring a
-*pruning* step, however.
-To keep things simple, we will not concern ourselves with pruning here.
+nodes, or performing [tree
+pruning](https://en.wikipedia.org/wiki/Decision_tree_pruning).
+To keep things simple, we will only support limiting the number of samples
+required to split an internal node for the moment.
+The default value of 2 will always lead to fully grown trees, which corresponds
+to the default behavior of scikit-learn's `DecisionTreeRegressor` class.
 
 ## Python Implementation of a Decision Tree Regressor
 
