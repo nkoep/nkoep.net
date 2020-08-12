@@ -51,7 +51,21 @@ We will therefore begin our foray into the inner workings of AdaBoost for
 regression by detailing the training process.
 This will already provide a lot of intuition and insight for the subsequent
 prediction step and the corresponding Python implementation we will discuss
-towards the end of the post.
+towards the end of the post.[^adaboost-classification]
+
+[^adaboost-classification]: Note that this mainly applies to AdaBoost for
+  regression.
+  In the case of (binary) classification, the prediction step is very natural.
+  In short, every member in the ensemble has a nonnegative weight associated
+  with it, which are determined during training.
+  To classify a new sample, each estimator in the ensemble makes a prediction,
+  splitting the ensemble into those predicting one class and those predicting
+  the other.
+  Instead of simply selecting the class with the most votes, an AdaBoost binary
+  classifier predicts the class with the highest estimator weight sum of the
+  respective class.
+  In other words, AdaBoost for classification forms its predictions based on
+  a simple weighted average of vote counts.
 
 ### Ensemble Fitting
 
