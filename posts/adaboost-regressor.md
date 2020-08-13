@@ -10,28 +10,39 @@ After [introducing](/p/random-forest-regressor) random forests as a first
 algorithm in the class of *ensemble methods*, today's post covers another
 well-known ensemble method known as *AdaBoost*.
 AdaBoost, short for **ada**ptive **boost**ing, is, as the name suggests, based
-on the powerful *boosting* principle, which considers a collection of so-called
-*weak learners* which collaborate in a clever way to form accurate predictions.
+on the *boosting* principle.
+Boosting techniques consider a collection of so-called *weak learners* which
+collaborate in a clever way to form accurate predictions.
 A weak learner is a predictor which in itself only has limited predictive
-power, often achieved by restricting the complexity of a more expressive model.
+power, often constructed by restricting the complexity of a more expressive
+model.
 Consequently, the philosophy at the heart of boosting is *strength in numbers*,
 meaning that the power of the ensemble is due to the different strengths and
 weaknesses of its individual members.
 
 As described in the previous post, the estimators in a random forest ensemble
 are all trained in isolation.
-The improved predictive performance over simple decision trees is rooted in
+The improved predictive performance over simple decision trees is achieved by
 randomizing the training set for each estimator, and averaging the individual
-predictions of each tree.
+predictions of each tree, a process known as *bagging*.
 In contrast, boosting uses the information of how well the previous estimator
 in the ensemble performed on the training set to construct the next estimator.
 AdaBoost is a particular type of boosting algorithm which attempts to train a
 weak learner that performs better on training examples that the previous
 learner performed poorly on.
+
 In this post, we will discuss the most popular version of AdaBoost for
 regression commonly known as *AdaBoost.R2* as described in the
 [paper](https://dl.acm.org/doi/10.5555/645526.657132) "Improving Regressors
 Using Boosting Techniques" by H. Drucker.
+Note that even though the post focuses on tree-based regression methods, we
+emphasize that AdaBoost is a general boosting framework that is compatible with
+any type of supervised learning algorithm, not just decision trees.
+However, it is safe to say that the most common choice of weak learners in
+AdaBoost are
+[CARTs](https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees_.28CART.29).
+This is also the case for sklearn's `AdaBoostRegressor` estimator, which we
+will use as baseline to compare our implementation against later on.
 
 > The Python code this post refers to can be found here:
 > https://github.com/nkoep/fundamental-ml/tree/v3-adaboost.
