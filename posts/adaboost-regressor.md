@@ -13,11 +13,10 @@ AdaBoost, short for **ada**ptive **boost**ing, is, as the name suggests, based
 on the powerful *boosting* principle, which considers a collection of so-called
 *weak learners* which collaborate in a clever way to form accurate predictions.
 A weak learner is a predictor which in itself only has limited predictive
-capability, often achieved by restricting the complexity of a more versatile
-model.
-The boosting philosophy is *strength in numbers*, where the power of the
-ensemble is due to the different strengths and weaknesses of its individual
-members.
+power, often achieved by restricting the complexity of a more expressive model.
+Consequently, the philosophy at the heart of boosting is *strength in numbers*,
+meaning that the power of the ensemble is due to the different strengths and
+weaknesses of its individual members.
 
 As described in the previous post, the estimators in a random forest ensemble
 are all trained in isolation.
@@ -55,15 +54,14 @@ towards the end of the post.[^adaboost-classification]
 
 [^adaboost-classification]: Note that this mainly applies to AdaBoost for
   regression.
-  In the case of (binary) classification, the prediction step is very natural.
+  In the case of classification, the prediction step is rather natural.
   In short, every member in the ensemble has a nonnegative weight associated
   with it, which are determined during training.
   To classify a new sample, each estimator in the ensemble makes a prediction,
-  splitting the ensemble into those predicting one class and those predicting
-  the other.
-  Instead of simply selecting the class with the most votes, an AdaBoost binary
-  classifier predicts the class with the highest estimator weight sum of the
-  respective class.
+  splitting the ensemble into distinct subsets of estimators for each
+  individual class.
+  Instead of simply selecting the class with most votes, AdaBoost selects the
+  class with the highest sum of associated estimator weights.
   In other words, AdaBoost for classification forms its predictions based on
   a simple weighted average of vote counts.
 
