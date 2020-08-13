@@ -69,12 +69,44 @@ towards the end of the post.[^adaboost-classification]
   In short, every member in the ensemble has a nonnegative weight associated
   with it, which are determined during training.
   To classify a new sample, each estimator in the ensemble makes a prediction,
-  splitting the ensemble into distinct subsets of estimators for each
-  individual class.
-  Instead of simply selecting the class with most votes, AdaBoost selects the
+  splitting the ensemble into distinct subsets of estimators based on the
+  predicted classes.
+  Instead of simply choosing the class with most votes, AdaBoost selects the
   class with the highest sum of associated estimator weights.
-  In other words, AdaBoost for classification forms its predictions based on
-  a simple weighted average of vote counts.
+  In other words, in a classification context, AdaBoost forms its predictions
+  based on a simple weighted average of vote counts.
+
+To highlight the conceptual differences between random forests and AdaBoost, we
+begin by briefly reviewing the idea behind random forests.[^random-forests]
+A random forest is simply a collection of independently trained decision trees.
+Each tree is trained on a bootstrapped (i.e., randomly subsampled) version of
+the training set.
+This bootstrapping step reduces the likelihood that trees overfit to potential
+idiosyncracies in the training data, which might not be representative of the
+true data distribution we are trying to learn.
+Since all trees are trained independently, each tree has the same say in the
+final prediction of the ensemble, which is simply taken as the average of all
+predictions in a democratic manner.
+This combination of boostrapping the training set and aggregating individual
+predictions is commonly known as bagging.
+
+[^random-forests]: See [the previous post](/p/random-forest-regressor) for
+  details.
+
+In contrast, the estimators in an AdaBoost ensemble are constructed
+sequentially in order to improve the predictions of the next estimator for
+those training samples that the previous estimator performed poorly on.
+For starters, this means that there is no straightforward way to parallelize
+the training process.
+However, as touched on in the introduction, the estimators in an AdaBoost
+ensemble are usually weak learners whose model complexity is intentionally
+restricted.
+This means that each estimator is usually easy to train.
+Controlling the complexity of individual learners therefore allows for a
+trade-off between predictive power of the ensemble and training time.
+
+With the high-level differences between random forests and AdaBoost out of the
+way, we move on to the actual training process of an AdaBoost ensemble.
 
 ### Ensemble Fitting
 
