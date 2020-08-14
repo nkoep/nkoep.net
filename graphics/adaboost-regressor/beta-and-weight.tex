@@ -24,7 +24,7 @@
   \begin{axis}[
     ylabel={$\beta$}
   ]
-    \addplot[domain=0:0.95] {x / (1 - x)};
+    \addplot[domain=0:0.5] {x / (1 - x)};
   \end{axis}
 \end{tikzpicture}
 \quad
@@ -32,7 +32,7 @@
   \begin{axis}[
     ylabel={$w_t$}
   ]
-    \addplot[domain=0.01:0.99] {-ln(x / (1 - x))};
+    \addplot[domain=0.01:0.5] {-ln(x / (1 - x))};
   \end{axis}
 \end{tikzpicture}
 

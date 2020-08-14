@@ -23,7 +23,8 @@ const highlight = (str, language) => {
 
 const markdown = (new markdownIt({
   highlight,
-  linkify: true
+  linkify: true,
+  html: true
 })).use(katex, {
   macros,
   throwOnError: true

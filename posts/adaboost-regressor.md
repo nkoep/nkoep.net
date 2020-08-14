@@ -110,8 +110,214 @@ way, we move on to the actual training process of an AdaBoost ensemble.
 
 ### Ensemble Fitting
 
-### Prediction
+The core idea in training an AdaBoost ensemble is the following.
+We begin by training a weak learner on the entire training set.
+Every example in the training set is then fed to the estimator to determine the
+prediction error of each example.[^model-performance]
+As the weak learner only has limited predictive capability, the estimator will
+perform better on certain samples of the training set than on others.
+The idea now is to train another learner that performs better on exactly those
+samples.
+Naturally, this learner will again work better for some examples than others,
+so another learner is trained to improve performance on those samples, and so
+on.
+The question is how we can steer the training process to emphasize the
+importance of learning to predict certain samples over others.
+
+[^model-performance]: Obviously, evaluating model performance on the training
+  set is considered a mortal sin in learning theory.
+  In AdaBoost, however, the step is merely used to identify training samples
+  which a learner could not predict well.
+
+The strategy adopted by AdaBoost is to use a carefully resampled training set
+in which difficult samples are included multiple times.
+In particular, one defines a discrete probability distribution on the training
+set that is used to sample from the set, where difficult samples are assigned
+a higher probability such that they are more likely to appear multiple times
+in the resampled training set.
+Intuitively, by including difficult samples multiple times, the prediction
+error of the respective samples also have a higher impact on the overall
+prediction error as individual errors add up.
+Training a learner on such a dataset therefore naturally creates an estimator
+which performs better on the samples in question than the previous estimator.
+
+To make matters concrete, consider as usual a training set $\Trainset \defeq
+\set{(\vmx_1, y_1), \ldots, (\vmx_\nsamp, y_\nsamp)} \subset \R^\nfeat \times
+\R$ consisting of feature vectors $\vmx_i$ and labels $y_i$.
+We want to train an ensemble of weight/estimator pairs
+$$
+  \family =
+  \setpred{(w_t, f_t)}{w_t \in \R, \function{f_t}{\R^\nfeat}{\R}, t = 1,
+  \ldots, \nest},
+$$
+representing our AdaBoost regressor.
+We also define a sequence of *sample weights* $s_1, \ldots, s_\nsamp \in \R_+$,
+which we initialize as $s_i = 1$.
+
+We now proceed as follows for every estimator indexed by $t = 1, \ldots,
+\nest$:
+1. Normalize the sample weights $s_i$ to obtain a discrete probability
+   distribution on $\Trainset$:
+   $$
+     p_i \defeq
+     s_i / \sum_i s_i.
+   $$
+1. Draw $\nsamp$ samples from $\Trainset$ with replacement according to the
+   probability distribution $(p_1, \ldots, p_\nsamp)$ to obtain the resampled
+   training set $\tilde{\Trainset}$.
+1. Train a weak learner $\function{f_t}{\R^\nfeat}{\R}$ on the training set
+   $\tilde{\Trainset}$, and compute the prediction errors $e_i \defeq
+   \abs{f_t(\vmx_i) - y_i}$ for each example $(\vmx_i, y_i) \in \Trainset$ in
+   the original training set.
+   Now compute the normalized losses
+   $$
+     L_i \defeq
+     \frac{e_i}{\norm{(e_j)_{j=1}^\nsamp}_\infty} \in [0, 1],
+   $$
+   as well as the average loss $\bar{L} \defeq \sum_{i=1}^\nsamp p_i L_i$ of
+   the estimator.
+   If $\bar{L} \geq 0.5$, reject the current estimator (unless it is the first
+   one) and abort the training process.
+1. Compute
+   $$
+     \beta =
+     \frac{\bar{L}}{1 - \bar{L}},
+   $$
+   and set the estimator weight to $w_t = \log(1 / \beta)$.
+1. Finally, for each training example $i = 1, \ldots, \nsamp$, update the
+   associated sample weight $s_i$ according to
+   $$
+    s_i \leftarrow
+    s_i \beta^{1 - L_i}.
+   $$
+
+The steps outlined above follow the paper by H. Drucker that introduced
+AdaBoost.R2.
+Let's look a little closer at the involved quantities to gain a better
+intuition into the design of AdaBoost.
+
+First of all, while $L_i$ measures the performance of the estimator on a
+particular training example, $\bar{L}$ and consequently $\beta$ measure the
+overall (average) performance of the estimator $f_t$.
+Naturally, small values of $\beta$ indicate good performance on the original
+training set.
+The update rule of the sample weights in step 5 combines the overall quality
+of the estimator with the behavior on individual training examples.
+As outlined above, the idea is to increase the sample weight $s_i$ (and
+consequently the sample probability $p_i$) for a sample that was predicted
+poorly (i.e., high $L_i$) and decrease it otherwise.
+This is achieved by scaling the current weight $s_i$ by $\beta^{1-L_i}$ since
+$a^b$ for $a \in (0, 1)$ tends towards $1$ as $b$ goes to $0$ (from above).
+Note, however, that this only makes sense if $\beta < 1$ as implied by $\bar{L}
+< 0.5$.
+This is why a learner with an average error of $0.5$ or higher is rejected in
+step 3 and the training process aborted.
+
+The graphs below depict the behavior of $\beta$ and the estimator weight $w_t$
+as functions of the average error in the feasible region $\bar{L} \in (0,
+0.5]$.
+Since the estimator weight $w_t$ is the negative logarithm of $\beta$,
+estimators with a low average error are assigned a higher weight to indicate
+confidence in the accuracy of the estimator.
+This will play an important role in the prediction step.
+As $\bar{L}$ tends towards $0$, the estimator weight $w_t$ increases much
+faster than it decreases as $\bar{L} \to 0.5$.
+Intuitively, this means that AdaBoost has slightly more confidence in an
+estimator's assessment of being a good predictor compared to one that
+supposedly performed badly.
+Note that due to the value ranges of $\beta$ and $L_i$, every sample weight
+$s_i$ will remain nonnegative after step 5.
+Normalizing the updated samples weights according to step 1 therefore always
+yields a valid probability distribution on $\Trainset$.
+
+![Beta and weight as a function of the average
+loss](img/adaboost-regressor/beta-and-weight.svg)
+
+### Weighted Median Prediction
 
 ## Python Implementation of an AdaBoost Regressor
+
+```python
+import numpy as np
+from sklearn.base import BaseEstimator, RegressorMixin
+
+from random_state import ensure_random_state
+from tree import DecisionTree
+
+
+class Sprout(DecisionTree):
+    def __init__(self, **kwargs):
+        super().__init__(max_depth=3, **kwargs)
+
+
+class AdaBoost(BaseEstimator, RegressorMixin):
+    def __init__(self, n_estimators=50, random_state=None):
+        self.n_estimators = n_estimators
+        self.random_state = random_state
+
+        self._reset_sprouts()
+
+    def _reset_sprouts(self):
+        self.sprout_weights_ = np.zeros(self.n_estimators)
+        self.sprouts_ = []
+
+    def fit(self, X, y):
+        X, y = map(np.array, (X, y))
+        num_samples = X.shape[0]
+        sample_weights = np.ones(num_samples) / num_samples
+
+        self._reset_sprouts()
+
+        random_state = ensure_random_state(self.random_state)
+
+        for i in range(self.n_estimators):
+            # Resample the training set.
+            indices = random_state.choice(
+                np.arange(num_samples), size=num_samples, replace=True,
+                p=sample_weights)
+            X_resampled = X[indices, :]
+            y_resampled = y[indices]
+
+            # Train a weak learner on the resampled training data.
+            sprout = Sprout(random_state=random_state)
+            sprout.fit(X_resampled, y_resampled)
+
+            # Compute normalized losses and average loss.
+            predictions = sprout.predict(X)
+            prediction_errors = np.abs(y - predictions)
+            prediction_errors /= prediction_errors.max()
+            average_loss = np.inner(prediction_errors, sample_weights)
+
+            # Update estimator weights.
+            beta = average_loss / (1 - average_loss)
+            self.sprout_weights_[i] = np.log(1 / beta)
+            self.sprouts_.append(sprout)
+
+            # Update sample weights.
+            weights = sample_weights * beta ** (1 - prediction_errors)
+            sample_weights = weights / weights.sum()
+
+        return self
+
+    def predict(self, X):
+        if not self.sprouts_:
+            raise RuntimeError("Estimator needs to be fitted first")
+
+        predictions = np.array([
+            sprout.predict(X) for sprout in self.sprouts_])
+
+        sort_indices = predictions.argsort(axis=0)
+        sorted_weights = self.sprout_weights_[:, np.newaxis][
+            sort_indices].squeeze()
+        cumulative_weights = np.cumsum(sorted_weights, axis=0)
+        weight_sums = cumulative_weights[-1, :]
+        predictor_indices = (cumulative_weights >=
+                   0.5 * weight_sums[np.newaxis, :]).argmax(axis=0)
+
+        num_samples = X.shape[0]
+        selectors = np.arange(num_samples)
+        return predictions[sort_indices[predictor_indices, selectors],
+                           selectors]
+```
 
 ## Closing Remarks
