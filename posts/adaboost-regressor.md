@@ -281,6 +281,18 @@ def weighted_median(weights, elements):
 
 ## Python Implementation of an AdaBoost Regressor
 
+As usual, we close out the post by briefly presenting a rudimentary Python
+implementation of the discussed algorithm.
+We begin with a tiny utility class and the high-level definition of our
+`AdaBoost` class.[^sklearn-conventions]
+
+[^sklearn-conventions]: Note that the code presented in previous posts did not
+  properly follow sklearn's coding conventions.
+  For instance, parameters passed in to the constructor should always be
+  exposed as "public" members (i.e., not prefixed with underscores).
+  Moreover, instance attributes which are modified during calls to the `fit`
+  method of an estimator should always be suffixed with an underscore.
+
 ```python
 import numpy as np
 from sklearn.base import BaseEstimator, RegressorMixin
@@ -304,7 +316,26 @@ class AdaBoost(BaseEstimator, RegressorMixin):
     def _reset_sprouts(self):
         self.sprout_weights_ = np.zeros(self.n_estimators)
         self.sprouts_ = []
+```
 
+As pointed out in the beginning, AdaBoost is compatible with any type of
+regression method.
+However, since we always try to stay reasonably close to sklearn's interface,
+we use the same type of base estimator as sklearn's `AdaBoostRegressor`
+defaults to, namely a decision tree regressor with `max_depth` set to
+3.[^max-depth]
+We refer to such a tree as a *sprout*.
+
+Next up is the usual `fit` method, which implements the steps outlined in the
+section on ensemble fitting above.
+The implementation is a fairly straightforward translation of the update rules
+into Python code.
+
+[^max-depth]: Note that in previous posts, we did not support limiting the tree
+  depth to arbitrary values of `max_width`.
+  This rather silly restriction was lifted in .
+
+```python
     def fit(self, X, y):
         X, y = map(np.array, (X, y))
         num_samples = X.shape[0]
@@ -332,6 +363,12 @@ class AdaBoost(BaseEstimator, RegressorMixin):
             prediction_errors /= prediction_errors.max()
             average_loss = np.inner(prediction_errors, sample_weights)
 
+            # Early termination if loss is too bad.
+            if average_loss >= 0.5:
+                if len(self.sprouts_) == 0:
+                    self.sprouts_.append(sprout)
+                break
+
             # Update estimator weights.
             beta = average_loss / (1 - average_loss)
             self.sprout_weights_[i] = np.log(1 / beta)
@@ -342,26 +379,62 @@ class AdaBoost(BaseEstimator, RegressorMixin):
             sample_weights = weights / weights.sum()
 
         return self
+```
+
+Lastly, it remains to implement the `predict` method, which uses the
+`weighted_median` function already presented above.
+For simplicity, we determine the weighted median for one observation at a time.
+Hence in the `predict` method, we first pass the matrix of observations to
+each predictor, and turn the resulting list of 1-dimensional NumPy arrays
+into the `predictions` array of shape `(num_samples, n_estimators)`.
+Each row of this array contains the predictions of the estimators in the
+ensemble for each individual observation.
+We then compute the weighted median of each row w.r.t. estimator weights the
+`self.sprout_weights_`.
+
+```python
+    def _weighted_median(self, weights, elements):
+        sort_indices = np.argsort(elements)
+        sorted_weights = weights[sort_indices]
+        cumulative_weights = np.cumsum(sorted_weights)
+        index = (cumulative_weights >= 0.5 * np.sum(weights)).argmax()
+        return elements[sort_indices[index]]
 
     def predict(self, X):
         if not self.sprouts_:
             raise RuntimeError("Estimator needs to be fitted first")
 
-        predictions = np.array([
-            sprout.predict(X) for sprout in self.sprouts_])
-
-        sort_indices = predictions.argsort(axis=0)
-        sorted_weights = self.sprout_weights_[:, np.newaxis][
-            sort_indices].squeeze()
-        cumulative_weights = np.cumsum(sorted_weights, axis=0)
-        weight_sums = cumulative_weights[-1, :]
-        predictor_indices = (cumulative_weights >=
-                   0.5 * weight_sums[np.newaxis, :]).argmax(axis=0)
-
-        num_samples = X.shape[0]
-        selectors = np.arange(num_samples)
-        return predictions[sort_indices[predictor_indices, selectors],
-                           selectors]
+        predictions = np.array([sprout.predict(X)
+                                for sprout in self.sprouts_]).T
+        return np.array([self._weighted_median(self.sprout_weights_, row)
+                         for row in predictions])
 ```
+
+As usual, we sanity-check our implementation by comparing its performance
+against sklearn's implementation on the Boston housing dataset.
+We limit the number of estimators in the ensemble to 25.
+
+```shell
+$ python test_adaboost_regressor.py
+sklearn
+-------
+MAE: 3.074215066418774
+R^2 score: 0.5717439634843211
+Time elapsed: 0.039751 seconds
+
+naive
+-----
+MAE: 3.1515798879484787
+R^2 score: 0.5608751574764101
+Time elapsed: 0.781498 seconds
+```
+
+We point out that these results fall somewhat behind the performance of the
+random forest regressor presented in the previous post.
+Note, however, that this is likely due to the fact that we did not bother to
+perform any hyperparameter tuning.
+The point of these informal comparisons is merely to verify the (probably)
+correct behavior of our implementation rather than an exhaustive performance
+comparison.
 
 ## Closing Remarks
