@@ -15,7 +15,7 @@ export default {
   "\\eqdef": "=:",
   "\\card": "|#1|",
   "\\abs": "\\left|#1\\right|",
-  "\\opt": "#1^\\ast",
+  "\\opt": "{#1^\\ast}",
   "\\argmin": "\\mathop{\\operatorname{argmin}}\\limits",
   "\\E": "\\mathbb{E}",
   "\\P": "\\mathbb{P}",

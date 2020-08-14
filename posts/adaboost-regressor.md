@@ -235,6 +235,50 @@ loss](img/adaboost-regressor/beta-and-weight.svg)
 
 ### Weighted Median Prediction
 
+As the title of the section suggests, AdaBoost uses the weighted median of the
+individual predictions to determine the final prediction of the ensemble.
+Ignoring the estimator weights $w_t$ for a moment, simply taking the median of
+the estimates $\set{f_t(\vmx)}_{t=1}^\nest$ for an unseen observation $\vmx \in
+\R^\nfeat$ could be interpreted as a form of continuous majority voting that is
+robust to sporadic outliers in the predictions.
+However, this would ignore the confidence information that we have about each
+predictor's accuracy on the training set as determined during model training.
+Instead, AdaBoost first orders each prediction in ascending order such that
+$$
+  f_{\pi(1)}(\vmx) \leq
+  f_{\pi(2)}(\vmx) \leq
+  \ldots \leq
+  f_{\pi(\nest)}(\vmx)
+$$
+where $\function{\pi}{[\nest]}{[\nest]}$ is a permutation, and $[n] \defeq
+\set{1, \ldots, n}$ for $n \in \N$.
+It then finds the smallest index $\opt{t} = 1, \ldots, \nest$ for which the
+inequality
+$$
+  \sum_{i=1}^\opt{t} w_{\pi(i)} \geq \frac{1}{2} \sum_{t=1}^\nest w_t
+$$
+holds.
+The Wikipedia [article](https://en.wikipedia.org/wiki/Weighted_median) for the
+weighted median provides a good illustration of the principle.
+In short, the weights $w_t$ are interpreted as widths of the bars representing
+the values in our list of predictions.
+The weighted median is simply the value associated with the bar that we find
+when splitting the diagram in the middle.
+The following is a simple Python function that determines the weighted median
+of a 1-dimensional array, which serves as a basis for our estimator's
+`predict` method later on.
+
+```python
+import numpy as np
+
+def weighted_median(weights, elements):
+    sort_indices = np.argsort(elements)
+    sorted_weights = weights[sort_indices]
+    cumulative_weights = np.cumsum(sorted_weights)
+    index = (cumulative_weights >= 0.5 * np.sum(weights)).argmax()
+    return elements[sort_indices[index]]
+```
+
 ## Python Implementation of an AdaBoost Regressor
 
 ```python
