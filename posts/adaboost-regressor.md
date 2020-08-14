@@ -90,7 +90,7 @@ predictions in a democratic manner.
 This combination of boostrapping the training set and aggregating individual
 predictions is commonly known as bagging.
 
-[^random-forests]: See [the previous post](/p/random-forest-regressor) for
+[^random-forests]: See the [previous post](/p/random-forest-regressor) for
   details.
 
 In contrast, the estimators in an AdaBoost ensemble are constructed
@@ -333,7 +333,7 @@ into Python code.
 
 [^max-depth]: Note that in previous posts, we did not support limiting the tree
   depth to arbitrary values of `max_width`.
-  This rather silly restriction was lifted in .
+  This rather silly restriction was lifted in https://git.io/JJ5UW.
 
 ```python
     def fit(self, X, y):
@@ -438,3 +438,24 @@ correct behavior of our implementation rather than an exhaustive performance
 comparison.
 
 ## Closing Remarks
+
+Despite its seemingly complicated construction procedure, AdaBoost turns out to
+be a rather elegant ensemble method that gradually improves the predictive
+power of the ensemble as training progresses.
+At its core, it is based on a clever resampling trick of the training set that
+is used to train additional estimators with better predictive performance on
+training examples that previous estimators in the ensemble struggled with.
+While this dependence between individual estimators prevents straightforward
+parallel training, AdaBoost estimators can still be trained rather efficiently
+since the base estimators of the ensemble are so-called weak learners.
+These models are usually very simple and on their own only have limited
+predictive power, which means they can generally be trained very efficiently.
+The simple nature of these estimators, however, does not diminish the
+predictive capabilities of an AdaBoost estimator.
+On the contrary, the fact that AdaBoost still manages to achieve highly
+competitive results despite the simplicity of its base estimators emphasizes
+the power of the boosting methodology.
+
+And with this we reached the end of the penultimate post in this short
+series on tree-based regression algorithms, which we will close out with the
+final post on *gradient-boosted trees*.
