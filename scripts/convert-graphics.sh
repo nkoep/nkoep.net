@@ -23,7 +23,7 @@ mkdir -p "$outputdir"
 for f in "$inputdir"/*.pdf; do
   filename="$(basename $f)"
   stem="${filename%.*}"
-  echo inkscape \
+  inkscape \
     --pdf-poppler \
     --export-plain-svg \
     --export-text-to-path \
