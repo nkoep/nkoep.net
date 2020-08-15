@@ -1,13 +1,13 @@
 <script context="module">
-	export async function preload({ params, query }) {
+  export async function preload({ params, query }) {
     const response = await this.fetch("p.json");
     const posts = await response.json();
     return { posts };
-	}
+  }
 </script>
 
 <script>
-	export let posts;
+  export let posts;
 </script>
 
 <style lang="scss">
@@ -43,14 +43,14 @@
 </style>
 
 <svelte:head>
-	<title>Niklas Koep</title>
+  <title>Niklas Koep</title>
 </svelte:head>
 
 <div>
-	{#each posts as post}
+  {#each posts as post}
     <a class="post" rel="prefetch" href="p/{post.slug}">
       <h1>{post.title}</h1>
       <p class="date">{post.date}</p>
     </a>
-	{/each}
+  {/each}
 </div>

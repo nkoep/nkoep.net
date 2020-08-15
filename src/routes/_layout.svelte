@@ -3,11 +3,11 @@
   import { afterUpdate, onMount } from "svelte";
   import { stores } from "@sapper/app";
 
-	import Header from "../components/Header.svelte";
+  import Header from "../components/Header.svelte";
   import Menu from "../components/Menu.svelte";
   import { showMenu } from "../stores.js";
 
-	export let segment;
+  export let segment;
 
   let show = true;
   let initialPageLoad = true;

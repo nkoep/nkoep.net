@@ -7,7 +7,7 @@
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-	export let segment;
+  export let segment;
 </script>
 
 <style lang="scss">

@@ -9,16 +9,16 @@ import headings from "markdown-it-github-headings";
 import macros from "./_katex-macros.js";
 
 const highlight = (str, language) => {
-    if (language && hljs.getLanguage(language)) {
-      try {
-        return (
-          "<pre><code class=\"hljs\">" +
-          hljs.highlight(language, str, true).value +
-          "</code></pre>"
-        )
-      } catch (_) {}
-    }
-    return "";
+  if (language && hljs.getLanguage(language)) {
+    try {
+      return (
+        "<pre><code class=\"hljs\">" +
+        hljs.highlight(language, str, true).value +
+        "</code></pre>"
+      )
+    } catch (_) {}
+  }
+  return "";
 };
 
 const markdown = (new markdownIt({

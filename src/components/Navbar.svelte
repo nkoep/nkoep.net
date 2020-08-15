@@ -13,7 +13,7 @@
   [aria-current],
   [aria-current]::after {
     font-weight: bold;
-	}
+  }
 
   nav {
     font-family: "Montserrat", sans-serif;
@@ -32,7 +32,10 @@
 <nav>
   <ul>
     {#each pages as page}
-      <li><a on:click={() => $showMenu = false} aria-current={segment === page ? segment : undefined} href="{page}">{page}</a></li>
+      <li><a on:click={() => $showMenu = false}
+             aria-current={segment === page ? segment : undefined}
+             href="{page}"
+          >{page}</a></li>
     {/each}
   </ul>
 </nav>
