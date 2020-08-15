@@ -1,6 +1,6 @@
 ---
 title: "Tree-Based Regression Methods (Part III): AdaBoost"
-date: August 12, 2020
+date: August 15, 2020
 slug: adaboost-regressor
 ---
 
