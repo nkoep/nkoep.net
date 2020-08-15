@@ -82,12 +82,12 @@ A random forest is simply a collection of independently trained decision trees.
 Each tree is trained on a bootstrapped (i.e., randomly subsampled) version of
 the training set.
 This bootstrapping step reduces the likelihood that trees overfit to potential
-idiosyncracies in the training data, which might not be representative of the
+idiosyncrasies in the training data, which might not be representative of the
 true data distribution we are trying to learn.
 Since all trees are trained independently, each tree has the same say in the
 final prediction of the ensemble, which is simply taken as the average of all
 predictions in a democratic manner.
-This combination of boostrapping the training set and aggregating individual
+This combination of bootstrapping the training set and aggregating individual
 predictions is commonly known as bagging.
 
 [^random-forests]: See the [previous post](/p/random-forest-regressor) for
