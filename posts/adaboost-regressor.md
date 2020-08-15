@@ -13,26 +13,25 @@ AdaBoost, short for **ada**ptive **boost**ing, is, as the name suggests, based
 on the *boosting* principle.
 Boosting techniques consider a collection of so-called *weak learners* which
 collaborate in a clever way to form accurate predictions.
-A weak learner is a predictor which in itself only has limited predictive
-power, often constructed by restricting the complexity of a more expressive
-model.
+A weak learner is a predictor which by itself only has limited predictive
+power.
+Weak learners are usually based on more expressive models such as decision
+trees whose complexity is intentionally limited.
 Consequently, the philosophy at the heart of boosting is *strength in numbers*,
 meaning that the power of the ensemble is due to the different strengths and
 weaknesses of its individual members.
 
-As described in the previous post, the estimators in a random forest ensemble
-are all trained in isolation.
-The improved predictive performance over simple decision trees is achieved by
-randomizing the training set for each estimator, and averaging the individual
-predictions of each tree, a process known as *bagging*.
+As we discussed last time, the estimators in a random forest ensemble are all
+trained in isolation.
+The improved predictive performance and generalizability over simple decision
+trees is achieved by randomizing the training set for each estimator, and
+averaging the individual predictions of each tree.
+This process is known as *bagging*.
 In contrast, boosting uses the information of how well the previous estimator
 in the ensemble performed on the training set to construct the next estimator.
-AdaBoost is a particular type of boosting algorithm which attempts to train a
-weak learner that performs better on training examples that the previous
-learner performed poorly on.
 
-In this post, we will discuss the most popular version of AdaBoost for
-regression commonly known as *AdaBoost.R2* as described in the
+In this post, we will introduce the most popular version of AdaBoost for
+regression, commonly known as *AdaBoost.R2* as described in the
 [paper](https://dl.acm.org/doi/10.5555/645526.657132) "Improving Regressors
 Using Boosting Techniques" by H. Drucker.
 Note that even though the post focuses on tree-based regression methods, we
@@ -41,10 +40,10 @@ any type of supervised learning algorithm, not just decision trees.
 However, it is safe to say that the most common choice of weak learners in
 AdaBoost are
 [CARTs](https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees_.28CART.29).
-This is also the case for sklearn's `AdaBoostRegressor` estimator, which we
-will use as baseline to compare our implementation against later on.
+This is also the case for sklearn's `AdaBoostRegressor`, which we will use as
+baseline to compare our implementation against later on.
 
-> The Python code this post refers to can be found here:
+> The Python code accompanying this post can be found here:
 > https://github.com/nkoep/fundamental-ml/tree/v3-adaboost.
 
 ## Adaptive Boosting
@@ -53,15 +52,16 @@ In the case of decision trees and random forests, the prediction step was
 pretty straightforward once a trained regressor was available.
 Unfortunately, in the particular case of AdaBoost, the situation is slightly
 different.
-Naturally, prediction is still less complicated than the training procedure.
+Naturally, the prediction step is less complicated than the training step.
 However, there is not much insight to be gained from explaining how prediction
 is carried out first without going into the construction principle behind
-AdaBoost.
-We will therefore begin our foray into the inner workings of AdaBoost for
-regression by detailing the training process.
-This will already provide a lot of intuition and insight for the subsequent
-prediction step and the corresponding Python implementation we will discuss
-towards the end of the post.[^adaboost-classification]
+AdaBoost.[^adaboost-classification]
+In contrast to the previous two posts, we will therefore begin our foray into
+the inner workings of AdaBoost for regression by detailing the training
+process.
+This will provide some intuition and insight for the subsequent prediction
+step and the corresponding Python implementation we will discuss towards the
+end of the post.
 
 [^adaboost-classification]: Note that this mainly applies to AdaBoost for
   regression.
@@ -106,23 +106,23 @@ Controlling the complexity of individual learners therefore allows for a
 trade-off between predictive power of the ensemble and training time.
 
 With the high-level differences between random forests and AdaBoost out of the
-way, we move on to the actual training process of an AdaBoost ensemble.
+way, let us move on to the actual training process of an AdaBoost ensemble.
 
 ### Ensemble Fitting
 
 The core idea in training an AdaBoost ensemble is the following.
-We begin by training a weak learner on the entire training set.
-Every example in the training set is then fed to the estimator to determine the
-prediction error of each example.[^model-performance]
+We begin by training a weak learner on a bootstrapped training set.
+The estimator is than applied to every example in the original training set to
+determine the prediction error of each example.[^model-performance]
 As the weak learner only has limited predictive capability, the estimator will
 perform better on certain samples of the training set than on others.
 The idea now is to train another learner that performs better on exactly those
 samples.
-Naturally, this learner will again work better for some examples than others,
-so another learner is trained to improve performance on those samples, and so
-on.
+Naturally, this learner will again work better for some examples than for
+others, so another learner is trained to improve performance on those samples,
+and so on.
 The question is how we can steer the training process to emphasize the
-importance of learning to predict certain samples over others.
+importance of learning to predict certain samples better than others.
 
 [^model-performance]: Obviously, evaluating model performance on the training
   set is considered a mortal sin in learning theory.
@@ -137,11 +137,11 @@ a higher probability such that they are more likely to appear multiple times
 in the resampled training set.
 Intuitively, by including difficult samples multiple times, the prediction
 error of the respective samples also have a higher impact on the overall
-prediction error as individual errors add up.
+prediction error.
 Training a learner on such a dataset therefore naturally creates an estimator
 which performs better on the samples in question than the previous estimator.
 
-To make matters concrete, consider as usual a training set $\Trainset \defeq
+To make matters concrete, consider a training set $\Trainset \defeq
 \set{(\vmx_1, y_1), \ldots, (\vmx_\nsamp, y_\nsamp)} \subset \R^\nfeat \times
 \R$ consisting of feature vectors $\vmx_i$ and labels $y_i$.
 We want to train an ensemble of weight/estimator pairs
@@ -150,7 +150,8 @@ $$
   \setpred{(w_t, f_t)}{w_t \in \R, \function{f_t}{\R^\nfeat}{\R}, t = 1,
   \ldots, \nest},
 $$
-representing our AdaBoost regressor.
+representing our AdaBoost regressor, where the weights $w_t$ quantify the
+quality of individual estimators.
 We also define a sequence of *sample weights* $s_1, \ldots, s_\nsamp \in \R_+$,
 which we initialize as $s_i = 1$.
 
@@ -160,7 +161,7 @@ We now proceed as follows for every estimator indexed by $t = 1, \ldots,
    distribution on $\Trainset$:
    $$
      p_i \defeq
-     s_i / \sum_i s_i.
+     \frac{s_i}{\sum_{j=1}^\nsamp s_j}.
    $$
 1. Draw $\nsamp$ samples from $\Trainset$ with replacement according to the
    probability distribution $(p_1, \ldots, p_\nsamp)$ to obtain the resampled
@@ -196,8 +197,8 @@ AdaBoost.R2.
 Let's look a little closer at the involved quantities to gain a better
 intuition into the design of AdaBoost.
 
-First of all, while $L_i$ measures the performance of the estimator on a
-particular training example, $\bar{L}$ and consequently $\beta$ measure the
+First of all, while $L_i$ measures the performance of the estimator on the
+$i$-th training example, $\bar{L}$ and consequently $\beta$ measure the
 overall (average) performance of the estimator $f_t$.
 Naturally, small values of $\beta$ indicate good performance on the original
 training set.
@@ -227,7 +228,7 @@ estimator's assessment of being a good predictor compared to one that
 supposedly performed badly.
 Note that due to the value ranges of $\beta$ and $L_i$, every sample weight
 $s_i$ will remain nonnegative after step 5.
-Normalizing the updated samples weights according to step 1 therefore always
+Normalizing the updated sample weights according to step 1 therefore always
 yields a valid probability distribution on $\Trainset$.
 
 ![Beta and weight as a function of the average
@@ -261,11 +262,11 @@ holds.
 The Wikipedia [article](https://en.wikipedia.org/wiki/Weighted_median) for the
 weighted median provides a good illustration of the principle.
 In short, the weights $w_t$ are interpreted as widths of the bars representing
-the values in our list of predictions.
-The weighted median is simply the value associated with the bar that we find
-when splitting the diagram in the middle.
+the values in our list of predictions in a bar plot.
+Then the weighted median is simply the value associated with the bar that we
+find when drawing a vertical line in the middle of the diagram.
 The following is a simple Python function that determines the weighted median
-of a 1-dimensional array, which serves as a basis for our estimator's
+of a 1-dimensional array, which serves as the basis for our estimator's
 `predict` method later on.
 
 ```python
@@ -321,8 +322,8 @@ class AdaBoost(BaseEstimator, RegressorMixin):
 As pointed out in the beginning, AdaBoost is compatible with any type of
 regression method.
 However, since we always try to stay reasonably close to sklearn's interface,
-we use the same type of base estimator as sklearn's `AdaBoostRegressor`
-defaults to, namely a decision tree regressor with `max_depth` set to
+we use the same type of base estimator as the default choice in sklearn's
+`AdaBoostRegressor`, namely a decision tree regressor with `max_depth` set to
 3.[^max-depth]
 We refer to such a tree as a *sprout*.
 
@@ -389,7 +390,7 @@ each predictor, and turn the resulting list of 1-dimensional NumPy arrays
 into the `predictions` array of shape `(num_samples, n_estimators)`.
 Each row of this array contains the predictions of the estimators in the
 ensemble for each individual observation.
-We then compute the weighted median of each row w.r.t. estimator weights the
+We then compute the weighted median of each row w.r.t. the estimator weights
 `self.sprout_weights_`.
 
 ```python
@@ -410,7 +411,7 @@ We then compute the weighted median of each row w.r.t. estimator weights the
                          for row in predictions])
 ```
 
-As usual, we sanity-check our implementation by comparing its performance
+At last we briefly sanity-check our implementation by comparing its performance
 against sklearn's implementation on the Boston housing dataset.
 We limit the number of estimators in the ensemble to 25.
 
@@ -429,8 +430,10 @@ R^2 score: 0.5608751574764101
 Time elapsed: 0.781498 seconds
 ```
 
-We point out that these results fall somewhat behind the performance of the
-random forest regressor presented in the previous post.
+While our implementation's performance falls slightly behind sklearn's for our
+particular hyperparameter choice, our estimator seems to be working correctly.
+We also point out that both implementations fall somewhat behind the
+performance of the random forest regressor presented in the previous post.
 Note, however, that this is likely due to the fact that we did not bother to
 perform any hyperparameter tuning.
 The point of these informal comparisons is merely to verify the (probably)
@@ -454,8 +457,9 @@ The simple nature of these estimators, however, does not diminish the
 predictive capabilities of an AdaBoost estimator.
 On the contrary, the fact that AdaBoost still manages to achieve highly
 competitive results despite the simplicity of its base estimators emphasizes
-the power of the boosting methodology.
+the power of the particular boosting methodology.
 
 And with this we reached the end of the penultimate post in this short
-series on tree-based regression algorithms, which we will close out with the
-final post on *gradient-boosted trees*.
+series on tree-based regression algorithms.
+In the next post, we will finally cover the topic this series was originally
+motivated by: the powerful concept of *gradient-boosted regression trees*.
