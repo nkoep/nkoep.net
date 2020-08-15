@@ -1,12 +1,16 @@
 import frontMatter from "front-matter";
 import fs from "fs";
 import hljs from "highlight.js";
+import hljs_svelte from "highlightjs-svelte";
 import katex from "@neilsustc/markdown-it-katex";
 import footnotes from "markdown-it-footnote";
 import markdownIt from "markdown-it";
 import headings from "markdown-it-github-headings";
 
 import macros from "./_katex-macros.js";
+
+// Register svelte highlighter with highlight.js.
+hljs_svelte(hljs);
 
 const highlight = (str, language) => {
   if (language && hljs.getLanguage(language)) {
