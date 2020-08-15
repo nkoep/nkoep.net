@@ -48,7 +48,11 @@ const preprocess = [
     remarkPlugins: [
       slug,
       [headings, {
-        linkProperties: {ariaHidden: true, tabIndex: -1, className: "icon-link"},
+        linkProperties: {
+          ariaHidden: true,
+          tabIndex: -1,
+          className: "icon-link"
+        },
         content: {
           type: "text",
           value: "#"

@@ -15,12 +15,9 @@ hljs_svelte(hljs);
 const highlight = (str, language) => {
   if (language && hljs.getLanguage(language)) {
     try {
-      return (
-        "<pre><code class=\"hljs\">" +
-        hljs.highlight(language, str, true).value +
-        "</code></pre>"
-      )
-    } catch (_) {}
+      const code = hljs.highlight(language, str, true).value;
+      return `<pre><code class="hljs">${code}</code></pre>`;
+    } catch (exc) {}
   }
   return "";
 };
