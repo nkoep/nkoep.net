@@ -65,6 +65,7 @@ Some other notable works and favorites include
 
 <div class="video">
   <iframe src="https://www.youtube.com/embed/DtJYa5F2ghI" frameborder="0"
+          title="Echoes of 2017"
           allowfullscreen>
   </iframe>
 </div>
@@ -73,6 +74,7 @@ Some other notable works and favorites include
 
 <div class="video">
   <iframe src="https://www.youtube.com/embed/MO_XwBLHsFE" frameborder="0"
+          title="Echoes of 2016"
           allowfullscreen>
   </iframe>
 </div>
