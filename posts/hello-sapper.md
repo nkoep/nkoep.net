@@ -7,14 +7,13 @@ slug: hello-sapper
 ## Introduction
 
 The original version of this site was written as a hand-rolled framework-less
-single-page app (SPA) with a custom router managing the low-level details of
-the [History
-API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
+single-page app with a custom router managing the low-level details of the
+[History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
 This choice was mostly motivated by the desire to see what goes into writing a
 client-side JS-based router.
 Admittedly, my implementation suffered from a few annoying shortcomings as well
 as some outright silly design decisions.
-One example of such poor design was my insistence on serving pages as markdown
+One example of such poor design was my insistence on serving pages as Markdown
 files that were rendered on the client rather than serving pre-compiled HTML
 files.
 Moreover, since every page was served dynamically, every request to the site
@@ -28,21 +27,21 @@ Enter [Sapper](https://sapper.svelte.dev/), which is to
 [Svelte](https://svelte.dev/) what Next.js is to React and what Nuxt.js is to
 Vue.js.
 I had long been interested in playing around with Svelte, and rewriting my
-personal site in it was a natural opportunity to finally try it out.
+personal site in Sapper was a natural opportunity to finally try it out.
 In short, Svelte is not just another component framework like React or Vue.js
 but an optimizing compiler.
 While most frameworks do the heavy lifting inside their respective virtual DOM
-implementation running inside the browser, Svelte performs a lot of this work
+implementation running in the browser, Svelte performs a lot of this work
 offline as part of the compilation step.
 This allows for some rather unique features like true first-class
 [reactivity](https://svelte.dev/blog/svelte-3-rethinking-reactivity), and
-generally results in less code and reduced bundle sizes.
-[This](https://www.youtube.com/watch?v=AdNJ3fydeao) by now classic talk by
-Svelte's creator Rich Harris introduces the core ideas behind the project.
+generally results in less code and lower bundle sizes.
+[This](https://www.youtube.com/watch?v=AdNJ3fydeao) already classic talk by
+Svelte's creator Rich Harris introduces the main ideas behind the project.
 
 Sapper takes Svelte to its natural conclusion, and provides a framework to
 author web apps with out-of-the-box support for code-splitting as well as
-server-side rendering (SSR) that does not compromise SEO.
+server-side rendering (SSR) that does not compromise on SEO.
 Instead of listing all of Sapper's neat features, I'll simply refer interested
 readers to its introductory blog
 [post](https://svelte.dev/blog/sapper-towards-the-ideal-web-app-framework).
