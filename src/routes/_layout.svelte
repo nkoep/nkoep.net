@@ -102,6 +102,14 @@
     font-size: 12px;
   }
 
+  p {
+    > code {
+      background-color: rgba($fg-muted, 0.1);
+      border-radius: 3px;
+      padding: .2em .3em;
+    }
+  }
+
   blockquote {
     background-color: rgba($fg-muted, 0.02);
     border-left: solid 3px rgba($link, 0.75);
