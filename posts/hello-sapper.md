@@ -11,9 +11,9 @@ single-page app with a custom router managing the low-level details of the
 [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
 This choice was mostly motivated by the desire to see what goes into writing a
 client-side JS-based router.
-Admittedly, my implementation suffered from a few annoying shortcomings as well
-as some outright silly design decisions.
-One example of such poor design was my insistence on serving pages as Markdown
+Admittedly, the implementation suffered from a few annoying shortcomings as
+well as some outright silly design decisions.
+One example of such poor design was the insistence on serving pages as Markdown
 files that were rendered on the client rather than serving pre-compiled HTML
 files.
 Moreover, since every page was served dynamically, every request to the site
@@ -49,14 +49,19 @@ While there are some concepts in Svelte and Sapper that take a little getting
 used to, the overall developer experience is incredibly refreshing.
 However, I encountered a few issues along the way that seemed a little less
 straightforward to resolve than I had hoped for or anticipated.
-In this blog post, I therefore want to address 3 of those rough edges and
-present the way I resolved them in the end.
+In this blog post, I want to address 3 of those rough edges and present the way
+I resolved them in the end.
+In particular, we'll look at how to
+
+- add support for writing blog posts and regular pages in Markdown,
+- fix up anchor hash links to link to local page elements,
+- and add page transitions when navigating between different pages of the site.
 
 ## Markdown Pages
 
-The first and most crucial feature I was missing out-of-the-box after checking
-out the [Sapper template](https://github.com/sveltejs/sapper-template) was the
-lack of support for Markdown pages.
+The first and most crucial feature that was missing out-of-the-box after
+checking out the [Sapper template](https://github.com/sveltejs/sapper-template)
+was the lack of support for Markdown pages.
 Now in a way this shouldn't come as a surprise; in Sapper each page is simply
 assumed to be a Svelte component.
 I can appreciate this approach for regular pages of a site (i.e., any file in
@@ -95,10 +100,8 @@ export default posts;
 ### Regular Pages
 
 While looking around for a solution to the first issue, I naturally came across
-MDsveX which allows you to write Svelte components in Markdown in the spirit of
-[MDX](https://mdxjs.com/) for JSX in Markdown.
-Even though I don't have many regular pages on this site, I still preferred to
-write those pages in Markdown.
+[MDsveX](https://mdsvex.com/) which allows one to write Svelte components in
+Markdown in the spirit of [MDX](https://mdxjs.com/) for JSX in Markdown.
 While there's a Sapper starter
 [template](https://github.com/pngwn/sapper-mdsvex-template) with MDsveX
 support, setting it up manually with the regular Sapper template isn't too
@@ -134,7 +137,7 @@ export default {
         dev,
         hydratable: true,
         emitCss: true,
-        extensions: [".svelte", ".md"],
+        extensions: [".svelte", ".md"],  // Respect .md files.
         preprocess
       })
     ],
@@ -148,7 +151,7 @@ export default {
       svelte({
         generate: "ssr",
         dev,
-        extensions: [".svelte", ".md"],
+        extensions: [".svelte", ".md"],  // Respect .md files.
         preprocess
       }),
       // ...
@@ -158,22 +161,22 @@ export default {
 };
 ```
 
-After making these changes I was surprised to see that things were still not
-working as expected.
-There weren't any errors, but none of my MDsveX components appeared in the
-generated bundle.
-This is because in addition to telling Svelte to process `.md` files in our
-rollup config, we also have to tell Sapper to respect Markdown files when it is
-invoked.
+Surprisingly, after making these changes things were still not working as
+expected.
+Even though there weren't any errors, none of the MDsveX components actually
+appeared in the generated bundle.
+This is because in addition to telling Svelte to process `.md` files in the
+rollup config, it is also necessary to tell Sapper to respect Markdown files
+when it is invoked.
 To that end, we have to pass the option `--ext '.svelte .md'` to every
 invocation of the `sapper` utility inside
 [our](https://github.com/nkoep/nkoep.net/blob/acf400cbaad2b7f56aca9024848a93bb99be2554/package.json#L6)
 `package.json` file.
 With these changes any Markdown file in the `src/routes` directory ending in
-`.md` will first be converted to a regular Svelte component before being passed
-on to the Sapper pipeline.
+`.md` will first be converted to a regular Svelte component before being
+processed by Sapper.
 
-## Hydration of Internal Links
+## Hydration of Anchor Tags
 
 ```svelte
 <script>
