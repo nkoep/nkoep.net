@@ -40,12 +40,9 @@ const posts = fs.readdirSync("./posts").map(postFilename => {
     encoding: "utf8"
   });
   const postFrontMatter = frontMatter(postContent);
-  return {
-    title: postFrontMatter.attributes.title,
-    date: postFrontMatter.attributes.date,
-    slug: postFrontMatter.attributes.slug,
-    html: markdown.render(postFrontMatter.body)
-  }
+  const { title, date, slug } = postFrontMatter.attributes;
+  const html = markdown.render(postFrontMatter.body);
+  return {title, date, slug, html};
 });
 posts.sort((post1, post2) => new Date(post2.date) - new Date(post1.date));
 posts.forEach(post => {

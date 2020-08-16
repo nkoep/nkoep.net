@@ -54,7 +54,18 @@ present the way I resolved them in the end.
 
 ## Markdown Pages
 
-### Regular Pages
+The first and most crucial feature I was missing out-of-the-box after checking
+out the [Sapper template](https://github.com/sveltejs/sapper-template) was the
+lack of support for Markdown pages.
+Now in a way this shouldn't come as a surprise; in Sapper each page is simply
+assumed to be a Svelte component.
+I can appreciate this approach for regular pages of a site (i.e., any file in
+`src/routes` not prefixed with and underscore and ending in `.svelte`).
+However, this convention doesn't extend to blog posts, which in the Sapper
+template are defined as inline HTML strings in `src/routes/blog/_posts.js`.
+Since it's really not too much fun to write regular content pages or blog posts
+in plain HTML (or Svelte components for that matter), we make the following
+changes.
 
 ### Blog Posts
 
@@ -69,12 +80,9 @@ const posts = fs.readdirSync("./posts").map(postFilename => {
     encoding: "utf8"
   });
   const postFrontMatter = frontMatter(postContent);
-  return {
-    title: postFrontMatter.attributes.title,
-    date: postFrontMatter.attributes.date,
-    slug: postFrontMatter.attributes.slug,
-    html: markdown.render(postFrontMatter.body)
-  }
+  const { title, date, slug } = postFrontMatter.attributes;
+  const html = markdown.render(postFrontMatter.body);
+  return {title, date, slug, html};
 });
 posts.sort((post1, post2) => new Date(post2.date) - new Date(post1.date));
 posts.forEach(post => {
@@ -83,6 +91,87 @@ posts.forEach(post => {
 
 export default posts;
 ```
+
+### Regular Pages
+
+While looking around for a solution to the first issue, I naturally came across
+MDsveX which allows you to write Svelte components in Markdown in the spirit of
+[MDX](https://mdxjs.com/) for JSX in Markdown.
+Even though I don't have many regular pages on this site, I still preferred to
+write those pages in Markdown.
+While there's a Sapper starter
+[template](https://github.com/pngwn/sapper-mdsvex-template) with MDsveX
+support, setting it up manually with the regular Sapper template isn't too
+complicated either.
+
+To get started, we add MDsveX to the dev dependencies.
+
+```shell
+$ yarn add -D mdsvex
+```
+
+Then in the `rollup.config.js` file, we import the package and pass it to
+the `svelte` function as part of the preprocessing step of both the client and
+server configuration.
+We also have to make sure to update the `extensions` variable so that Svelte
+doesn't ignore files ending in `.md`.
+
+```js
+import * as fs from "fs";
+// ...
+import { mdsvex } from "mdsvex";
+
+const preprocess = mdsvex({
+  extension: ".md"
+});
+
+export default {
+  client: {
+    // ...
+    plugins: [
+      // ...
+      svelte({
+        dev,
+        hydratable: true,
+        emitCss: true,
+        extensions: [".svelte", ".md"],
+        preprocess
+      })
+    ],
+    // ...
+  },
+
+  server: {
+    // ...
+    plugins: [
+      json(),
+      svelte({
+        generate: "ssr",
+        dev,
+        extensions: [".svelte", ".md"],
+        preprocess
+      }),
+      // ...
+    ],
+    // ...
+  }
+};
+```
+
+After making these changes I was surprised to see that things were still not
+working as expected.
+There weren't any errors, but none of my MDsveX components appeared in the
+generated bundle.
+This is because in addition to telling Svelte to process `.md` files in our
+rollup config, we also have to tell Sapper to respect Markdown files when it is
+invoked.
+To that end, we have to pass the option `--ext '.svelte .md'` to every
+invocation of the `sapper` utility inside
+[our](https://github.com/nkoep/nkoep.net/blob/acf400cbaad2b7f56aca9024848a93bb99be2554/package.json#L6)
+`package.json` file.
+With these changes any Markdown file in the `src/routes` directory ending in
+`.md` will first be converted to a regular Svelte component before being passed
+on to the Sapper pipeline.
 
 ## Hydration of Internal Links
 
