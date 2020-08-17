@@ -101,12 +101,12 @@ the training process.
 However, as touched on in the introduction, the estimators in an AdaBoost
 ensemble are usually weak learners whose model complexity is intentionally
 restricted.
-This means that each estimator is usually easy to train.
+This means that each estimator is generally easy to train.
 Controlling the complexity of individual learners therefore allows for a
 trade-off between predictive power of the ensemble and training time.
 
 With the high-level differences between random forests and AdaBoost out of the
-way, let us move on to the actual training process of an AdaBoost ensemble.
+way, let us move on to the actual training process of AdaBoost.
 
 ### Ensemble Fitting
 
