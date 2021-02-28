@@ -13,15 +13,15 @@ This choice was mostly motivated by the desire to see what goes into writing a
 client-side JS-based router.
 Admittedly, the implementation suffered from a few annoying shortcomings as
 well as some outright silly design decisions.
-One example of such poor design was the insistence on serving pages as Markdown
+One example of such poor design was insisting on serving pages as Markdown
 files that were rendered on the client rather than serving pre-compiled HTML
 files.
 Moreover, since every page was served dynamically, every request to the site
 had to be redirected to the index page serving as the site's entry point.
 This meant, however, that the site could not return proper 404 status codes if
 an unknown URL was hit.
-Sadly, those weren't the only issues with the site, which is why a few months
-ago I eventually decided to rewrite it in a more seasoned frontend framework.
+Sadly, those weren't the only issues with the site, which is why I eventually
+decided to rewrite it in a more seasoned frontend framework.
 
 Enter [Sapper](https://sapper.svelte.dev/), which is to
 [Svelte](https://svelte.dev/) what Next.js is to React and what Nuxt.js is to
@@ -32,7 +32,7 @@ In short, Svelte is not just another component framework like React or Vue.js
 but an optimizing compiler.
 While most frameworks do the heavy lifting inside their respective virtual DOM
 implementation running in the browser, Svelte performs a lot of this work
-offline as part of the compilation step.
+offline as part of a compilation step.
 This allows for some rather unique features like true first-class
 [reactivity](https://svelte.dev/blog/svelte-3-rethinking-reactivity), and
 generally results in less code and lower bundle sizes.
@@ -49,23 +49,23 @@ While there are some concepts in Svelte and Sapper that take a little getting
 used to, the overall developer experience is incredibly refreshing.
 However, I encountered a few issues along the way that seemed a little less
 straightforward to resolve than I had hoped for or anticipated.
-In this blog post, I want to address 3 of those rough edges and present the way
-I resolved them in the end.
-In particular, we'll look at how to
+For this post, I picked three such rough edges.
+In particular, we'll discuss
 
-- add support for writing blog posts and regular pages in Markdown,
-- fix up anchor hash links to link to local page elements,
-- and add page transitions when navigating between different pages of the site.
+- adding Markdown support,
+- fixing up anchor tags to link to local page elements,
+- adding page transitions.
 
 ## Markdown Pages
 
-The first and most crucial feature that was missing out-of-the-box after
-checking out the [Sapper template](https://github.com/sveltejs/sapper-template)
-was the lack of support for Markdown pages.
+The first and most crucial feature that was missing out-of-the-box from the
+[Sapper template](https://github.com/sveltejs/sapper-template) was the lack of
+support for Markdown pages.
 Now in a way this shouldn't come as a surprise; in Sapper each page is simply
 assumed to be a Svelte component.
 I can appreciate this approach for regular pages of a site (i.e., any file in
-`src/routes` not prefixed with and underscore and ending in `.svelte`).
+`src/routes` not prefixed with and underscore and, by default, ending in
+`.svelte`).
 However, this convention doesn't extend to blog posts, which in the Sapper
 template are defined as inline HTML strings in `src/routes/blog/_posts.js`.
 Since it's really not too much fun to write regular content pages or blog posts
@@ -113,9 +113,9 @@ To get started, we add MDsveX to the dev dependencies.
 $ yarn add -D mdsvex
 ```
 
-Then in the `rollup.config.js` file, we import the package and pass it to
-the `svelte` function as part of the preprocessing step of both the client and
-server configuration.
+Then in `rollup.config.js`, we import the package and pass it to the `svelte`
+function as part of the preprocessing step of both the client and server
+configuration.
 We also have to make sure to update the `extensions` variable so that Svelte
 doesn't ignore files ending in `.md`.
 
@@ -161,8 +161,8 @@ export default {
 };
 ```
 
-Surprisingly, after making these changes things were still not working as
-expected.
+Unfortunately, things were not yet working as expected after these
+modifications.
 Even though there weren't any errors, none of the MDsveX components actually
 appeared in the generated bundle.
 This is because in addition to telling Svelte to process `.md` files in the
