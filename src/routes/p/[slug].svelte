@@ -23,6 +23,11 @@
   :global(.hljs) {
     background-color: rgba($fg-muted, 0.02);
   }
+
+  h1,
+  p.date {
+    text-align: center;
+  }
 </style>
 
 <svelte:head>

@@ -172,6 +172,7 @@
 
   p.date {
     color: $fg-muted;
+    color: rgba($fg-muted, 0.75);
     font-style: italic;
     margin: 0;
     margin-top: -0.5em;
