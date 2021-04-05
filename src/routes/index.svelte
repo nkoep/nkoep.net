@@ -48,7 +48,7 @@
 
 <div>
   {#each posts as post}
-    <a class="post" rel="prefetch" href="p/{post.slug}">
+    <a class="post" sapper:prefetch href="p/{post.slug}">
       <h1>{post.title}</h1>
       <p class="date">{post.date}</p>
     </a>
