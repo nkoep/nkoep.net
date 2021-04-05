@@ -119,6 +119,7 @@ export default {
       svelte({
         generate: "ssr",
         dev,
+        hydratable: true,
         extensions: [".svelte", ".md"],
         preprocess
       }),
