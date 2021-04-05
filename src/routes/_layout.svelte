@@ -52,7 +52,8 @@
 
   html {
     margin: auto;
-    // Hack to avoid content from being repositioned when the scrollbar appears.
+    // Hack to avoid content from being repositioned when the scrollbar
+    // appears.
     margin-right: calc(100% - 100vw);
     overflow-x: hidden;
   }

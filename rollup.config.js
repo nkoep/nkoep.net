@@ -21,7 +21,7 @@ const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => {
   return (
-    (warning.code === "MISSING_EXPORT" && /"preload"/.test(warning.message)) ||
+    (warning.code === "MISSING_EXPORT" && /'preload'/.test(warning.message)) ||
     (warning.code === "CIRCULAR_DEPENDENCY" &&
       /[/\\]@sapper[/\\]/.test(warning.message)) ||
     onwarn(warning)
