@@ -20,8 +20,12 @@ const dev = mode === "development";
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => {
-  return (warning.code === "CIRCULAR_DEPENDENCY" &&
-          /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+  return (
+    (warning.code === "MISSING_EXPORT" && /'preload'/.test(warning.message)) ||
+    (warning.code === "CIRCULAR_DEPENDENCY" &&
+      /[/\\]@sapper[/\\]/.test(warning.message)) ||
+    onwarn(warning)
+  );
 };
 
 const watchPosts = {
@@ -71,11 +75,13 @@ export default {
         "process.env.NODE_ENV": JSON.stringify(mode)
       }),
       svelte({
-        dev,
-        hydratable: true,
         emitCss: true,
         extensions: [".svelte", ".md"],
-        preprocess
+        preprocess,
+        compilerOptions: {
+          dev,
+          hydratable: true
+        }
       }),
       resolve({
         browser: true,
@@ -114,13 +120,17 @@ export default {
       watchPosts,
       replace({
         "process.browser": false,
-        "process.env.NODE_ENV": JSON.stringify(mode)
+        "process.env.NODE_ENV": JSON.stringify(mode),
+        "preventAssignment": true
       }),
       svelte({
-        generate: "ssr",
-        dev,
         extensions: [".svelte", ".md"],
-        preprocess
+        preprocess,
+        compilerOptions: {
+          generate: "ssr",
+          dev,
+          hydratable: true
+        }
       }),
       resolve({
         dedupe: ["svelte"]
@@ -141,7 +151,8 @@ export default {
       resolve(),
       replace({
         "process.browser": true,
-        "process.env.NODE_ENV": JSON.stringify(mode)
+        "process.env.NODE_ENV": JSON.stringify(mode),
+        "preventAssignment": true
       }),
       commonjs(),
       !dev && terser()

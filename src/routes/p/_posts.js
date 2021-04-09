@@ -17,7 +17,7 @@ const highlight = (str, language) => {
     try {
       return (
         "<pre><code class=\"hljs\">" +
-        hljs.highlight(language, str, true).value +
+        hljs.highlight(str, {language, ignoreIllegals: true}).value +
         "</code></pre>"
       )
     } catch (_) {}
