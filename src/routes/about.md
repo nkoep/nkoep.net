@@ -13,6 +13,13 @@ header: img/mug.jpg
 
 ## CV
 
+### Professional Experience
+
+- February 2021--present: Data Scientist (Logistics) at [Delivery
+  Hero](https://www.deliveryhero.com/), Berlin, Germany
+- September 2014--August 2019: Research assistant at the Institute for
+  Theoretical Information Technology, RWTH Aachen University, Aachen, Germany
+
 ### Education
 
 - Dr.-Ing. (PhD) from the Faculty of Electrical Engineering and Information
@@ -45,7 +52,7 @@ autodiff backends (currently [Autograd](https://github.com/HIPS/autograd),
 [Theano](http://www.deeplearning.net/software/theano/) and
 [TensorFlow](https://www.tensorflow.org/)).
 By appealing to automatic differentiation, the toolbox lowers the entry barrier
-for rapid prototyping as laborious calculations of higher-order derivates by
+for rapid prototyping as laborious calculations of higher-order derivatives by
 hand are eliminated.
 
 ### Lampions
