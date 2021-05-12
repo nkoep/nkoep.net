@@ -38,7 +38,7 @@
     "mdsvex": "^0.9.0",
     "node-sass": "^5.0.0",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.2.9",
+    "postcss": "^8.2.10",
     "postcss-load-config": "^3.0.1",
     "remark-autolink-headings": "^6.0.1",
     "remark-slug": "^6.0.0",
