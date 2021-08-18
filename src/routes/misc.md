@@ -43,6 +43,13 @@ title: Miscellaneous
 > He would suffer. He would know pain. With infinite care and patience, he set
 > about destroying his own happiness.
 
+### George Eliot - Middlemarch
+
+> ...for the growing good of the world is partly dependent on unhistoric acts;
+> and that things are not so ill with you and me as they might have been, is
+> half owing to the number who lived faithfully a hidden life, and rest in
+> unvisited tombs.
+
 ## Video Editing
 
 As a teenager, I heavily got into editing frag movies for Counter-Strike.
