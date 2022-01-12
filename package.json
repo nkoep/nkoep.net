@@ -32,7 +32,7 @@
     "front-matter": "^4.0.2",
     "highlight.js": "^10.7.2",
     "highlightjs-svelte": "^1.0.6",
-    "markdown-it": "^12.0.4",
+    "markdown-it": "^12.3.2",
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-github-headings": "^2.0.0",
     "mdsvex": "^0.9.0",
