@@ -8,8 +8,7 @@ data scientist in the logistics department at Delivery Hero.
 In my role I mainly deal with predictive modeling around the topic of optimal
 courier staffing throughout the day.
 Before moving to Berlin, I studied electrical engineering at RWTH Aachen
-University where I graduated with an M.Sc. in 2014, and a doctoral degree in
-2019.
+University where I graduated with an M.Sc. in 2014, and a doctoral degree in 2019.
 
 ### Publications
 
