@@ -3,7 +3,7 @@
 
   export let segment;
 
-  const pages = ["about", "misc"];
+  const pages = ["about", "quotes"];
 </script>
 
 <style lang="scss">
