@@ -15,7 +15,7 @@ University where I graduated with an M.Sc. in 2014, and a doctoral degree in
 
 <https://scholar.google.com/citations?user=CpQ1YvMAAAAJ>
 
-## Projects
+## Open Source
 
 ### Pymanopt
 
@@ -30,12 +30,11 @@ To attack such problems, Pymanopt, which is based on the MATLAB toolbox
 (e.g. steepest descent, conjugate gradients, trust-regions), manifolds (e.g.
 Stiefel manifold, Grassmannian, positive definite matrices) and
 autodiff backends (currently [Autograd](https://github.com/HIPS/autograd),
-[PyTorch](https://pytorch.org/),
-[Theano](http://www.deeplearning.net/software/theano/) and
-[TensorFlow](https://www.tensorflow.org/)).
+[TensorFlow](https://www.tensorflow.org/), [PyTorch](https://pytorch.org/) and
+[JAX](https://jax.readthedocs.io/en/latest/)).
 By appealing to automatic differentiation, the toolbox lowers the entry barrier
-for rapid prototyping as laborious calculations of higher-order derivatives by
-hand are eliminated.
+for rapid prototyping as the need for laborious calculation of higher-order
+derivatives of matrix expressions by hand is removed.
 
 ### Lampions
 
@@ -48,5 +47,5 @@ forwarding addresses.
 The project consists of a command-line utility to configure the necessary AWS
 infrastructure and define email routes.
 Additionally, a browser extension can be used to define, remove or temporarily
-deactivate email aliases in case one wants to stop receiving emails on certain
+deactivate email aliases in case one wants to stop receiving emails for certain
 aliases.
