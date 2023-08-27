@@ -49,3 +49,65 @@ infrastructure and define email routes.
 Additionally, a browser extension can be used to define, remove or temporarily
 deactivate email aliases in case one wants to stop receiving emails for certain
 aliases.
+
+## Video Editing
+
+During my teenage years, my creative outlet was editing frag movies about the
+competitive scene of the game Counter-Strike.
+I eventually retired the hobby in 2008 after enrolling in university but picked
+it up again for a while in late 2015.
+Some selected works dating back all the way to 2007 can be found below.
+
+### Echoes of 2017
+
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/DtJYa5F2ghI" frameborder="0"
+          title="Echoes of 2017"
+          allowfullscreen>
+  </iframe>
+</div>
+
+### Echoes of 2016
+
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/MO_XwBLHsFE" frameborder="0"
+          title="Echoes of 2016"
+          allowfullscreen>
+  </iframe>
+</div>
+
+### Trenches
+
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/GEtdRpNrWb4"
+          title="Trenches" frameborder="0"
+          allowfullscreen>
+  </iframe>
+</div>
+
+### Repeat/Rewind
+
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/U0E2_KWXlxE"
+          title="Repeat/Rewind" frameborder="0"
+          allowfullscreen>
+  </iframe>
+</div>
+
+### O' fRoD, the Aftermath
+
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/34DeJGlylsA"
+          title="O' fRoD, the Aftermath" frameborder="0"
+          allowfullscreen>
+  </iframe>
+</div>
+
+### Eve
+
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/yZgt4lSz5NA"
+          title="Eve" frameborder="0"
+          allowfullscreen>
+  </iframe>
+</div>
