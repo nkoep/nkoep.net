@@ -1,8 +1,9 @@
 ---
 title: "Tree-Based Regression Methods (Part II): Random Forests"
 date: July 18, 2020
-slug: random-forest-regressor
 ---
+
+[[toc]]
 
 ## Introduction
 

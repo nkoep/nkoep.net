@@ -1,8 +1,9 @@
 ---
 title: "Tree-Based Regression Methods (Part I): Decision Trees"
 date: July 08, 2020
-slug: decision-tree-regressor
 ---
+
+[[toc]]
 
 ## Introduction
 
@@ -119,7 +120,7 @@ a particular leaf; there are no invalid inputs.
 Once reaching a terminal node, the value $\yhat_i$ at the respective leaf is
 what the decision tree predicts for the given sample.
 
-![Sketch of a decision tree](img/decision-tree-regressor/decision-tree.svg)
+![Sketch of a decision tree](/img/decision-tree-regressor/decision-tree.svg)
 
 To better visualize how this decision tree partitions the nonnegative feature
 orthant $\setpred{(x_1, x_2) \in \R^2}{x_1, x_2 \geq 0}$, we may draw the
@@ -131,7 +132,7 @@ and extend to infinity.
 In our toy example, the only bounded region is the one associated with the
 prediction $\yhat_1$.
 
-![Sketch of decision regions induced by a decision tree](img/decision-tree-regressor/decision-tree-regions.svg)
+![Sketch of decision regions induced by a decision tree](/img/decision-tree-regressor/decision-tree-regions.svg)
 
 While many regression methods such as linear regression produce predictions in
 a continuum,[^linear-regression] the range of a decision tree (seen as a

@@ -2,13 +2,29 @@
   import Logo from "./Logo.svelte";
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
-  import { showMenu } from "../stores.js";
+  import { showMenu } from "./stores.js";
 
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-
-  export let segment;
 </script>
+
+<header>
+  <div>
+    <Navbar />
+  </div>
+
+  <Logo />
+
+  <div>
+    <Social />
+  </div>
+
+  <div id="menu-button">
+    <button on:click={() => ($showMenu = !$showMenu)}>
+      <Icon data={$showMenu ? faTimes : faBars} scale="1.5" />
+    </button>
+  </div>
+</header>
 
 <style lang="scss">
   @import "../style/theme.scss";
@@ -50,21 +66,3 @@
     }
   }
 </style>
-
-<header>
-  <div>
-    <Navbar {segment}/>
-  </div>
-
-  <Logo/>
-
-  <div>
-    <Social/>
-  </div>
-
-  <div id="menu-button">
-    <button on:click={() => $showMenu = !$showMenu}>
-      <Icon data={$showMenu ? faTimes : faBars} scale="1.5"/>
-    </button>
-  </div>
-</header>

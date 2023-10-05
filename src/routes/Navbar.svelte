@@ -1,10 +1,25 @@
 <script>
-  import { showMenu } from "../stores.js";
+  import { page } from "$app/stores";
+  import { showMenu } from "./stores.js";
 
-  export let segment;
+  $: currentPage = $page.params.page;
 
   const pages = ["about", "quotes"];
 </script>
+
+<nav>
+  <ul>
+    {#each pages as page}
+      <li>
+        <a
+          on:click={() => ($showMenu = false)}
+          aria-current={page === currentPage ? true : undefined}
+          href="/{page}">{page}</a
+        >
+      </li>
+    {/each}
+  </ul>
+</nav>
 
 <style lang="scss">
   @import "../style/theme.scss";
@@ -28,14 +43,3 @@
     margin-right: $item-spacing;
   }
 </style>
-
-<nav>
-  <ul>
-    {#each pages as page}
-      <li><a on:click={() => $showMenu = false}
-             aria-current={segment === page ? segment : undefined}
-             href="{page}"
-          >{page}</a></li>
-    {/each}
-  </ul>
-</nav>

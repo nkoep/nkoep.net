@@ -1,17 +1,20 @@
 <script>
   import { fade } from "svelte/transition";
-  import { afterUpdate, onMount } from "svelte";
-  import { stores } from "@sapper/app";
+  import { onMount } from "svelte";
+  import { page } from "$app/stores";
 
-  import Header from "../components/Header.svelte";
-  import Menu from "../components/Menu.svelte";
-  import { showMenu } from "../stores.js";
+  import "@fontsource/montserrat";
+  import "@fontsource/raleway";
+  import "@fontsource/nunito";
+  import "@fontsource/cormorant";
+  import "highlight.js/styles/paraiso-light.css";
 
-  export let segment;
+  import Header from "./Header.svelte";
+  import Menu from "./Menu.svelte";
+  import { showMenu } from "./stores.js";
 
   let show = true;
   let initialPageLoad = true;
-  const { page } = stores();
 
   onMount(() => {
     return page.subscribe(() => {
@@ -21,22 +24,28 @@
       }
       $showMenu = false;
       show = false;
-      setTimeout(() => show = true, 0);
-    });
-  });
-
-  afterUpdate(() => {
-    document.querySelectorAll("a").forEach(a => {
-      if (a.hostname !== window.location.hostname) {
-        return;
-      }
-      if (!a.hash || !document.querySelectorAll(a.hash).length) {
-        return;
-      }
-      a.href = window.location.origin + window.location.pathname + a.hash;
+      setTimeout(() => {
+        show = true;
+      }, 0);
     });
   });
 </script>
+
+<main>
+  <Header />
+
+  {#if $showMenu}
+    <div class="small-screen">
+      <Menu />
+    </div>
+  {/if}
+
+  {#if show}
+    <div id="outlet" in:fade={{ duration: 650 }}>
+      <slot />
+    </div>
+  {/if}
+</main>
 
 <style lang="scss" global>
   @import "../style/theme.scss";
@@ -76,6 +85,12 @@
       max-width: 100%;
       min-width: 40%;
     }
+  }
+
+  img.header {
+    display: block;
+    margin: 0 auto;
+    width: 40%;
   }
 
   h1,
@@ -181,6 +196,11 @@
     padding-bottom: 1em;
   }
 
+  h1,
+  p.date {
+    text-align: center;
+  }
+
   main {
     margin: auto;
     max-width: 700px;
@@ -200,7 +220,13 @@
     overflow-y: hidden;
   }
 
-  h1, h2, h3 {
+  .hljs {
+    background-color: rgba($fg-muted, 0.02);
+  }
+
+  h1,
+  h2,
+  h3 {
     .icon-link {
       $offset: 1em;
 
@@ -219,7 +245,8 @@
   }
 
   // Hack to hide anchor tags on page headings.
-  h1 .icon-link {
+  h1 .icon-link,
+  #table-of-contents .icon-link {
     display: none;
   }
 
@@ -229,19 +256,3 @@
     }
   }
 </style>
-
-<main>
-  <Header {segment}/>
-
-  {#if $showMenu}
-    <div class="small-screen">
-      <Menu {segment}/>
-    </div>
-  {/if}
-
-  {#if show}
-    <div id="outlet" in:fade={{duration: 650}}>
-      <slot></slot>
-    </div>
-  {/if}
-</main>

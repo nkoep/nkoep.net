@@ -1,23 +1,24 @@
 ---
 title: "Tree-Based Regression Methods (Part III): AdaBoost"
 date: August 15, 2020
-slug: adaboost-regressor
 ---
+
+[[toc]]
 
 ## Introduction
 
 After [introducing](/p/random-forest-regressor) random forests as a first
-algorithm in the class of *ensemble methods*, today's post covers another
-well-known ensemble method known as *AdaBoost*.
+algorithm in the class of _ensemble methods_, today's post covers another
+well-known ensemble method known as _AdaBoost_.
 AdaBoost, short for **ada**ptive **boost**ing, is, as the name suggests, based
-on the *boosting* principle.
-Boosting techniques consider a collection of so-called *weak learners* which
+on the _boosting_ principle.
+Boosting techniques consider a collection of so-called _weak learners_ which
 collaborate in a clever way to form accurate predictions.
 A weak learner is a predictor which by itself only has limited predictive
 power.
 Weak learners are usually based on more expressive models such as decision
 trees whose complexity is intentionally limited.
-Consequently, the philosophy at the heart of boosting is *strength in numbers*,
+Consequently, the philosophy at the heart of boosting is _strength in numbers_,
 meaning that the power of the ensemble is due to the different strengths and
 weaknesses of its individual members.
 
@@ -26,12 +27,12 @@ trained in isolation.
 The improved predictive performance and generalizability over simple decision
 trees is achieved by randomizing the training set for each estimator, and
 averaging the individual predictions of each tree.
-This process is known as *bagging*.
+This process is known as _bagging_.
 In contrast, boosting uses the information of how well the previous estimator
 in the ensemble performed on the training set to construct the next estimator.
 
 In this post, we will introduce the most popular version of AdaBoost for
-regression, commonly known as *AdaBoost.R2* as described in the
+regression, commonly known as _AdaBoost.R2_ as described in the
 [paper](https://dl.acm.org/doi/10.5555/645526.657132) "Improving Regressors
 Using Boosting Techniques" by H. Drucker.
 Note that even though the post focuses on tree-based regression methods, we
@@ -63,18 +64,19 @@ This will provide some intuition and insight for the subsequent prediction
 step and the corresponding Python implementation we will discuss towards the
 end of the post.
 
-[^adaboost-classification]: Note that this mainly applies to AdaBoost for
-  regression.
-  In the case of classification, the prediction step is rather natural.
-  In short, every member in the ensemble has a nonnegative weight associated
-  with it, which are determined during training.
-  To classify a new sample, each estimator in the ensemble makes a prediction,
-  splitting the ensemble into distinct subsets of estimators based on the
-  predicted classes.
-  Instead of simply choosing the class with most votes, AdaBoost selects the
-  class with the highest sum of associated estimator weights.
-  In other words, in a classification context, AdaBoost forms its predictions
-  based on a simple weighted average of vote counts.
+[^adaboost-classification]:
+    Note that this mainly applies to AdaBoost for
+    regression.
+    In the case of classification, the prediction step is rather natural.
+    In short, every member in the ensemble has a nonnegative weight associated
+    with it, which are determined during training.
+    To classify a new sample, each estimator in the ensemble makes a prediction,
+    splitting the ensemble into distinct subsets of estimators based on the
+    predicted classes.
+    Instead of simply choosing the class with most votes, AdaBoost selects the
+    class with the highest sum of associated estimator weights.
+    In other words, in a classification context, AdaBoost forms its predictions
+    based on a simple weighted average of vote counts.
 
 To highlight the conceptual differences between random forests and AdaBoost, we
 begin by briefly reviewing the idea behind random forests.[^random-forests]
@@ -90,8 +92,9 @@ predictions in a democratic manner.
 This combination of bootstrapping the training set and aggregating individual
 predictions is commonly known as bagging.
 
-[^random-forests]: See the [previous post](/p/random-forest-regressor) for
-  details.
+[^random-forests]:
+    See the [previous post](/p/random-forest-regressor) for
+    details.
 
 In contrast, the estimators in an AdaBoost ensemble are constructed
 sequentially in order to improve the predictions of the next estimator for
@@ -124,10 +127,11 @@ and so on.
 The question is how we can steer the training process to emphasize the
 importance of learning to predict certain samples better than others.
 
-[^model-performance]: Obviously, evaluating model performance on the training
-  set is considered a mortal sin in learning theory.
-  In AdaBoost, however, the step is merely used to identify training samples
-  which a learner could not predict well.
+[^model-performance]:
+    Obviously, evaluating model performance on the training
+    set is considered a mortal sin in learning theory.
+    In AdaBoost, however, the step is merely used to identify training samples
+    which a learner could not predict well.
 
 The strategy adopted by AdaBoost is to use a carefully resampled training set
 in which difficult samples are included multiple times.
@@ -145,18 +149,21 @@ To make matters concrete, consider a training set $\Trainset \defeq
 \set{(\vmx_1, y_1), \ldots, (\vmx_\nsamp, y_\nsamp)} \subset \R^\nfeat \times
 \R$ consisting of feature vectors $\vmx_i$ and labels $y_i$.
 We want to train an ensemble of weight/estimator pairs
+
 $$
   \family =
   \setpred{(w_t, f_t)}{w_t \in \R, \function{f_t}{\R^\nfeat}{\R}, t = 1,
   \ldots, \nest},
 $$
+
 representing our AdaBoost regressor, where the weights $w_t$ quantify the
 quality of individual estimators.
-We also define a sequence of *sample weights* $s_1, \ldots, s_\nsamp \in \R_+$,
+We also define a sequence of _sample weights_ $s_1, \ldots, s_\nsamp \in \R_+$,
 which we initialize as $s_i = 1$.
 
 We now proceed as follows for every estimator indexed by $t = 1, \ldots,
 \nest$:
+
 1. Normalize the sample weights $s_i$ to obtain a discrete probability
    distribution on $\Trainset$:
    $$
@@ -232,7 +239,7 @@ Normalizing the updated sample weights according to step 1 therefore always
 yields a valid probability distribution on $\Trainset$.
 
 ![Beta and weight as a function of the average
-loss](img/adaboost-regressor/beta-and-weight.svg)
+loss](/img/adaboost-regressor/beta-and-weight.svg)
 
 ### Weighted Median Prediction
 
@@ -245,19 +252,23 @@ robust to sporadic outliers in the predictions.
 However, this would ignore the confidence information that we have about each
 predictor's accuracy on the training set as determined during model training.
 Instead, AdaBoost first orders each prediction in ascending order such that
+
 $$
   f_{\pi(1)}(\vmx) \leq
   f_{\pi(2)}(\vmx) \leq
   \ldots \leq
   f_{\pi(\nest)}(\vmx)
 $$
+
 where $\function{\pi}{[\nest]}{[\nest]}$ is a permutation, and $[n] \defeq
 \set{1, \ldots, n}$ for $n \in \N$.
 It then finds the smallest index $\opt{t} = 1, \ldots, \nest$ for which the
 inequality
+
 $$
   \sum_{i=1}^\opt{t} w_{\pi(i)} \geq \frac{1}{2} \sum_{t=1}^\nest w_t
 $$
+
 holds.
 The Wikipedia [article](https://en.wikipedia.org/wiki/Weighted_median) for the
 weighted median provides a good illustration of the principle.
@@ -287,12 +298,13 @@ implementation of the discussed algorithm.
 We begin with a tiny utility class and the high-level definition of our
 `AdaBoost` class.[^sklearn-conventions]
 
-[^sklearn-conventions]: Note that the code presented in previous posts did not
-  properly follow sklearn's coding conventions.
-  For instance, parameters passed in to the constructor should always be
-  exposed as "public" members (i.e., not prefixed with underscores).
-  Moreover, instance attributes which are modified during calls to the `fit`
-  method of an estimator should always be suffixed with an underscore.
+[^sklearn-conventions]:
+    Note that the code presented in previous posts did not
+    properly follow sklearn's coding conventions.
+    For instance, parameters passed in to the constructor should always be
+    exposed as "public" members (i.e., not prefixed with underscores).
+    Moreover, instance attributes which are modified during calls to the `fit`
+    method of an estimator should always be suffixed with an underscore.
 
 ```python
 import numpy as np
@@ -323,18 +335,18 @@ As pointed out in the beginning, AdaBoost is compatible with any type of
 regression method.
 However, since we always try to stay reasonably close to sklearn's interface,
 we use the same type of base estimator as the default choice in sklearn's
-`AdaBoostRegressor`, namely a decision tree regressor with `max_depth` set to
-3.[^max-depth]
-We refer to such a tree as a *sprout*.
+`AdaBoostRegressor`, namely a decision tree regressor with `max_depth` set to 3.[^max-depth]
+We refer to such a tree as a _sprout_.
 
 Next up is the usual `fit` method, which implements the steps outlined in the
 section on ensemble fitting above.
 The implementation is a fairly straightforward translation of the update rules
 into Python code.
 
-[^max-depth]: Note that in previous posts, we did not support limiting the tree
-  depth to arbitrary values of `max_width`.
-  This rather silly restriction was lifted in https://git.io/JJ5UW.
+[^max-depth]:
+    Note that in previous posts, we did not support limiting the tree
+    depth to arbitrary values of `max_width`.
+    This rather silly restriction was lifted in https://git.io/JJ5UW.
 
 ```python
     def fit(self, X, y):
@@ -462,4 +474,4 @@ the power of the particular boosting methodology.
 And with this we reached the end of the penultimate post in this short
 series on tree-based regression algorithms.
 In the next post, we will finally cover the topic this series was originally
-motivated by: the powerful concept of *gradient-boosted regression trees*.
+motivated by: the powerful concept of _gradient-boosted regression trees_.

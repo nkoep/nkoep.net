@@ -1,3 +1,7 @@
+<div>
+  <a href="/">NK</a>
+</div>
+
 <style lang="scss">
   @import "../style/components/Header.scss";
 
@@ -8,7 +12,3 @@
     text-align: center;
   }
 </style>
-
-<div>
-  <a href="/">NK</a>
-</div>

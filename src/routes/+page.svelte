@@ -1,14 +1,19 @@
-<script context="module">
-  export async function preload({ params, query }) {
-    const response = await this.fetch("p.json");
-    const posts = await response.json();
-    return { posts };
-  }
+<script>
+  export let data;
 </script>
 
-<script>
-  export let posts;
-</script>
+<svelte:head>
+  <title>Niklas Koep</title>
+</svelte:head>
+
+<div>
+  {#each data.posts as post}
+    <a class="post" data-sveltekit-preload-data href="p/{post.slug}">
+      <h1>{post.title}</h1>
+      <p class="date">{post.date}</p>
+    </a>
+  {/each}
+</div>
 
 <style lang="scss">
   @import "./style/theme.scss";
@@ -23,6 +28,11 @@
 
     h1 {
       font-size: 1.25em;
+    }
+
+    h1,
+    p.date {
+      text-align: left;
     }
 
     .post {
@@ -41,16 +51,3 @@
     }
   }
 </style>
-
-<svelte:head>
-  <title>Niklas Koep</title>
-</svelte:head>
-
-<div>
-  {#each posts as post}
-    <a class="post" sapper:prefetch href="p/{post.slug}">
-      <h1>{post.title}</h1>
-      <p class="date">{post.date}</p>
-    </a>
-  {/each}
-</div>

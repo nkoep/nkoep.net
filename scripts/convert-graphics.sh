@@ -1,7 +1,7 @@
 #!/bin/sh
 
 die() {
-  echo $*
+  echo "$@"
   exit 1
 }
 
@@ -21,13 +21,13 @@ outputdir="static/img/$slug"
 mkdir -p "$outputdir"
 
 for f in "$inputdir"/*.pdf; do
-  filename="$(basename $f)"
+  filename=$(basename "$f")
   stem="${filename%.*}"
   inkscape \
     --pdf-poppler \
     --export-plain-svg \
     --export-text-to-path \
     --export-filename "$outputdir/$stem.svg" \
-    $f
+    "$f"
 done
 svgo "$outputdir"/*.svg

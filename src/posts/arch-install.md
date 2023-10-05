@@ -1,13 +1,14 @@
 ---
 title: Condensed Arch Linux Installation Guide
 date: December 06, 2019
-slug: arch-install
 ---
 
 Considering how often I seem to re-install Arch Linux on various machines and
 that I can never seem to remember the exact details, I figured I should write
 up a short installation guide, mainly as future reference for myself.
 Here we go.
+
+[[toc]]
 
 ## First Steps
 
@@ -129,7 +130,7 @@ Before creating the initramfs and installing the bootloader, we'll have to make
 sure to enable LVM and encryption support in the `mkinitcpio` config.
 To that end, change the **HOOKS** line in `/etc/mkinitcpio.conf` to
 
-```
+```raw
 HOOKS=(... keyboard keymap block lvm2 encrypt filesystems ...)
 ```
 
@@ -174,7 +175,7 @@ window manager:
 # pacman -S xterm xfce4-terminal xmonad xmonad-contrib
 ```
 
-Create a user, create a system group *autologin* and add the user:
+Create a user, create a system group _autologin_ and add the user:
 
 ```shell
 # useradd -m nik

@@ -3,12 +3,10 @@ title: About
 header: img/mug.jpg
 ---
 
-My name is Niklas, and I am currently based out of Berlin where I work as a
-data scientist in the logistics department at Delivery Hero.
-In my role I mainly deal with predictive modeling around the topic of optimal
-courier staffing throughout the day.
-Before moving to Berlin, I studied electrical engineering at RWTH Aachen
-University where I graduated with an M.Sc. in 2014, and a doctoral degree in 2019.
+Hi! My name is Niklas, and I am currently based out of Berlin where I work as a
+data scientist.
+Before moving to Berlin at the beginning of 2021, I studied electrical
+engineering at RWTH Aachen University.
 
 ### Publications
 
