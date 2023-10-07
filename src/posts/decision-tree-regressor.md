@@ -13,13 +13,13 @@ Since I am currently on a deep-dive into the world of machine learning (ML), I
 decided to apply the same philosophy here by writing about some fundamental ML
 algorithms one naturally encounters along the way.
 
-Ultimately, my goal was to gain a deeper understanding of *gradient-boosted
-trees*, popularized by libraries such as
+Ultimately, my goal was to gain a deeper understanding of _gradient-boosted
+trees_, popularized by libraries such as
 [`XGBoost`](https://xgboost.readthedocs.io/en/latest/) or
 [`LightGBM`](https://lightgbm.readthedocs.io/en/latest/), which are regularly
 used in high-ranking submissions of various Kaggle competitions.
 However, in order to understand boosted trees, there are various other related
-methods one has to learn first, starting with so-called *decision trees*.
+methods one has to learn first, starting with so-called _decision trees_.
 Unfortunately, when learning a new topic you're often expected to simply accept
 certain things as facts.
 Of course, teachers can't explain everything in full detail, and one always has
@@ -28,17 +28,18 @@ Overwhelming students with too many details, which make them lose sight of the
 bigger picture, can be just as detrimental as glossing over or simplifying
 crucial ideas to the point of irrelevance.[^ft-note]
 
-[^ft-note]: My go-to example is the way the [Fourier
-  transform](https://en.wikipedia.org/wiki/Fourier_transform) is often taught
-  in higher mathematics classes for engineers at university.
-  My gripe here is with lecturers who merely remark that the Dirac delta
-  *function* $\delta(t)$ is actually a *distribution* without defining the
-  term, let alone pointing out the implications of this fact.
-  Unfortunately, this leads to frustrating inconsistencies.
-  For instance, while the *filtering* property of $\delta(t)$ can be invoked to
-  informally determine the Fourier transform of $\delta(t)$, the other
-  direction doesn't work as $\int_\R e^{i2\pi f t} \de{f}$ does not exist in
-  the Riemannian sense.
+[^ft-note]:
+    My go-to example is the way the [Fourier
+    transform](https://en.wikipedia.org/wiki/Fourier_transform) is often taught
+    in higher mathematics classes for engineers at university.
+    My gripe here is with lecturers who merely remark that the Dirac delta
+    _function_ $\delta(t)$ is actually a _distribution_ without defining the
+    term, let alone pointing out the implications of this fact.
+    Unfortunately, this leads to frustrating inconsistencies.
+    For instance, while the _filtering_ property of $\delta(t)$ can be invoked to
+    informally determine the Fourier transform of $\delta(t)$, the other
+    direction doesn't work as $\int_\R e^{i2\pi f t} \de{f}$ does not exist in
+    the Riemannian sense.
 
 In reading up on decision trees, the topic of the first post in this series,
 I noticed that most introductions focus (justifiably so) on the way decision
@@ -61,9 +62,9 @@ black box.
 
 Over the next few weeks, I plan to implement and write about various tree-based
 regression algorithms.
-We'll start with the most naive form, a *binary decision tree*.
+We'll start with the most naive form, a _binary decision tree_.
 We then slowly ramp up complexity by implementing more advanced
-approaches such as *random forests*, as well as *gradient-boosted trees*, all
+approaches such as _random forests_, as well as _gradient-boosted trees_, all
 of which build upon the foundation of decision trees.
 So with that overly lengthy introduction out of the way, let's move on to the
 topic at hand.
@@ -78,18 +79,18 @@ topic at hand.
 
 While decision trees can be used for both classification and regression (giving
 rise to the
-[*CART*](https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees_.28CART.29)
+[_CART_](https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees_.28CART.29)
 acronym), we will focus on regression in this post.
 For simplicity, we assume that none of our features are categorical so we don't
 have to deal with feature encoding.
 Given a feature vector $\vmx \in \R^\nfeat$, where each coordinate represents
 an observation of one of $\nfeat$ different features (predictors), we aim to
-infer the value of some *target* or *response* variable $y \in \R$.
+infer the value of some _target_ or _response_ variable $y \in \R$.
 Since the exact nature of the relationship between $\vmx$ and $y$ is rarely
-if ever known, we may turn to a data-driven approach, where we try to *infer*
+if ever known, we may turn to a data-driven approach, where we try to _infer_
 the relationship based on a set of representative observations $\set{(\vmx_1,
 y_1), \ldots, (\vmx_\nsamp, y_\nsamp)}$.
-This is known as the *supervised learning problem*.
+This is known as the _supervised learning problem_.
 
 The remainder of this post is structured as follows.
 First, we look at a simple example to examine the general structure of
@@ -100,7 +101,7 @@ presenting a simple Python implementation of a decision tree regressor.
 
 ## Using Decision Trees for Prediction
 
-A decision tree is simply a *binary* tree, in which each internal node is
+A decision tree is simply a _binary_ tree, in which each internal node is
 associated with a particular feature.
 These nodes are used to partition the input space into regions of similar
 observations and similar target values.
@@ -147,11 +148,12 @@ This will also become clear as we move on to more sophisticated regression
 algorithms, which share the same property but which use clever techniques to
 significantly increase the size of the prediction space.
 
-[^linear-regression]: This is because a linear regressor $f$ maps an
-  observation $\vmx$ from $\R^\nfeat$ to $\R$ according to $f(\vmx) =
+[^linear-regression]:
+    This is because a linear regressor $f$ maps an
+    observation $\vmx$ from $\R^\nfeat$ to $\R$ according to $f(\vmx) =
   \inner{\vmx}{\vmw} + b$, where $\vmw \in \R^\nfeat$ is a weight vector, $b
   \in \R$ is a constant offset or bias term, and $\inner{\cdot}{\cdot}$ is the
-  canonical inner product on $\R^\nfeat$.
+    canonical inner product on $\R^\nfeat$.
 
 ## Tree Construction
 
@@ -160,6 +162,7 @@ answered the question how a tree is ultimately constructed.
 In particular, the following questions come to mind.
 
 > How does a tree (or, more precisely, a construction algorithm)
+>
 > 1. decide how many leaf nodes to consider?
 > 1. choose which feature to branch on in each node?
 > 1. pick the threshold value in each internal node?
@@ -171,10 +174,12 @@ predictions $\yhat_1, \ldots, \yhat_\npart$.
 With the training set $\set{(\vmx_1, y_1), \ldots, (\vmx_\nsamp,
 y_\nsamp)}$, we can measure the performance of the decision tree using the
 loss function
+
 $$
   \loss(\npart, P_1, \ldots, P_\npart, \yhat_1, \ldots, \yhat_\npart)
   = \sum_{j=1}^\npart \sum_{i : \vmx_i \in P_j} (y_i - \yhat_j)^2.
 $$
+
 In words, for each partition $P_j$, we select the training examples $E_j \defeq
 \setpred{(\vmx_i, y_i)}{\vmx_i \in P_j}$ that are mapped to the partition
 $P_j$, and sum up the squared errors that arise from assigning the same
@@ -183,17 +188,19 @@ The goal now is to simultaneously optimize $L$ w.r.t. $\npart$ and the
 sequence of partition/predictor pairs $(P_1, \yhat_1), \ldots, (P_\npart,
 \yhat_\npart)$.
 This turns out to be an intractable problem in its current form.
-In practice, the problem is therefore solved by a *greedy* approach known as
-*recursive splitting*.
+In practice, the problem is therefore solved by a _greedy_ approach known as
+_recursive splitting_.
 
 Before explaining recursive splitting, we first address the issue of choosing
 the predictors $\yhat_j$ when $\npart$ and the partitions $P_j$ are fixed
 (question 4).
 In that case, $\loss$ is a simple convex differentiable function of $(\yhat_1,
 \ldots, \yhat_\npart)$, and hence
+
 $$
   \yhat_j = \frac{1}{\card{E_j}} \sum_{(\vmx_i, y_i) \in E_j} y_i,
 $$
+
 where $\card{\cdot}$ denotes set cardinality.
 In other words, the predictor $\yhat_j$ associated with partition $P_j$ is the
 mean response of all training samples in $P_j$ (which we denoted by $E_j$).
@@ -215,6 +222,7 @@ In order to split the observations, we need to pick both the best feature to
 split on, and the best decision threshold.
 To that end, we first fix an arbitrary feature index $i$ and choose the best
 decision threshold according to
+
 $$
   \opt{s_i}
   = \argmin_{s_i \in \set{(\vmx_1)_i, \ldots, (\vmx_\nsamp)_i}} \braces{
@@ -222,6 +230,7 @@ $$
     \sum_{j : (\vmx_j)_i \geq s_i} (y_j - \yhat_2(s_i))^2
   },
 $$
+
 where $\yhat_1(s_i)$ and $\yhat_2(s_i)$ are the mean responses of all
 observations with $(\vmx_j)_i < s_i$ and $(\vmx_j)_i \geq s_i$, respectively.
 We repeat this process for every feature index $i$, and finally pick the
@@ -300,7 +309,7 @@ terminal node), we define the tree recursively.
 If a node is an internal node, it has both a `left` and `right` branch.
 We also store a `feature_index` to identify the feature we're comparing to, as
 well as an associated decision `threshold`.
-A terminal node (or *leaf*) on the other hand will only have a non-`None`
+A terminal node (or _leaf_) on the other hand will only have a non-`None`
 `prediction` attribute.
 
 Performing prediction with this tree structure is pretty straightforward.
@@ -495,8 +504,8 @@ Due to our naive and unoptimized implementation, training and prediction take
 orders of magnitude longer than scikit-learn's efficient
 [Cython](https://cython.org/) implementation though.
 I also want to point out that while we're training both models to optimize for
-lowest MSE, we're scoring performance on the test set in terms of *mean
-absolute error (MAE)*, which is a bit inconsistent.
+lowest MSE, we're scoring performance on the test set in terms of _mean
+absolute error (MAE)_, which is a bit inconsistent.
 
 ## Closing Remarks
 
@@ -505,5 +514,5 @@ tree-based regression algorithms.
 While there is certainly more to say on the topic of decision trees, I believe
 we covered enough ground to be able to move on to more advanced methods.
 In the [next post](/p/random-forest-regressor), we'll be looking at random
-forests, a simple extension of decision trees that consider an *ensemble* of
+forests, a simple extension of decision trees that consider an _ensemble_ of
 trees rather than fitting a single tree.

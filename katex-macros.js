@@ -32,5 +32,5 @@ export default {
   "\\function": "#1\\colon#2\\to#3",
   "\\bigO": "\\mathcal{O}",
   "\\Trainset": "\\mathcal{D}",
-  "\\norm": "\\|#1\\|"
+  "\\norm": "\\|#1\\|",
 };

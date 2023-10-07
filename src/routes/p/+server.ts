@@ -1,5 +1,5 @@
-import { json } from "@sveltejs/kit";
 import type { Post } from "$lib/types";
+import { json } from "@sveltejs/kit";
 
 export async function GET() {
   const paths = import.meta.glob("/src/posts/*.md", { eager: true });

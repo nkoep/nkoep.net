@@ -1,14 +1,13 @@
+import katex from "@neilsustc/markdown-it-katex";
 import adapter from "@sveltejs/adapter-static";
 import autoprefixer from "autoprefixer";
-import sveltePreprocess from "svelte-preprocess";
-
 import frontMatter from "front-matter";
 import hljs from "highlight.js";
-import katex from "@neilsustc/markdown-it-katex";
-import footnotes from "markdown-it-footnote";
 import markdownIt from "markdown-it";
+import footnotes from "markdown-it-footnote";
 import headings from "markdown-it-github-headings";
 import toc from "markdown-it-table-of-contents";
+import sveltePreprocess from "svelte-preprocess";
 
 import macros from "./katex-macros.js";
 
@@ -20,7 +19,9 @@ const highlight = (str, language) => {
         hljs.highlight(str, { language, ignoreIllegals: true }).value +
         "</code></pre>"
       );
-    } catch (_) { }
+    } catch (_) {
+      // empty
+    }
   }
   return "";
 };
@@ -58,7 +59,7 @@ const markdownItProcessor = () => {
     const metadata = JSON.stringify(postFrontMatter.attributes);
     const scriptModule = `<script context="module">export const metadata = ${metadata};</script>`;
     return {
-      code: scriptModule + "\n" + `\{@html \`${rendered}\`\}`,
+      code: scriptModule + "\n" + `{@html \`${rendered}\`}`,
     };
   };
 

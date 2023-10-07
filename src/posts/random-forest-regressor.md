@@ -8,7 +8,7 @@ date: July 18, 2020
 ## Introduction
 
 In the previous [post](/p/decision-tree-regressor), we introduced the concept
-of *decision trees* for the purpose of regression in the context of supervised
+of _decision trees_ for the purpose of regression in the context of supervised
 learning.
 Decision trees are very simple models, which are easy to understand and apply,
 but which suffer from rather poor performance as they tend to be fairly biased
@@ -21,15 +21,15 @@ leaf node, or the minimum number of samples to split an internal node can all
 help improve the generalization of trees.
 However, the performance on unseen data ultimately remains rather poor.
 
-One common way to combat this effect is by considering *ensembles* of trees,
+One common way to combat this effect is by considering _ensembles_ of trees,
 where each tree in the ensemble "votes" on the final prediction.
-*Random forests*, the topic of this post, are a popular method in this
-category which consider *randomized ensembles*.
+_Random forests_, the topic of this post, are a popular method in this
+category which consider _randomized ensembles_.
 In particular, random forests grow a collection of decision trees in isolation.
 On the one hand this means that the construction procedure is simple and easily
 parallelizable. On the other hand it means there is no mechanism to gradually
 improve the performance of the ensemble based on previously constructed trees.
-In contrast, *boosting* methods such as *AdaBoost* or *gradient-boosted trees*,
+In contrast, _boosting_ methods such as _AdaBoost_ or _gradient-boosted trees_,
 which we will discuss in upcoming posts, incrementally improve the performance
 of the ensemble as it grows.
 
@@ -60,10 +60,12 @@ More concretely, consider a family of decision trees $\family =
 forming the basis of the random forest.[^not-basis]
 Given an unseen observation $\vmx \in \R^\nfeat$, the random forest regressor
 now simply returns
+
 $$
   \yhat
   = \frac{1}{\nest} \sum_{f \in \family} f(\vmx)
 $$
+
 as its final prediction.
 And that's all there is to it.
 Since all trees are created in the same if randomized way (the details of which
@@ -73,8 +75,9 @@ This is in stark contrast to some of the more advanced methods we'll be looking
 at in future posts, where different members of the ensemble might have a
 stronger influence on the final prediction than others.
 
-[^not-basis]: We emphasize that we *don't* mean a basis in the linear algebraic
-  sense here.
+[^not-basis]:
+    We emphasize that we _don't_ mean a basis in the linear algebraic
+    sense here.
 
 ## Seeing the Random Forest for the Decision Trees[^sorry]
 
@@ -96,11 +99,11 @@ The intuition here is that while each individual tree might slightly overfit
 the samples it was trained on, by averaging the predictions of each individual
 tree this effect may be reduced, which in turn reduces variance on unseen data.
 
-Subsampling the training set is more commonly referred to as *bootstrapping*;
-a training (sub)set created in this way is called a *bootstrapped set*.
+Subsampling the training set is more commonly referred to as _bootstrapping_;
+a training (sub)set created in this way is called a _bootstrapped set_.
 The combination of **b**ootstrapping the training set and **agg**regat**ing**
 the individual predictions to form the ensemble's final prediction is what is
-generally known as *bagging*.
+generally known as _bagging_.
 This principle is not restricted to decision trees but can be applied to any
 classification or regression method in supervised learning.
 
@@ -111,8 +114,8 @@ splitting internal nodes.
 This often helps avoid the tendency of trees to split on the same features as
 other trees in the ensemble due to highly correlated, dominant features, even
 if they are trained on bootstrapped samples.
-A closely related ensemble method called *extremely randomized trees* (or
-*extra trees* for short), takes things one step further.
+A closely related ensemble method called _extremely randomized trees_ (or
+_extra trees_ for short), takes things one step further.
 Instead of choosing the best split threshold based on the samples in a node,
 they randomly generate a set of candidate thresholds and pick the threshold
 with the best score to further decouple individual trees from the
@@ -121,7 +124,7 @@ For simplicity, we will limit ourselves to random forests in this post.
 
 ### Random Sampling of the Training Set
 
-While the number of samples drawn from the training set (*with* replacement) to
+While the number of samples drawn from the training set (_with_ replacement) to
 form the bootstrapped sample is usually around $\nsamp / 3$ in classification
 tasks, in regression it is more common to draw $\nsamp$ samples from the
 training set.
@@ -142,22 +145,27 @@ In particular, denote by $\event_i$ the event that $i \in S$.
 Then $|S| = \sum_{i=1}^\nsamp \ind{\event_i}$, where
 $\ind{\event_i}$ is 1 if $\event_i$ happens, and 0 otherwise.
 By linearity of expectation, this yields
+
 $$
   \E\card{S}
   = \sum_{i=1}^\nsamp \E\ind{\event_i}
   = \sum_{i=1}^\nsamp \P(\event_i)
   = \sum_{i=1}^\nsamp (1 - \P(\comp{\event_i})).
 $$
+
 It remains to estimate the probability of the complementary event
 $\comp{\event_i}$, i.e., we never pick element $i$ when drawing $\nsamp$
 elements from $[\nsamp]$.
 Since each element of $[\nsamp]$ is equally likely, we have by independence of
 individual draws that
+
 $$
   \P(\comp{\event_i})
   = \parens{\frac{\nsamp - 1}{\nsamp}}^\nsamp.
 $$
+
 Overall, this yields
+
 $$
   \E\card{S}
   = \nsamp\parens{1 - \parens{\frac{\nsamp - 1}{\nsamp}}^\nsamp}.
@@ -167,6 +175,7 @@ Moreover, by [Hoeffding's
 inequality](https://en.wikipedia.org/wiki/Hoeffding%27s_inequality#General_case_of_bounded_random_variables)
 the random variable $\card{S}$ concentrates sharply around its mean.
 To see this, note that by the previous representation of $\card{S}$, we have
+
 $$
   \card{S} - \E\card{S}
   = \sum_{i=1}^\nsamp (\ind{\event_i} - \E\ind{\event_i})
@@ -174,23 +183,28 @@ $$
   \parens{\frac{\nsamp-1}{\nsamp}}^\nsamp}
   \eqdef \sum_{i=1}^\nsamp X_i.
 $$
+
 Clearly, $\E X_i = 0$ and $\abs{X_i} \leq 1$ a.s. for all $i \in [\nsamp]$.
 Hence Hoeffding's inequality states that for $t > 0$,
+
 $$
   \P(\abs{\card{S} - \E\card{S}} \geq t)
   = \P\parens{\abs{\sum_{i=1}^\nsamp X_i} \geq t}
   \leq 2 \exp\parens{-\frac{t^2}{2\nsamp}}.
 $$
+
 In other words, the probability that $\card{S}$ deviates significantly from its
 mean decays exponentially fast.
 
 Note that with the limit representation $e^x = \lim_{n \to \infty} (1 +
 x/n)^n$, for large $\nsamp$ we roughly have that
+
 $$
   \E\card{S}
   \approx \nsamp (1 - e^{-1})
   \approx 0.63212 \nsamp.
 $$
+
 This means that by drawing $\nsamp$ samples uniformly at random from the
 training set of size $\nsamp$ with replacement, on average we will use around
 2/3 of the training set to fit each individual tree in the ensemble.
@@ -355,5 +369,5 @@ However, the independent nature in which individual estimators of the ensemble
 are trained leaves a lot of unused potential to improve predictive performance
 on the table.
 In the next post, we'll be looking at a classical example of an ensemble method
-based on *boosting*, which gradually improves the performance of the ensemble
+based on _boosting_, which gradually improves the performance of the ensemble
 as training progresses.
