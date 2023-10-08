@@ -1,4 +1,5 @@
 <script>
+  import "normalize.css";
   import "./styles.scss";
 
   import { fade } from "svelte/transition";

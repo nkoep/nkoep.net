@@ -39,6 +39,7 @@
     "markdown-it-footnote": "^3.0.3",
     "markdown-it-github-headings": "^2.0.1",
     "markdown-it-table-of-contents": "^0.6.0",
+    "normalize.css": "^8.0.1",
     "prettier": "^2.8.0",
     "prettier-plugin-svelte": "^2.10.1",
     "sass": "^1.66.1",

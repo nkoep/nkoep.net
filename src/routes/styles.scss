@@ -10,8 +10,8 @@
 
 html {
   margin: auto;
-  /* Hack to avoid content from being repositioned when the scrollbar
-       appears.*/
+  // Hack to avoid content from being repositioned when
+  // the scrollbar appears.
   margin-right: calc(100% - 100vw);
   overflow-x: hidden;
 }
@@ -193,8 +193,8 @@ h3 {
   }
 }
 
-h1 .icon-link,
-#table-of-contents .icon-link {
+// Hide anchor tags on page headings.
+h1 .icon-link {
   display: none;
 }
 
