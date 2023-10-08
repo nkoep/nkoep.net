@@ -1,6 +1,7 @@
 <script>
   import "normalize.css";
   import "./styles.scss";
+  import "katex/dist/katex.min.css";
 
   import { fade } from "svelte/transition";
   import { onMount } from "svelte";
