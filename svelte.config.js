@@ -1,7 +1,7 @@
 import katex from "@neilsustc/markdown-it-katex";
 import adapter from "@sveltejs/adapter-static";
 import autoprefixer from "autoprefixer";
-import frontMatter from "front-matter";
+import grayMatter from "gray-matter";
 import hljs from "highlight.js";
 import markdownIt from "markdown-it";
 import footnotes from "markdown-it-footnote";
@@ -47,16 +47,16 @@ const markdownItProcessor = () => {
     });
 
   const processMarkdown = (content) => {
-    const postFrontMatter = frontMatter(content);
+    const frontMatter = grayMatter(content);
     const rendered = markdown
-      .render(postFrontMatter.body)
+      .render(frontMatter.content)
       .replace(/^\t{3}/gm, "")
       .replace("`", "&#96;")
       .replace(/\t/g, "&#9;")
       .replace(/{/g, "&#123;")
       .replace(/}/g, "&#125;");
 
-    const metadata = JSON.stringify(postFrontMatter.attributes);
+    const metadata = JSON.stringify(frontMatter.data);
     const scriptModule = `<script context="module">export const metadata = ${metadata};</script>`;
     return {
       code: scriptModule + "\n" + `{@html \`${rendered}\`}`,
