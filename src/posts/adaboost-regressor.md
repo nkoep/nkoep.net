@@ -45,7 +45,7 @@ This is also the case for sklearn's `AdaBoostRegressor`, which we will use as
 baseline to compare our implementation against later on.
 
 > The Python code accompanying this post can be found here:
-> https://github.com/nkoep/fundamental-ml/tree/v3-adaboost.
+> <https://github.com/nkoep/fundamental-ml/tree/v3-adaboost>.
 
 ## Adaptive Boosting
 
@@ -346,7 +346,7 @@ into Python code.
 [^max-depth]:
     Note that in previous posts, we did not support limiting the tree
     depth to arbitrary values of `max_width`.
-    This rather silly restriction was lifted in https://git.io/JJ5UW.
+    This rather silly restriction was lifted in <https://git.io/JJ5UW>.
 
 ```python
     def fit(self, X, y):

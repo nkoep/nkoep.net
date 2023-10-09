@@ -73,7 +73,7 @@ topic at hand.
 > interface of the simple `DecisionTree` class we'll be looking at in this post
 > are likely to change in the future.
 > For reference, I tagged the code relating to this post in the Github repo:
-> https://github.com/nkoep/fundamental-ml/tree/v1-decision-tree.
+> <https://github.com/nkoep/fundamental-ml/tree/v1-decision-tree>.
 
 ## Problem Formulation and Outline
 

@@ -28,24 +28,22 @@ const highlight = (str, language) => {
 
 const markdownItProcessor = () => {
   const markdown = new markdownIt({
-    highlight,
-    linkify: true,
     html: true,
+    highlight,
   })
-    .use(katex, {
-      macros,
-      throwOnError: true,
-    })
-    .use(footnotes)
     .use(headings, {
       className: "icon-link",
       prefixHeadingIds: false,
       linkIcon: "#",
     })
+    .use(footnotes)
     .use(toc, {
       containerHeaderHtml: "<h2>Table of Contents</div>",
+    })
+    .use(katex, {
+      macros,
+      throwOnError: true,
     });
-
   const processMarkdown = (content) => {
     const frontMatter = grayMatter(content);
     const rendered = markdown
@@ -58,16 +56,16 @@ const markdownItProcessor = () => {
 
     const metadata = JSON.stringify(frontMatter.data);
     const scriptModule = `<script context="module">export const metadata = ${metadata};</script>`;
-    return {
-      code: scriptModule + "\n" + `{@html \`${rendered}\`}`,
-    };
+    return scriptModule + "\n" + `{@html \`${rendered}\`}`;
   };
 
   const markup = ({ content, filename }) => {
-    if (!filename.endsWith(".md")) {
-      return { code: content };
+    if (filename.endsWith(".md")) {
+      content = processMarkdown(content);
     }
-    return processMarkdown(content);
+    return {
+      code: content,
+    };
   };
 
   return { markup };

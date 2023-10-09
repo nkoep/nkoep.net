@@ -42,7 +42,7 @@ last time in the context of our decision tree regressor.
 
 > The Python code we will be discussing below can be found under the following
 > tag of the Github repository:
-> https://github.com/nkoep/fundamental-ml/tree/v2-random-forest.
+> <https://github.com/nkoep/fundamental-ml/tree/v2-random-forest>.
 
 ## Prediction via Ensembles of Trees
 
@@ -243,7 +243,7 @@ enable Numba to do its magic.
 In the interest of brevity, we skip any further details at this point and
 simply refer to the Numba
 [documentation](http://numba.pydata.org/numba-doc/latest/index.html).
-With a few minor changes to our `Tree` class (see https://git.io/JJZbz), the
+With a few minor changes to our `Tree` class (see <https://git.io/JJZbz>), the
 runtime of our decision tree example from the previous post improves from
 1.7775 to 0.1233 seconds.
 This puts us in a decent starting position to build our random forest
@@ -316,7 +316,7 @@ We also change the constructor of the `Tree` class to accept a reference to our
 internal RNG in order to randomize the feature set if `max_features` is
 specified.
 The changes to the `Tree` class's `construct_tree` method to accommodate random
-feature selection are also straightforward (see https://git.io/JJnq7).
+feature selection are also straightforward (see <https://git.io/JJnq7>).
 
 To see how this implementation fares against scikit-learn's
 `RandomForestRegressor`, we train both algorithms with ensembles of 25 trees
