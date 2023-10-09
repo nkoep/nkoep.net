@@ -1,17 +1,17 @@
 <script>
+  import "@fontsource/cormorant";
+  import "@fontsource/montserrat";
+  import "@fontsource/nunito";
+  import "@fontsource/raleway";
+
   import "normalize.css";
-  import "./styles.scss";
   import "katex/dist/katex.min.css";
+  import "highlight.js/styles/paraiso-light.css";
+  import "./styles.scss";
 
   import { fade } from "svelte/transition";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
-
-  import "@fontsource/montserrat";
-  import "@fontsource/raleway";
-  import "@fontsource/nunito";
-  import "@fontsource/cormorant";
-  import "highlight.js/styles/paraiso-light.css";
 
   import Header from "./Header.svelte";
   import Menu from "./Menu.svelte";
