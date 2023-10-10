@@ -186,7 +186,7 @@ Create a user, create a system group _autologin_ and add the user:
 
 While we're at it, let's also give the user `sudo` privileges by adding
 
-```
+```raw
 nik ALL=(ALL) NOPASSWD: ALL
 ```
 
@@ -194,7 +194,7 @@ to the sudoers file via `EDITOR=vim visudo`.
 
 Add the lines
 
-```
+```raw
 autologin-user=nik
 autologin-session=xmonad
 ```
