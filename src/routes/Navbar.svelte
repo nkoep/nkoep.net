@@ -22,9 +22,6 @@
 </nav>
 
 <style lang="scss">
-  @import "../style/theme.scss";
-  @import "../style/components/Header.scss";
-
   [aria-current],
   [aria-current]::after {
     font-weight: bold;
@@ -39,7 +36,14 @@
     text-transform: uppercase;
   }
 
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
   li {
-    margin-right: $item-spacing;
+    display: inline;
+    margin-right: var(--item-spacing);
   }
 </style>

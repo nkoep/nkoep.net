@@ -28,15 +28,16 @@
 </ul>
 
 <style lang="scss">
-  @import "../style/theme.scss";
-  @import "../style/components/Header.scss";
-
   ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     text-align: right;
   }
 
   li {
-    margin-left: $item-spacing;
+    display: inline;
+    margin-left: var(--item-spacing);
     white-space: nowrap;
   }
 </style>

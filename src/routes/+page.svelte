@@ -16,7 +16,7 @@
 </div>
 
 <style lang="scss">
-  @import "./style/theme.scss";
+  @import "./theme.scss";
 
   div {
     h1,

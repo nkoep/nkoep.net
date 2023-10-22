@@ -14,10 +14,8 @@
   import { page } from "$app/stores";
 
   import Header from "./Header.svelte";
-  import Menu from "./Menu.svelte";
-  import { showMenu } from "./stores.js";
 
-  let show = true;
+  let showContent = true;
   let initialPageLoad = true;
 
   onMount(() => {
@@ -26,10 +24,9 @@
         initialPageLoad = false;
         return;
       }
-      $showMenu = false;
-      show = false;
+      showContent = false;
       setTimeout(() => {
-        show = true;
+        showContent = true;
       }, 0);
     });
   });
@@ -38,13 +35,7 @@
 <main>
   <Header />
 
-  {#if $showMenu}
-    <div class="small-screen">
-      <Menu />
-    </div>
-  {/if}
-
-  {#if show}
+  {#if showContent}
     <div id="outlet" in:fade={{ duration: 650 }}>
       <slot />
     </div>

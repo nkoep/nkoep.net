@@ -21,25 +21,30 @@
 </div>
 
 <style lang="scss">
-  @import "../style/components/Header.scss";
-  @import "../style/theme.scss";
+  @import "./theme.scss";
 
   div {
+    @media only screen and (min-width: $menu-breakpoint) {
+      display: none;
+    }
+
     align-items: center;
     display: flex;
     flex-direction: column;
-    font-size: $menu-fontsize;
+    font-size: var(--menu-fontsize);
 
-    :global(li) {
-      font-size: $menu-fontsize;
-      margin: $item-spacing;
-    }
+    :global {
+      li {
+        font-size: var(--menu-fontsize);
+        margin: var(--item-spacing);
+      }
 
-    :global(nav),
-    :global(ul) {
-      align-items: center;
-      display: flex;
-      flex: 1 1 100%;
+      nav,
+      ul {
+        align-items: center;
+        display: flex;
+        flex: 1 1 100%;
+      }
     }
   }
 </style>

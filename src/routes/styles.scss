@@ -1,4 +1,18 @@
-@import "../style/theme.scss";
+@import "./theme.scss";
+
+// Theme
+:root {
+  --theme-fg: #040f16;
+  --theme-fg-muted: #454745;
+  --theme-bg: #fbfbff;
+  --theme-link: #ffc423;
+  --theme-link-hover: var(--fg-muted);
+
+  --inner-padding: 0.5em;
+  --item-spacing: 1.5em;
+  --menu-breakpoint: 575px;
+  --menu-fontsize: 18px;
+}
 
 * {
   box-sizing: border-box;
@@ -36,12 +50,6 @@ p {
   }
 }
 
-img.header {
-  display: block;
-  margin: 0 auto;
-  width: 40%;
-}
-
 h1,
 h2,
 h3 {
@@ -73,8 +81,8 @@ blockquote {
   font-style: italic;
   color: rgba($fg, 0.75);
   margin: 1em 0;
-  padding: $inner-padding;
-  padding-left: 2 * $inner-padding;
+  padding: var(--inner-padding);
+  padding-left: calc(2 * var(--inner-padding));
   transition: 250ms;
 
   p {
@@ -102,21 +110,28 @@ ul {
 }
 
 button {
+  background: none;
+  border: none;
   margin: 0;
   padding: 0;
 
   &:focus {
     outline: 0;
   }
+
+  &:hover,
+  &:active {
+    cursor: pointer;
+  }
 }
 
 a {
-  color: $link;
+  color: var(--theme-link);
   text-decoration: none;
   transition: color 250ms;
 
   &:hover {
-    color: $link-hover;
+    color: var(--theme-link-hover);
     transition: color 100ms;
   }
 }
@@ -135,8 +150,13 @@ summary:hover {
   cursor: pointer;
 }
 
+img.header {
+  display: block;
+  margin: 0 auto;
+  width: 40%;
+}
+
 p.date {
-  color: $fg-muted;
   color: rgba($fg-muted, 0.75);
   font-style: italic;
   margin: 0;
@@ -196,12 +216,6 @@ h3 {
 // Hide anchor tags on page headings.
 h1 .icon-link {
   display: none;
-}
-
-.small-screen {
-  @media only screen and (min-width: $menu-breakpoint) {
-    display: none;
-  }
 }
 
 .video {

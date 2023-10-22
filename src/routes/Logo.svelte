@@ -3,7 +3,13 @@
 </div>
 
 <style lang="scss">
-  @import "../style/components/Header.scss";
+  a {
+    color: var(--theme-fg);
+
+    &:hover {
+      color: var(--theme-link);
+    }
+  }
 
   div {
     font-family: "Cormorant", serif;
