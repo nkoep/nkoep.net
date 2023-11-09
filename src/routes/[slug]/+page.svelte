@@ -1,18 +1,7 @@
 <script>
-  export let data;
+  import Page from "../Page.svelte";
 
-  const { body, title, header } = data;
+  export let data;
 </script>
 
-<svelte:head>
-  <title>{title} | Niklas Koep</title>
-</svelte:head>
-
-{#if header}
-  <img class="header" alt="header" src={header} />
-{/if}
-
-{#if title}
-  <h1>{title}</h1>
-{/if}
-<svelte:component this={body} />
+<Page {...data} />
