@@ -1,5 +1,8 @@
 <script>
-  export let body, title, date, header;
+  export let body;
+  export let title;
+  export let date = null;
+  export let header = null;
 </script>
 
 <svelte:head>
