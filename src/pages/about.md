@@ -4,9 +4,8 @@ header: img/mug.jpg
 ---
 
 Hi! My name is Niklas, and I am currently based out of Berlin where I work as a
-data scientist.
-Before moving to Berlin at the beginning of 2021, I studied electrical
-engineering at RWTH Aachen University.
+data scientist in the logistics department of [Delivery
+Hero](https://www.deliveryhero.com/).
 
 ### Publications
 
