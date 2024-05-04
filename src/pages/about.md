@@ -9,7 +9,7 @@ Hero](https://www.deliveryhero.com/).
 
 ### Publications
 
-<https://scholar.google.com/citations?user=CpQ1YvMAAAAJ>
+[Google Scholar](https://scholar.google.com/citations?user=CpQ1YvMAAAAJ)
 
 ## Open Source
 
