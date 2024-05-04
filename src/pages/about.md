@@ -1,6 +1,6 @@
 ---
 title: About
-header: img/mug.jpg
+header: /img/mug.jpg
 ---
 
 Hi! My name is Niklas, and I am currently based out of Berlin where I work as a
