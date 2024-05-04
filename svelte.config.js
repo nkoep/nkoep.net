@@ -1,6 +1,7 @@
 import katex from "@neilsustc/markdown-it-katex";
 import adapter from "@sveltejs/adapter-static";
 import autoprefixer from "autoprefixer";
+import { slug } from "github-slugger";
 import grayMatter from "gray-matter";
 import hljs from "highlight.js";
 import markdownIt from "markdown-it";
@@ -10,6 +11,8 @@ import toc from "markdown-it-table-of-contents";
 import sveltePreprocess from "svelte-preprocess";
 
 import macros from "./katex-macros.js";
+
+const slugger = (text) => slug(text.replace(/[<>]/g, "").toLowerCase());
 
 const highlight = (str, language) => {
   if (language && hljs.getLanguage(language)) {
@@ -39,6 +42,7 @@ const markdownItProcessor = () => {
     .use(footnotes)
     .use(toc, {
       containerHeaderHtml: "<h2>Table of Contents</div>",
+      slugify: slugger,
     })
     .use(katex, {
       macros,
