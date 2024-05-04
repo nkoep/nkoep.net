@@ -8,6 +8,8 @@ that I can never seem to remember the exact details, I figured I should write
 up a short installation guide, mainly as future reference for myself.
 Here we go.
 
+> This post was updated on May 4, 2024.
+
 [[toc]]
 
 ## First Steps
@@ -172,7 +174,7 @@ window manager:
 
 ```shell
 # pacman -S sudo xorg-server xf86-video-intel lightdm
-# pacman -S xterm xfce4-terminal xmonad xmonad-contrib
+# pacman -S xmonad xmonad-contrib polybar kitty neovim
 ```
 
 Create a user, create a system group _autologin_ and add the user:
@@ -190,7 +192,7 @@ While we're at it, let's also give the user `sudo` privileges by adding
 nik ALL=(ALL) NOPASSWD: ALL
 ```
 
-to the sudoers file via `EDITOR=vim visudo`.
+to the sudoers file via `EDITOR=nvim visudo`.
 
 Add the lines
 
@@ -222,31 +224,23 @@ EOF
 
 ## Arch User Repository (AUR)
 
-In order to interface with the AUR, we opt for `pacaur`.
-To install it, we first need to grab some AUR packages manually.
-To that end, we first install a few needed base packages
+In order to interface with the AUR, we opt for `paru`.
+To install it, we first need to grab the package from the AUR itself.
+To that end, we first install a few needed base packages:
 
 ```shell
 # pacman -S git make fakeroot pkg-config
 ```
 
-Now grab `cower` and `pacaur` from the AUR:
+Now grab `paru` from the AUR git, and build and install the package:
 
 ```shell
-# cd /tmp
-# for pkg in cower pacaur; do
-git clone https://aur.archlinux.org/$pkg.git
-cd $pkg && makepkg -si && cd ..
-done
+# git clone https://aur.archlinux.org/paru.git /tmp/paru && makepkg -siD /tmp/paru
 ```
 
-With `pacaur` set up, let's install a pacman hook to update the bootloader
-after kernel upgrades, as well as a bunch of other common AUR packages:
+With `paru` set up, let's install a convenient pacman hook to update the
+bootloader after kernel upgrades.
 
 ```shell
-# pacaur -S systemd-boot-pacman-hook
-# pacaur -S dmenu-xft-mouse-height-fuzzy-history dropbox
-# pacaur -S gopass numix-square-icon-theme-git polybar
+# paru -S systemd-boot-pacman-hook
 ```
-
-And that's it!
