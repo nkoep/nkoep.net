@@ -4,7 +4,7 @@
 
   $: currentPage = $page.params.page;
 
-  const pages = ["about", "quotes"];
+  const pages = ["about", "projects"];
 </script>
 
 <nav>
