@@ -79,9 +79,7 @@ stronger influence on the final prediction than others.
     We emphasize that we _don't_ mean a basis in the linear algebraic
     sense here.
 
-## Seeing the Random Forest for the Decision Trees[^sorry]
-
-[^sorry]: Sorry, I couldn't help myself.
+## Seeing the Random Forest for the Decision Trees
 
 In this section, we briefly go over the construction of random forests.
 Since a random forest is just a collection of trees trained on independently
