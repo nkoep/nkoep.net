@@ -1,18 +1,15 @@
 import katex from "@neilsustc/markdown-it-katex";
 import adapter from "@sveltejs/adapter-static";
 import autoprefixer from "autoprefixer";
-import { slug } from "github-slugger";
 import grayMatter from "gray-matter";
 import hljs from "highlight.js";
 import markdownIt from "markdown-it";
+import anchor from "markdown-it-anchor";
 import footnotes from "markdown-it-footnote";
-import headings from "markdown-it-github-headings";
 import toc from "markdown-it-table-of-contents";
 import sveltePreprocess from "svelte-preprocess";
 
 import macros from "./katex-macros.js";
-
-const slugger = (text) => slug(text.replace(/[<>]/g, "").toLowerCase());
 
 const highlight = (str, language) => {
   if (language && hljs.getLanguage(language)) {
@@ -34,16 +31,18 @@ const markdownItProcessor = () => {
     html: true,
     highlight,
   })
-    .use(headings, {
-      className: "icon-link",
-      prefixHeadingIds: false,
-      linkIcon: "#",
-    })
-    .use(footnotes)
     .use(toc, {
       containerHeaderHtml: "<h2>Table of Contents</div>",
-      slugify: slugger,
+      slugify: anchor.defaults.slugify,
     })
+    .use(anchor, {
+      permalink: anchor.permalink.linkInsideHeader({
+        class: "icon-link",
+        symbol: "#",
+      }),
+      slugify: anchor.defaults.slugify,
+    })
+    .use(footnotes)
     .use(katex, {
       macros,
       throwOnError: true,
