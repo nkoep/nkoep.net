@@ -35,7 +35,8 @@ const markdownItProcessor = () => {
     highlight,
   })
     .use(toc, {
-      containerHeaderHtml: "<h2>Table of Contents</div>",
+      containerClass: "table-of-contents",
+      containerHeaderHtml: "<h2>Table of Contents</h2>",
       slugify: anchor.defaults.slugify,
     })
     .use(anchor, {
@@ -50,17 +51,29 @@ const markdownItProcessor = () => {
       macros,
       throwOnError: true,
     });
+
+  // markdown-it automatically wraps the output of [[toc]] in a paragraph.
+  // Since the content is a div (i.e., a block element), the svelte compiler
+  // will throw an error since block elements are not allowed in p-tags.
+  const unwrapTableOfContents = (html) => {
+    const capture = html.match(/<p>(<div class="table-of-contents".*?)<\/p>/);
+    if (capture === null) {
+      return html;
+    }
+    const [pTag, pTagContent] = capture;
+    return html.replace(pTag, pTagContent);
+  };
+
   const processMarkdown = (content) => {
-    const frontMatter = grayMatter(content);
-    const rendered = markdown
-      .render(frontMatter.content)
+    const parsed = grayMatter(content);
+    const rendered = unwrapTableOfContents(markdown.render(parsed.content))
       .replace(/^\t{3}/gm, "")
       .replace("`", "&#96;")
       .replace(/\t/g, "&#9;")
       .replace(/{/g, "&#123;")
       .replace(/}/g, "&#125;");
 
-    const metadata = JSON.stringify(frontMatter.data);
+    const metadata = JSON.stringify(parsed.data);
     const scriptModule = `<script context="module">export const metadata = ${metadata};</script>`;
     return scriptModule + "\n" + rendered;
   };
