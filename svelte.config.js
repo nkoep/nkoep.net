@@ -54,7 +54,9 @@ const markdownItProcessor = () => {
 
   // markdown-it automatically wraps the output of [[toc]] in a paragraph.
   // Since the content is a div (i.e., a block element), the svelte compiler
-  // will throw an error since block elements are not allowed in p-tags.
+  // will throw an error since block elements are not allowed in p-tags. This
+  // function finds the p-tag surrounding the TOC if there is one and removes
+  // it.
   const unwrapTableOfContents = (html) => {
     const capture = html.match(/<p>(<div class="table-of-contents".*?)<\/p>/);
     if (capture === null) {
@@ -75,7 +77,7 @@ const markdownItProcessor = () => {
 
     const metadata = JSON.stringify(parsed.data);
     const scriptModule = `<script context="module">export const metadata = ${metadata};</script>`;
-    return scriptModule + "\n" + rendered;
+    return `${scriptModule}\n${rendered}`;
   };
 
   const markup = ({ content, filename }) => {
