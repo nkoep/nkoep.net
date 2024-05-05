@@ -1,4 +1,6 @@
 <script>
+  import { formatDate } from "../routes/helpers";
+
   export let data;
 </script>
 
@@ -10,7 +12,7 @@
   {#each data.posts as post}
     <a class="post" data-sveltekit-preload-data href="p/{post.slug}">
       <h1>{post.title}</h1>
-      <p class="date">{post.date}</p>
+      <p class="date">{formatDate(post.date)}</p>
     </a>
   {/each}
 </div>
