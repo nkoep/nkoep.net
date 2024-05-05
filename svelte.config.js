@@ -62,7 +62,7 @@ const markdownItProcessor = () => {
 
     const metadata = JSON.stringify(frontMatter.data);
     const scriptModule = `<script context="module">export const metadata = ${metadata};</script>`;
-    return scriptModule + "\n" + `{@html \`${rendered}\`}`;
+    return scriptModule + "\n" + rendered;
   };
 
   const markup = ({ content, filename }) => {
