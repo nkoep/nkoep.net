@@ -217,15 +217,3 @@ h3 {
 h1 .icon-link {
   display: none;
 }
-
-.video {
-  margin: 1em 0;
-  padding-bottom: 56.25%; // 16:9
-  position: relative;
-
-  iframe[src*="youtube.com"] {
-    height: 100%;
-    position: absolute;
-    width: 100%;
-  }
-}
