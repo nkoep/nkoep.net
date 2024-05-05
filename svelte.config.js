@@ -3,6 +3,7 @@ import adapter from "@sveltejs/adapter-static";
 import autoprefixer from "autoprefixer";
 import grayMatter from "gray-matter";
 import hljs from "highlight.js";
+import svelteHighlight from "highlightjs-svelte";
 import markdownIt from "markdown-it";
 import anchor from "markdown-it-anchor";
 import footnotes from "markdown-it-footnote";
@@ -10,6 +11,8 @@ import toc from "markdown-it-table-of-contents";
 import sveltePreprocess from "svelte-preprocess";
 
 import macros from "./katex-macros.js";
+
+svelteHighlight(hljs);
 
 const highlight = (str, language) => {
   if (language && hljs.getLanguage(language)) {
