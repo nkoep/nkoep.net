@@ -10,3 +10,11 @@ export function makeLoader(pathPrefix: string) {
     }
   };
 }
+
+export function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString("en-us", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

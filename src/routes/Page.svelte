@@ -1,4 +1,6 @@
 <script>
+  import { formatDate } from "../routes/helpers";
+
   export let body;
   export let title;
   export let date = null;
@@ -16,7 +18,7 @@
 {#if title}
   <h1>{title}</h1>
   {#if date}
-    <p class="date">{date}</p>
+    <p class="date">{formatDate(date)}</p>
   {/if}
 {/if}
 <svelte:component this={body} />
