@@ -1,17 +1,12 @@
 <script>
   import Icon from "svelte-awesome/components/Icon.svelte";
-  import {
-    faGithub,
-    faInstagram,
-    faLastfm,
-  } from "@fortawesome/free-brands-svg-icons";
+  import { faGithub, faLastfm } from "@fortawesome/free-brands-svg-icons";
   import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
   export let iconScale = 1;
 
   const socialPages = [
     { url: "https://github.com/nkoep/", icon: faGithub },
-    { url: "https://instagram.com/polylith_", icon: faInstagram },
     { url: "https://last.fm/user/cRZYFST", icon: faLastfm },
     { url: "mailto:contact@nkoep.net", icon: faEnvelope },
   ];
