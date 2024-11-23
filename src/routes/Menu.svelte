@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
   import { slide } from "svelte/transition";
 
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
   import { showMenu } from "./stores.js";
 
-  const validateCloseMenu = (event) => {
+  const validateCloseMenu = (event: KeyboardEvent) => {
     const { key } = event;
     if (key === "Escape" || key === "Esc") {
       $showMenu = false;

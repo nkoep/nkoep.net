@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   import { formatDate } from "../routes/helpers";
 
   export let body;
-  export let title;
-  export let date = null;
-  export let header = null;
+  export let title: string;
+  export let date: string | null = null;
+  export let header: string | null = null;
 </script>
 
 <svelte:head>
