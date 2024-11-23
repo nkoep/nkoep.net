@@ -2,7 +2,7 @@
   import { formatDate } from "../routes/helpers";
 
   interface Props {
-    body;
+    body: import("svelte").Component;
     title: string;
     date?: string | null;
     header?: string | null;
