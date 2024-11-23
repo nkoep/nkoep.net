@@ -1,9 +1,13 @@
-<script>
+<script lang="ts">
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { faGithub, faLastfm } from "@fortawesome/free-brands-svg-icons";
   import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
-  export let iconScale = 1;
+  interface Props {
+    iconScale?: number;
+  }
+
+  let { iconScale = 1 }: Props = $props();
 
   const socialPages = [
     { url: "https://github.com/nkoep/", icon: faGithub },

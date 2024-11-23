@@ -1,10 +1,16 @@
 <script lang="ts">
   import { formatDate } from "../routes/helpers";
 
-  export let body;
-  export let title: string;
-  export let date: string | null = null;
-  export let header: string | null = null;
+  interface Props {
+    body;
+    title: string;
+    date?: string | null;
+    header?: string | null;
+  }
+
+  let { body, title, date = null, header = null }: Props = $props();
+
+  const SvelteComponent = $derived(body);
 </script>
 
 <svelte:head>
@@ -21,4 +27,4 @@
     <p class="date">{formatDate(date)}</p>
   {/if}
 {/if}
-<svelte:component this={body} />
+<SvelteComponent />

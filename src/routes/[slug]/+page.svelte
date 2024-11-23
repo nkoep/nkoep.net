@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import Page from "../Page.svelte";
 
-  export let data;
+  let { data } = $props();
 </script>
 
 <Page {...data} />

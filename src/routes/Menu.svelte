@@ -8,12 +8,13 @@
   const validateCloseMenu = (event: KeyboardEvent) => {
     const { key } = event;
     if (key === "Escape" || key === "Esc") {
+      event.preventDefault();
       $showMenu = false;
     }
   };
 </script>
 
-<svelte:window on:keyup|preventDefault={validateCloseMenu} />
+<svelte:window onkeyup={validateCloseMenu} />
 
 <div transition:slide={{ duration: 300 }}>
   <Navbar />

@@ -21,7 +21,7 @@
   </div>
 
   <div id="menu-button">
-    <button on:click={() => ($showMenu = !$showMenu)}>
+    <button onclick={() => ($showMenu = !$showMenu)}>
       <Icon data={$showMenu ? faTimes : faBars} scale={1.5} />
     </button>
   </div>

@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let title: string;
-  export let id: string;
+  interface Props {
+    title: string;
+    id: string;
+  }
+
+  let { title, id }: Props = $props();
 </script>
 
 <div>
@@ -9,7 +13,7 @@
     {title}
     frameborder="0"
     allowfullscreen
-  />
+  ></iframe>
 </div>
 
 <style lang="scss">
