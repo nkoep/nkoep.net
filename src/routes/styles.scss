@@ -21,7 +21,7 @@ body {
   color: theme.$fg;
   font-family: "Nunito", sans-serif;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: theme.$line-height;
   margin: 2em auto;
 }
 
@@ -158,7 +158,7 @@ p.date {
 
 main {
   margin: auto;
-  max-width: 700px;
+  max-width: theme.$text-width;
   width: 85%;
 
   #outlet {
