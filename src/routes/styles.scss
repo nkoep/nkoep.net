@@ -1,18 +1,4 @@
-@import "./theme.scss";
-
-// Theme
-:root {
-  --theme-fg: #040f16;
-  --theme-fg-muted: #454745;
-  --theme-bg: #fbfbff;
-  --theme-link: #ffc423;
-  --theme-link-hover: var(--fg-muted);
-
-  --inner-padding: 0.5em;
-  --item-spacing: 1.5em;
-  --menu-breakpoint: 575px;
-  --menu-fontsize: 18px;
-}
+@use "./theme.scss";
 
 * {
   box-sizing: border-box;
@@ -31,8 +17,8 @@ html {
 }
 
 body {
-  background: $bg;
-  color: $fg;
+  background: theme.$bg;
+  color: theme.$fg;
   font-family: "Nunito", sans-serif;
   font-size: 16px;
   line-height: 1.5;
@@ -76,13 +62,13 @@ code {
 }
 
 blockquote {
-  background-color: rgba($fg-muted, 0.02);
-  border-left: solid 3px rgba($link, 0.75);
+  background-color: rgba(theme.$fg-muted, 0.02);
+  border-left: solid 3px rgba(theme.$link, 0.75);
   font-style: italic;
-  color: rgba($fg, 0.75);
+  color: rgba(theme.$fg, 0.75);
   margin: 1em 0;
-  padding: var(--inner-padding);
-  padding-left: calc(2 * var(--inner-padding));
+  padding: theme.$inner-padding;
+  padding-left: 2 * theme.$inner-padding;
   transition: 250ms;
 
   p {
@@ -92,9 +78,9 @@ blockquote {
 
   &:active,
   &:hover {
-    background-color: rgba($fg-muted, 0.1);
-    border-left: solid 3px rgba($fg-muted, 0.25);
-    padding-left: 2.5 * $inner-padding;
+    background-color: rgba(theme.$fg-muted, 0.1);
+    border-left: solid 3px rgba(theme.$fg-muted, 0.25);
+    padding-left: 2.5 * theme.$inner-padding;
   }
 
   cite {
@@ -126,12 +112,12 @@ button {
 }
 
 a {
-  color: var(--theme-link);
+  color: theme.$link;
   text-decoration: none;
   transition: color 250ms;
 
   &:hover {
-    color: var(--theme-link-hover);
+    color: theme.$link-hover;
     transition: color 100ms;
   }
 }
@@ -157,7 +143,7 @@ img.header {
 }
 
 p.date {
-  color: rgba($fg-muted, 0.75);
+  color: rgba(theme.$fg-muted, 0.75);
   font-style: italic;
   margin: 0;
   margin-top: -0.5em;
@@ -190,7 +176,7 @@ main {
 }
 
 .hljs {
-  background-color: rgba($fg-muted, 0.02);
+  background-color: rgba(theme.$fg-muted, 0.02);
 }
 
 h1,

@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
+  import type { PageProps } from "$lib/types";
+
   import { formatDate } from "../routes/helpers";
 
-  export let body;
-  export let title;
-  export let date = null;
-  export let header = null;
+  let { body, title, date = null, header = null }: PageProps = $props();
+
+  const SvelteComponent = $derived(body);
 </script>
 
 <svelte:head>
@@ -21,4 +22,4 @@
     <p class="date">{formatDate(date)}</p>
   {/if}
 {/if}
-<svelte:component this={body} />
+<SvelteComponent />

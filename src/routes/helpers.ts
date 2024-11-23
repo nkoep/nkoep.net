@@ -1,12 +1,18 @@
 import { error } from "@sveltejs/kit";
 
+type LoaderParams = {
+  params: {
+    slug: string;
+  };
+};
+
 export function makeLoader(pathPrefix: string) {
-  return async ({ params }) => {
+  return async ({ params }: LoaderParams) => {
     try {
       const content = await import(`../${pathPrefix}/${params.slug}.md`);
       return { body: content.default, ...content.metadata };
     } catch {
-      throw error(404, "Not found");
+      error(404, "Not found");
     }
   };
 }

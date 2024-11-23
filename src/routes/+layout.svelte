@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import "@fontsource/cormorant";
   import "@fontsource/montserrat";
   import "@fontsource/nunito";
@@ -14,8 +14,13 @@
   import { page } from "$app/stores";
 
   import Header from "./Header.svelte";
+  interface Props {
+    children?: import("svelte").Snippet;
+  }
 
-  let showContent = true;
+  let { children }: Props = $props();
+
+  let showContent = $state(true);
   let initialPageLoad = true;
 
   onMount(() => {
@@ -37,7 +42,7 @@
 
   {#if showContent}
     <div id="outlet" in:fade={{ duration: 650 }}>
-      <slot />
+      {@render children?.()}
     </div>
   {/if}
 </main>

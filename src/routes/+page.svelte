@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { formatDate } from "../routes/helpers";
 
-  export let data;
+  let { data } = $props();
 </script>
 
 <svelte:head>
@@ -18,7 +18,7 @@
 </div>
 
 <style lang="scss">
-  @import "./theme.scss";
+  @use "./theme.scss";
 
   div {
     h1,
@@ -41,14 +41,14 @@
       border: solid 0px transparent;
       display: block;
       margin: 1em 0;
-      padding: $inner-padding;
+      padding: theme.$inner-padding;
       transition: 250ms;
 
       &:hover,
       &:active {
-        background-color: rgba($fg-muted, 0.1);
-        border-left: solid 3px rgba($fg-muted, 0.25);
-        padding-left: 2 * $inner-padding;
+        background-color: rgba(theme.$fg-muted, 0.1);
+        border-left: solid 3px rgba(theme.$fg-muted, 0.25);
+        padding-left: 2 * theme.$inner-padding;
       }
     }
   }

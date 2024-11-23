@@ -3,11 +3,13 @@
 </div>
 
 <style lang="scss">
+  @use "./theme.scss";
+
   a {
-    color: var(--theme-fg);
+    color: theme.$fg;
 
     &:hover {
-      color: var(--theme-link);
+      color: theme.$link;
     }
   }
 

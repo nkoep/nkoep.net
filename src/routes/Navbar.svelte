@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import { showMenu } from "./stores.js";
 
-  $: currentPage = $page.params.page;
+  let currentPage = $derived($page.params.page);
 
   const pages = ["about", "projects"];
 </script>
@@ -12,7 +12,7 @@
     {#each pages as page}
       <li>
         <a
-          on:click={() => ($showMenu = false)}
+          onclick={() => ($showMenu = false)}
           aria-current={page === currentPage ? true : undefined}
           href="/{page}">{page}</a
         >
@@ -22,6 +22,8 @@
 </nav>
 
 <style lang="scss">
+  @use "./theme.scss";
+
   [aria-current],
   [aria-current]::after {
     font-weight: bold;
@@ -44,6 +46,6 @@
 
   li {
     display: inline;
-    margin-right: var(--item-spacing);
+    margin-right: theme.$item-spacing;
   }
 </style>
