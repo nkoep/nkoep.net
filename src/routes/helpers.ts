@@ -6,7 +6,7 @@ export function makeLoader(pathPrefix: string) {
       const content = await import(`../${pathPrefix}/${params.slug}.md`);
       return { body: content.default, ...content.metadata };
     } catch {
-      throw error(404, "Not found");
+      error(404, "Not found");
     }
   };
 }

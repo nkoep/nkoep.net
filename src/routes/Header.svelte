@@ -37,14 +37,14 @@
 {/if}
 
 <style lang="scss">
-  @import "./theme.scss";
+  @use "./theme.scss";
 
   div:not(.menu) {
     display: none;
     flex: 1 1 100%;
     margin: auto 0;
 
-    @media only screen and (min-width: $menu-breakpoint) {
+    @media only screen and (min-width: theme.$menu-breakpoint) {
       display: block;
     }
   }
@@ -68,7 +68,7 @@
       content: "";
       flex: 1 1 100%;
 
-      @media only screen and (min-width: $menu-breakpoint) {
+      @media only screen and (min-width: theme.$menu-breakpoint) {
         content: none;
       }
     }
@@ -79,10 +79,10 @@
     :global {
       a,
       button {
-        color: var(--theme-fg);
+        color: theme.$fg;
 
         &:hover {
-          color: var(--theme-link);
+          color: theme.$link;
         }
       }
     }
@@ -91,7 +91,7 @@
   #menu-button {
     display: flex;
 
-    @media only screen and (min-width: $menu-breakpoint) {
+    @media only screen and (min-width: theme.$menu-breakpoint) {
       display: none;
     }
 

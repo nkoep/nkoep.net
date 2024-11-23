@@ -28,6 +28,8 @@
 </ul>
 
 <style lang="scss">
+  @use "./theme.scss";
+
   ul {
     list-style: none;
     margin: 0;
@@ -37,7 +39,7 @@
 
   li {
     display: inline;
-    margin-left: var(--item-spacing);
+    margin-left: theme.$item-spacing;
     white-space: nowrap;
   }
 </style>

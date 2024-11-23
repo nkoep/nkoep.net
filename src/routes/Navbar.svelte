@@ -22,6 +22,8 @@
 </nav>
 
 <style lang="scss">
+  @use "./theme.scss";
+
   [aria-current],
   [aria-current]::after {
     font-weight: bold;
@@ -44,6 +46,6 @@
 
   li {
     display: inline;
-    margin-right: var(--item-spacing);
+    margin-right: theme.$item-spacing;
   }
 </style>

@@ -21,22 +21,22 @@
 </div>
 
 <style lang="scss">
-  @import "./theme.scss";
+  @use "./theme.scss";
 
   div {
-    @media only screen and (min-width: $menu-breakpoint) {
-      display: none;
-    }
-
     align-items: center;
     display: flex;
     flex-direction: column;
-    font-size: var(--menu-fontsize);
+    font-size: theme.$menu-fontsize;
+
+    @media only screen and (min-width: theme.$menu-breakpoint) {
+      display: none;
+    }
 
     :global {
       li {
-        font-size: var(--menu-fontsize);
-        margin: var(--item-spacing);
+        font-size: theme.$menu-fontsize;
+        margin: theme.$item-spacing;
       }
 
       nav,
