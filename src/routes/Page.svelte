@@ -1,14 +1,9 @@
 <script lang="ts">
+  import type { PageProps } from "$lib/types";
+
   import { formatDate } from "../routes/helpers";
 
-  interface Props {
-    body: import("svelte").Component;
-    title: string;
-    date?: string | null;
-    header?: string | null;
-  }
-
-  let { body, title, date = null, header = null }: Props = $props();
+  let { body, title, date = null, header = null }: PageProps = $props();
 
   const SvelteComponent = $derived(body);
 </script>
