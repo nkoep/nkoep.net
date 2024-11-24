@@ -41,9 +41,9 @@
       border: solid 0px transparent;
       display: block;
       margin: 1em 0;
-      padding: theme.$inner-padding;
       /* Add negative margin to avoid text wrapping on hover. */
       margin-right: -2 * theme.$inner-padding;
+      padding: theme.$inner-padding;
       transition: 250ms;
 
       &:hover,

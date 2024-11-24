@@ -67,6 +67,8 @@ blockquote {
   font-style: italic;
   color: rgba(theme.$fg, 0.75);
   margin: 1em 0;
+  /* Add negative margin to avoid text wrapping on hover. */
+  margin-right: -2 * theme.$inner-padding;
   padding: theme.$inner-padding;
   padding-left: 2 * theme.$inner-padding;
   transition: 250ms;
