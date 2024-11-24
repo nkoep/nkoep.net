@@ -8,7 +8,7 @@
 </script>
 
 <nav>
-  <ul>
+  <ul class="inline-list">
     {#each pages as page}
       <li>
         <a
@@ -38,14 +38,7 @@
     text-transform: uppercase;
   }
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
   li {
-    display: inline;
     margin-right: theme.$item-spacing;
   }
 </style>
