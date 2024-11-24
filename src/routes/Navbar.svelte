@@ -1,6 +1,5 @@
 <script>
   import { page } from "$app/stores";
-  import { showMenu } from "./stores.js";
 
   let currentPage = $derived($page.params.slug);
   const pages = ["about", "projects"];
@@ -11,7 +10,6 @@
     {#each pages as page}
       <li>
         <a
-          onclick={() => ($showMenu = false)}
           aria-current={page === currentPage ? true : undefined}
           href="/{page}">{page}</a
         >

@@ -1,19 +1,19 @@
 <script lang="ts">
+  import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+  import Icon from "svelte-awesome/components/Icon.svelte";
   import { slide } from "svelte/transition";
 
   import Logo from "./Logo.svelte";
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
-  import { showMenu } from "./stores.js";
 
-  import Icon from "svelte-awesome/components/Icon.svelte";
-  import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+  let showMenu = $state(false);
 
   const validateCloseMenu = (event: KeyboardEvent) => {
     const { key } = event;
     if (key === "Escape" || key === "Esc") {
       event.preventDefault();
-      $showMenu = false;
+      showMenu = false;
     }
   };
 </script>
@@ -34,13 +34,13 @@
   </div>
 
   <div class="menu-button">
-    <button onclick={() => ($showMenu = !$showMenu)}>
-      <Icon data={$showMenu ? faTimes : faBars} scale={1.5} />
+    <button onclick={() => (showMenu = !showMenu)}>
+      <Icon data={showMenu ? faTimes : faBars} scale={1.5} />
     </button>
   </div>
 </header>
 
-{#if $showMenu}
+{#if showMenu}
   <div class="menu" transition:slide={{ duration: 300 }}>
     <Navbar />
     <Social />
