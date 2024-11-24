@@ -2,8 +2,7 @@
   import { page } from "$app/stores";
   import { showMenu } from "./stores.js";
 
-  let currentPage = $derived($page.params.page);
-
+  let currentPage = $derived($page.params.slug);
   const pages = ["about", "projects"];
 </script>
 
