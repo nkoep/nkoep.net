@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { slide } from "svelte/transition";
 
   import Logo from "./Logo.svelte";
@@ -8,7 +8,17 @@
 
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+  const validateCloseMenu = (event: KeyboardEvent) => {
+    const { key } = event;
+    if (key === "Escape" || key === "Esc") {
+      event.preventDefault();
+      $showMenu = false;
+    }
+  };
 </script>
+
+<svelte:window onkeyup={validateCloseMenu} />
 
 <header>
   <div class="navbar">
