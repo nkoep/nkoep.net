@@ -21,7 +21,7 @@
 
     &::after {
       background-color: theme.$link;
-      bottom: 0;
+      bottom: 0.25em;
       content: "";
       height: 2px;
       left: 0;
