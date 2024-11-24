@@ -99,6 +99,7 @@ button {
 
   &:hover,
   &:active {
+    color: theme.$link;
     cursor: pointer;
   }
 }
@@ -106,10 +107,17 @@ button {
 a {
   color: theme.$link;
   text-decoration: none;
-  transition: color 250ms;
 
   &:hover {
     color: theme.$link-hover;
+  }
+}
+
+a,
+button {
+  transition: color 250ms;
+
+  &:hover {
     transition: color 100ms;
   }
 }
