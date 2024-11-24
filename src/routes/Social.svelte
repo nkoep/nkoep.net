@@ -1,13 +1,7 @@
 <script lang="ts">
-  import Icon from "svelte-awesome/components/Icon.svelte";
   import { faGithub, faLastfm } from "@fortawesome/free-brands-svg-icons";
   import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-
-  interface Props {
-    iconScale?: number;
-  }
-
-  let { iconScale = 1 }: Props = $props();
+  import Icon from "svelte-awesome/components/Icon.svelte";
 
   const socialPages = [
     { url: "https://github.com/nkoep/", icon: faGithub },
@@ -19,9 +13,7 @@
 <ul class="inline-list">
   {#each socialPages as page}
     <li>
-      <a href={page.url} target="_blank"
-        ><Icon data={page.icon} scale={iconScale} /></a
-      >
+      <a href={page.url} target="_blank"><Icon data={page.icon} /></a>
     </li>
   {/each}
 </ul>
@@ -29,12 +21,15 @@
 <style lang="scss">
   @use "./theme.scss";
 
-  ul {
-    text-align: right;
+  a {
+    color: theme.$fg;
+
+    &:hover {
+      color: theme.$link;
+    }
   }
 
   li {
-    margin-left: theme.$item-spacing;
-    white-space: nowrap;
+    padding: 0 theme.$item-spacing / 2;
   }
 </style>

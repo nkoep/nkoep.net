@@ -28,6 +28,14 @@
     font-weight: bold;
   }
 
+  a {
+    color: theme.$fg;
+
+    &:hover {
+      color: theme.$link;
+    }
+  }
+
   nav {
     font-family: "Montserrat", sans-serif;
     font-size: 11px;
@@ -38,6 +46,6 @@
   }
 
   li {
-    margin-right: theme.$item-spacing;
+    padding: 0 theme.$item-spacing / 2;
   }
 </style>

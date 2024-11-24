@@ -162,14 +162,6 @@ main {
   margin: auto;
   max-width: theme.$text-width;
   width: 85%;
-
-  #outlet {
-    padding-top: 1.5em;
-
-    ul {
-      font-size: 14px;
-    }
-  }
 }
 
 .katex-display {

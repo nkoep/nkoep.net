@@ -1,6 +1,7 @@
 <script>
+  import { slide } from "svelte/transition";
+
   import Logo from "./Logo.svelte";
-  import Menu from "./Menu.svelte";
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
   import { showMenu } from "./stores.js";
@@ -10,44 +11,34 @@
 </script>
 
 <header>
-  <div>
+  <div class="navbar">
     <Navbar />
   </div>
 
-  <Logo />
+  <div class="logo">
+    <Logo />
+  </div>
 
-  <div>
+  <div class="social">
     <Social />
   </div>
 
-  <div id="menu-button">
+  <div class="menu-button">
     <button onclick={() => ($showMenu = !$showMenu)}>
       <Icon data={$showMenu ? faTimes : faBars} scale={1.5} />
     </button>
   </div>
 </header>
 
-<!-- TODO: Do this without a Menu component that wraps separate instances of
-           Navbar + Social.
--->
 {#if $showMenu}
-  <div class="menu">
-    <Menu />
+  <div class="menu" transition:slide={{ duration: 300 }}>
+    <Navbar />
+    <Social />
   </div>
 {/if}
 
 <style lang="scss">
   @use "./theme.scss";
-
-  div:not(.menu) {
-    display: none;
-    flex: 1 1 100%;
-    margin: auto 0;
-
-    @media only screen and (min-width: theme.$menu-breakpoint) {
-      display: block;
-    }
-  }
 
   header {
     display: flex;
@@ -56,30 +47,32 @@
       content: "";
       flex: 1 1 100%;
 
-      @media only screen and (min-width: theme.$menu-breakpoint) {
+      @media (min-width: theme.$menu-breakpoint) {
         content: none;
       }
     }
   }
 
-  header,
-  .menu {
-    :global {
-      a,
-      button {
-        color: theme.$fg;
+  .navbar,
+  .social,
+  .menu-button {
+    display: flex;
+    flex: 1 1 100%;
+    margin: auto 0;
 
-        &:hover {
-          color: theme.$link;
-        }
-      }
+    @media (max-width: theme.$menu-breakpoint) {
+      display: none;
     }
   }
 
-  #menu-button {
+  .social {
+    justify-content: flex-end;
+  }
+
+  .menu-button {
     display: flex;
 
-    @media only screen and (min-width: theme.$menu-breakpoint) {
+    @media (min-width: theme.$menu-breakpoint) {
       display: none;
     }
 
@@ -87,5 +80,12 @@
       content: "";
       flex: 1 1 100%;
     }
+  }
+
+  .menu {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
   }
 </style>
