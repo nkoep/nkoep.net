@@ -46,6 +46,8 @@
   }
 
   li {
-    padding: 0 theme.$item-spacing / 2;
+    &:not(:first-child) {
+      padding-left: theme.$item-spacing;
+    }
   }
 </style>

@@ -30,6 +30,8 @@
   }
 
   li {
-    padding: 0 theme.$item-spacing / 2;
+    &:not(:last-child) {
+      padding-right: theme.$item-spacing;
+    }
   }
 </style>
