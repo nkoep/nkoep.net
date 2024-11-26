@@ -21,7 +21,7 @@
     "@iconify-json/mdi": "^1.2.1",
     "@neilsustc/markdown-it-katex": "^1.0.0",
     "@sveltejs/adapter-static": "^3.0.0",
-    "@sveltejs/kit": "^2.5.27",
+    "@sveltejs/kit": "^2.8.4",
     "@sveltejs/vite-plugin-svelte": "^4.0.2",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
