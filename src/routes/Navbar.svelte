@@ -1,18 +1,15 @@
 <script>
   import { page } from "$app/stores";
-  import { showMenu } from "./stores.js";
 
-  let currentPage = $derived($page.params.page);
-
+  let currentPage = $derived($page.params.slug);
   const pages = ["about", "projects"];
 </script>
 
 <nav>
-  <ul>
+  <ul class="inline-list">
     {#each pages as page}
       <li>
         <a
-          onclick={() => ($showMenu = false)}
           aria-current={page === currentPage ? true : undefined}
           href="/{page}">{page}</a
         >
@@ -29,6 +26,14 @@
     font-weight: bold;
   }
 
+  a {
+    color: theme.$fg;
+
+    &:hover {
+      color: theme.$link;
+    }
+  }
+
   nav {
     font-family: "Montserrat", sans-serif;
     font-size: 11px;
@@ -38,14 +43,9 @@
     text-transform: uppercase;
   }
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
   li {
-    display: inline;
-    margin-right: theme.$item-spacing;
+    &:not(:first-child) {
+      padding-left: theme.$item-spacing;
+    }
   }
 </style>

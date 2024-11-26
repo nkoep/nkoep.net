@@ -1,27 +1,19 @@
 <script lang="ts">
-  import Icon from "svelte-awesome/components/Icon.svelte";
-  import { faGithub, faLastfm } from "@fortawesome/free-brands-svg-icons";
-  import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-
-  interface Props {
-    iconScale?: number;
-  }
-
-  let { iconScale = 1 }: Props = $props();
+  import Envelope from "virtual:icons/la/envelope";
+  import Github from "virtual:icons/la/github";
+  import Lastfm from "virtual:icons/la/lastfm";
 
   const socialPages = [
-    { url: "https://github.com/nkoep/", icon: faGithub },
-    { url: "https://last.fm/user/cRZYFST", icon: faLastfm },
-    { url: "mailto:contact@nkoep.net", icon: faEnvelope },
+    { url: "https://github.com/nkoep/", Icon: Github },
+    { url: "https://last.fm/user/cRZYFST", Icon: Lastfm },
+    { url: "mailto:contact@nkoep.net", Icon: Envelope },
   ];
 </script>
 
-<ul>
+<ul class="inline-list">
   {#each socialPages as page}
     <li>
-      <a href={page.url} target="_blank"
-        ><Icon data={page.icon} scale={iconScale} /></a
-      >
+      <a href={page.url} target="_blank"><page.Icon /></a>
     </li>
   {/each}
 </ul>
@@ -29,16 +21,17 @@
 <style lang="scss">
   @use "./theme.scss";
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    text-align: right;
+  a {
+    color: theme.$fg;
+
+    &:hover {
+      color: theme.$link;
+    }
   }
 
   li {
-    display: inline;
-    margin-left: theme.$item-spacing;
-    white-space: nowrap;
+    &:not(:last-child) {
+      padding-right: theme.$item-spacing;
+    }
   }
 </style>

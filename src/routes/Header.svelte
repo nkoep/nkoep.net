@@ -1,97 +1,89 @@
-<script>
+<script lang="ts">
+  import { slide } from "svelte/transition";
+  import MenuIcon from "virtual:icons/mdi/menu";
+  import CloseIcon from "virtual:icons/mdi/close";
+
   import Logo from "./Logo.svelte";
-  import Menu from "./Menu.svelte";
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
-  import { showMenu } from "./stores.js";
 
-  import Icon from "svelte-awesome/components/Icon.svelte";
-  import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+  let showMenu = $state(false);
+  let Icon = $derived(showMenu ? CloseIcon : MenuIcon);
+
+  const validateCloseMenu = (event: KeyboardEvent) => {
+    const { key } = event;
+    if (key === "Escape" || key === "Esc") {
+      event.preventDefault();
+      showMenu = false;
+    }
+  };
 </script>
 
+<svelte:window onkeyup={validateCloseMenu} />
+
 <header>
-  <div>
+  <div class="navbar">
     <Navbar />
   </div>
 
-  <Logo />
+  <div class="logo">
+    <Logo />
+  </div>
 
-  <div>
+  <div class="social">
     <Social />
   </div>
 
-  <div id="menu-button">
-    <button onclick={() => ($showMenu = !$showMenu)}>
-      <Icon data={$showMenu ? faTimes : faBars} scale={1.5} />
+  <div class="menu-button">
+    <button onclick={() => (showMenu = !showMenu)}>
+      <Icon style="font-size: 1.5em" />
     </button>
   </div>
 </header>
 
-<!-- TODO: Do this without a Menu component that wraps separate instances of
-           Navbar + Social.
--->
-{#if $showMenu}
-  <div class="menu">
-    <Menu />
+{#if showMenu}
+  <div class="menu" transition:slide={{ duration: 300 }}>
+    <Navbar />
+    <Social />
   </div>
 {/if}
 
 <style lang="scss">
   @use "./theme.scss";
 
-  div:not(.menu) {
-    display: none;
-    flex: 1 1 100%;
-    margin: auto 0;
-
-    @media only screen and (min-width: theme.$menu-breakpoint) {
-      display: block;
-    }
-  }
-
   header {
-    :global {
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      li {
-        display: inline;
-      }
-    }
-
     display: flex;
 
     &::before {
       content: "";
       flex: 1 1 100%;
 
-      @media only screen and (min-width: theme.$menu-breakpoint) {
+      @media (min-width: theme.$menu-breakpoint) {
         content: none;
       }
     }
   }
 
-  header,
-  .menu {
-    :global {
-      a,
-      button {
-        color: theme.$fg;
+  .navbar,
+  .social,
+  .menu-button {
+    display: flex;
+    flex: 1 1 100%;
+    margin: auto 0;
 
-        &:hover {
-          color: theme.$link;
-        }
-      }
+    @media (max-width: theme.$menu-breakpoint) {
+      display: none;
     }
   }
 
-  #menu-button {
+  .social {
+    justify-content: flex-end;
+  }
+
+  .menu-button {
     display: flex;
 
-    @media only screen and (min-width: theme.$menu-breakpoint) {
+    @media (min-width: theme.$menu-breakpoint) {
       display: none;
     }
 
@@ -99,5 +91,12 @@
       content: "";
       flex: 1 1 100%;
     }
+  }
+
+  .menu {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
   }
 </style>

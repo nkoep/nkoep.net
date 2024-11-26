@@ -62,25 +62,17 @@ code {
 }
 
 blockquote {
-  background-color: rgba(theme.$fg-muted, 0.02);
+  background-color: rgba(theme.$fg-muted, 0.025);
   border-left: solid 3px rgba(theme.$link, 0.75);
   font-style: italic;
   color: rgba(theme.$fg, 0.75);
   margin: 1em 0;
   padding: theme.$inner-padding;
-  padding-left: 2 * theme.$inner-padding;
-  transition: 250ms;
+  padding-right: calc(2 * theme.$inner-padding);
 
   p {
     margin: 0;
     padding: 0;
-  }
-
-  &:active,
-  &:hover {
-    background-color: rgba(theme.$fg-muted, 0.1);
-    border-left: solid 3px rgba(theme.$fg-muted, 0.25);
-    padding-left: 2.5 * theme.$inner-padding;
   }
 
   cite {
@@ -107,6 +99,7 @@ button {
 
   &:hover,
   &:active {
+    color: theme.$link;
     cursor: pointer;
   }
 }
@@ -114,10 +107,17 @@ button {
 a {
   color: theme.$link;
   text-decoration: none;
-  transition: color 250ms;
 
   &:hover {
     color: theme.$link-hover;
+  }
+}
+
+a,
+button {
+  transition: color 250ms;
+
+  &:hover {
     transition: color 100ms;
   }
 }
@@ -160,14 +160,6 @@ main {
   margin: auto;
   max-width: theme.$text-width;
   width: 85%;
-
-  #outlet {
-    padding-top: 1.5em;
-
-    ul {
-      font-size: 14px;
-    }
-  }
 }
 
 .katex-display {
@@ -202,4 +194,18 @@ h3 {
 // Hide anchor tags on page headings.
 h1 .icon-link {
   display: none;
+}
+
+.inline-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline;
+  }
+}
+
+#outlet {
+  padding-top: 1em;
 }

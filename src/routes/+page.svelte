@@ -26,6 +26,8 @@
       margin: 0;
       padding: 0;
       pointer-events: none;
+      transform: translateX(0);
+      transition: 250ms;
     }
 
     h1 {
@@ -42,15 +44,18 @@
       display: block;
       margin: 1em 0;
       padding: theme.$inner-padding;
-      /* Add negative margin to avoid text wrapping on hover. */
-      margin-right: -2 * theme.$inner-padding;
+      padding-right: calc(2 * theme.$inner-padding);
       transition: 250ms;
 
       &:hover,
       &:active {
         background-color: rgba(theme.$fg-muted, 0.1);
         border-left: solid 3px rgba(theme.$fg-muted, 0.25);
-        padding-left: 2 * theme.$inner-padding;
+
+        h1,
+        p {
+          transform: translateX(theme.$inner-padding);
+        }
       }
     }
   }
