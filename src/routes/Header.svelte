@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-  import Icon from "svelte-awesome/components/Icon.svelte";
   import { slide } from "svelte/transition";
+  import MenuIcon from "virtual:icons/mdi/menu";
+  import CloseIcon from "virtual:icons/mdi/close";
 
   import Logo from "./Logo.svelte";
   import Navbar from "./Navbar.svelte";
   import Social from "./Social.svelte";
 
   let showMenu = $state(false);
+  let Icon = $derived(showMenu ? CloseIcon : MenuIcon);
 
   const validateCloseMenu = (event: KeyboardEvent) => {
     const { key } = event;
@@ -35,7 +36,7 @@
 
   <div class="menu-button">
     <button onclick={() => (showMenu = !showMenu)}>
-      <Icon data={showMenu ? faTimes : faBars} scale={1.5} />
+      <Icon style="font-size: 1.5em" />
     </button>
   </div>
 </header>

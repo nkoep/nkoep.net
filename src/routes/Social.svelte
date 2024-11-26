@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { faGithub, faLastfm } from "@fortawesome/free-brands-svg-icons";
-  import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-  import Icon from "svelte-awesome/components/Icon.svelte";
+  import Envelope from "virtual:icons/la/envelope";
+  import Github from "virtual:icons/la/github";
+  import Lastfm from "virtual:icons/la/lastfm";
 
   const socialPages = [
-    { url: "https://github.com/nkoep/", icon: faGithub },
-    { url: "https://last.fm/user/cRZYFST", icon: faLastfm },
-    { url: "mailto:contact@nkoep.net", icon: faEnvelope },
+    { url: "https://github.com/nkoep/", Icon: Github },
+    { url: "https://last.fm/user/cRZYFST", Icon: Lastfm },
+    { url: "mailto:contact@nkoep.net", Icon: Envelope },
   ];
 </script>
 
 <ul class="inline-list">
   {#each socialPages as page}
     <li>
-      <a href={page.url} target="_blank"><Icon data={page.icon} /></a>
+      <a href={page.url} target="_blank"><page.Icon /></a>
     </li>
   {/each}
 </ul>
