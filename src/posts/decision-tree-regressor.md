@@ -15,8 +15,8 @@ algorithms one naturally encounters along the way.
 
 Ultimately, my goal was to gain a deeper understanding of _gradient-boosted
 trees_, popularized by libraries such as
-[`XGBoost`](https://xgboost.readthedocs.io/en/latest/) or
-[`LightGBM`](https://lightgbm.readthedocs.io/en/latest/), which are regularly
+[XGBoost](https://xgboost.readthedocs.io/en/latest/) or
+[LightGBM](https://lightgbm.readthedocs.io/en/latest/), which are regularly
 used in high-ranking submissions of various Kaggle competitions.
 However, in order to understand boosted trees, there are various other related
 methods one has to learn first, starting with so-called _decision trees_.

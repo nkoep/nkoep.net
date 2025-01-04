@@ -6,7 +6,7 @@
 
   import "normalize.css";
   import "katex/dist/katex.min.css";
-  import "highlight.js/styles/paraiso-light.css";
+  import "@catppuccin/highlightjs/css/catppuccin-frappe.css";
   import "./styles.scss";
 
   import { fade } from "svelte/transition";
