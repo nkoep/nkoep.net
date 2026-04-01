@@ -1,7 +1,7 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import MenuIcon from "virtual:icons/mdi/menu";
   import CloseIcon from "virtual:icons/mdi/close";
+  import MenuIcon from "virtual:icons/mdi/menu";
 
   import Logo from "./Logo.svelte";
   import Navbar from "./Navbar.svelte";

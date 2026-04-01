@@ -3,18 +3,19 @@
   import "@fontsource/montserrat";
   import "@fontsource/nunito";
   import "@fontsource/raleway";
-
   import "normalize.css";
   import "katex/dist/katex.min.css";
   import "@catppuccin/highlightjs/css/catppuccin-frappe.css";
   import "./styles.scss";
 
-  import { fade } from "svelte/transition";
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
+
   import { afterNavigate } from "$app/navigation";
   import { page } from "$app/stores";
 
   import Header from "./Header.svelte";
+
   interface Props {
     children?: import("svelte").Snippet;
   }

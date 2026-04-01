@@ -1,5 +1,6 @@
-import type { Post } from "$lib/types";
 import { json } from "@sveltejs/kit";
+
+import type { Post } from "$lib/types";
 
 interface Metadata {
   title: string;
