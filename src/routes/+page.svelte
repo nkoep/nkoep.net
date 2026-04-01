@@ -2,6 +2,25 @@
   import { formatDate } from "../routes/helpers";
 
   let { data } = $props();
+
+  type Post = { title: string; date: string; slug: string };
+
+  const postsByYear = $derived(
+    data.posts.reduce(
+      (acc: Record<number, Post[]>, post: Post) => {
+        const year = new Date(post.date).getFullYear();
+        (acc[year] ??= []).push(post);
+        return acc;
+      },
+      {} as Record<number, Post[]>,
+    ),
+  );
+
+  const years = $derived(
+    Object.keys(postsByYear)
+      .map(Number)
+      .sort((a, b) => b - a),
+  );
 </script>
 
 <svelte:head>
@@ -9,53 +28,69 @@
 </svelte:head>
 
 <div>
-  {#each data.posts as post}
-    <a class="post" data-sveltekit-preload-data href="p/{post.slug}">
-      <h1>{post.title}</h1>
-      <p class="date">{formatDate(post.date)}</p>
-    </a>
+  {#each years as year}
+    <p class="year">{year}</p>
+    {#each postsByYear[year] as post}
+      <a class="post" data-sveltekit-preload-data href="p/{post.slug}">
+        <span class="title">{post.title}</span>
+        <span class="date">{formatDate(post.date)}</span>
+      </a>
+    {/each}
   {/each}
 </div>
 
 <style lang="scss">
   @use "./theme.scss";
 
-  div {
-    h1,
-    p {
-      margin: 0;
-      padding: 0;
+  .year {
+    color: theme.$link;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    margin: 1.5em 0 0.25em;
+    text-transform: uppercase;
+  }
+
+  .post {
+    border-left: solid 2px transparent;
+    display: block;
+    padding: 0.3em theme.$inner-padding;
+    transition:
+      background-color 250ms,
+      border-color 250ms;
+
+    .title,
+    .date {
+      display: block;
       pointer-events: none;
       transform: translateX(0);
-      transition: 250ms;
+      transition: transform 250ms;
     }
 
-    h1 {
-      font-size: 1.25em;
+    .title {
+      font-family: "Raleway", sans-serif;
+      font-size: 1em;
     }
 
-    h1,
-    p.date {
-      text-align: left;
+    .date {
+      color: rgba(theme.$fg-muted, 0.6);
+      font-size: 0.8em;
+      font-style: italic;
     }
 
-    .post {
-      border: solid 0px transparent;
-      display: block;
-      margin: 1em 0;
-      padding: theme.$inner-padding;
-      padding-right: calc(2 * theme.$inner-padding);
-      transition: 250ms;
+    &:hover,
+    &:active {
+      background-color: rgba(theme.$fg-muted, 0.07);
+      border-left-color: rgba(theme.$fg-muted, 0.25);
+      transition:
+        background-color 100ms,
+        border-color 100ms;
 
-      &:hover,
-      &:active {
-        background-color: rgba(theme.$fg-muted, 0.1);
-        border-left: solid 3px rgba(theme.$fg-muted, 0.25);
-
-        h1,
-        p {
-          transform: translateX(theme.$inner-padding);
-        }
+      .title,
+      .date {
+        transform: translateX(theme.$inner-padding);
+        transition: transform 100ms;
       }
     }
   }

@@ -55,12 +55,28 @@
   });
 </script>
 
+<div class="accent-bar"></div>
+
 <main>
   <Header />
 
   {#if showContent}
-    <div id="outlet" in:fade={{ duration: 650 }}>
+    <div id="outlet" in:fade={{ duration: 300 }}>
       {@render children?.()}
     </div>
   {/if}
 </main>
+
+<style lang="scss">
+  @use "./theme.scss";
+
+  .accent-bar {
+    background: theme.$link;
+    height: 3px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100;
+  }
+</style>

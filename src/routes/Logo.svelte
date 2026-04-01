@@ -7,7 +7,7 @@
 
   div {
     font-family: "Cormorant", serif;
-    font-size: 40px;
+    font-size: 56px;
     margin: auto 0;
     text-align: center;
   }
@@ -26,8 +26,8 @@
       height: 2px;
       left: 0;
       position: absolute;
-      transform-origin: right;
       transform: scaleX(0);
+      transform-origin: right;
       transition: transform 250ms;
       width: 100%;
     }
@@ -37,6 +37,7 @@
       &::after {
         transform: scaleX(1);
         transform-origin: left;
+        transition: transform 100ms;
       }
     }
   }

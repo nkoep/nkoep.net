@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -9,7 +9,9 @@
     />
     %sveltekit.head%
   </head>
-  <script>if (location.hash) document.documentElement.style.visibility = 'hidden';</script>
+  <script>
+    if (location.hash) document.documentElement.style.visibility = "hidden";
+  </script>
   <body data-sveltekit-preload-data="hover">
     <div style="display: contents">%sveltekit.body%</div>
   </body>
