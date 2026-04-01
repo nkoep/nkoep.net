@@ -15,18 +15,16 @@ import macros from "./katex-macros.js";
 svelteHighlight(hljs);
 
 const highlight = (str, language) => {
-  if (language && hljs.getLanguage(language)) {
-    try {
-      return (
-        '<pre><code class="hljs">' +
-        hljs.highlight(str, { language, ignoreIllegals: true }).value +
-        "</code></pre>"
-      );
-    } catch (_) {
-      // empty
-    }
+  const lang = language && hljs.getLanguage(language) ? language : "plaintext";
+  try {
+    return (
+      '<pre><code class="hljs">' +
+      hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+      "</code></pre>"
+    );
+  } catch (_) {
+    return '<pre><code class="hljs">' + str + "</code></pre>";
   }
-  return "";
 };
 
 const markdownItProcessor = () => {
