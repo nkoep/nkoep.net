@@ -11,6 +11,7 @@
 
   import { fade } from "svelte/transition";
   import { onMount } from "svelte";
+  import { afterNavigate } from "$app/navigation";
   import { page } from "$app/stores";
 
   import Header from "./Header.svelte";
@@ -20,15 +21,32 @@
 
   let { children }: Props = $props();
 
+  afterNavigate(({ type, to }) => {
+    if (type === "enter") {
+      if (to?.url.hash) {
+        document
+          .querySelector(to.url.hash)
+          ?.scrollIntoView({ behavior: "instant" });
+      }
+      document.documentElement.style.visibility = "";
+    }
+  });
+
   let showContent = $state(true);
   let initialPageLoad = true;
+  let currentPath = "";
 
   onMount(() => {
-    return page.subscribe(() => {
+    return page.subscribe(($page) => {
       if (initialPageLoad) {
         initialPageLoad = false;
+        currentPath = $page.url.pathname;
         return;
       }
+      if ($page.url.pathname === currentPath) {
+        return;
+      }
+      currentPath = $page.url.pathname;
       showContent = false;
       setTimeout(() => {
         showContent = true;
