@@ -79,18 +79,19 @@
       font-style: italic;
     }
 
-    &:hover,
-    &:active {
-      background-color: rgba(theme.$fg-muted, 0.07);
-      border-left-color: rgba(theme.$fg-muted, 0.25);
-      transition:
-        background-color 100ms,
-        border-color 100ms;
+    @media (hover: hover) {
+      &:hover {
+        background-color: rgba(theme.$fg-muted, 0.07);
+        border-left-color: rgba(theme.$fg-muted, 0.25);
+        transition:
+          background-color 100ms,
+          border-color 100ms;
 
-      .title,
-      .date {
-        transform: translateX(theme.$inner-padding);
-        transition: transform 100ms;
+        .title,
+        .date {
+          transform: translateX(theme.$inner-padding);
+          transition: transform 100ms;
+        }
       }
     }
   }

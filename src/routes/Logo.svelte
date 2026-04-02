@@ -32,12 +32,13 @@
       width: 100%;
     }
 
-    &:hover,
-    &:active {
-      &::after {
-        transform: scaleX(1);
-        transform-origin: left;
-        transition: transform 100ms;
+    @media (hover: hover) {
+      &:hover {
+        &::after {
+          transform: scaleX(1);
+          transform-origin: left;
+          transition: transform 100ms;
+        }
       }
     }
   }

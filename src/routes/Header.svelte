@@ -53,7 +53,7 @@
 
   header {
     display: flex;
-    padding-bottom: 1.5em;
+    padding-bottom: 1em;
 
     &::before {
       content: "";
